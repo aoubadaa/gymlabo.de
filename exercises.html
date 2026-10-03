@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GYM LABORATORY – Übungsbibliothek</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;family=Tajawal:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<link href="exercises_library_addons.css" rel="stylesheet"/>
+</head>
+<body data-page="exercises">
+<div id="top"></div>
+<!-- Header navigation (same as the other pages) -->
+<header class="site-header" id="siteHeader">
+<div class="container">
+<div class="header-shell">
+<a aria-label="GYM LABORATORY Startseite" class="logo header-brand" href="index.html#home">
+<span aria-hidden="true" class="header-brand-mark header-brand-mark--logo">
+<img alt="" src="images/gym-laboratory-logo.webp"/>
+</span>
+<span class="header-brand-name">GYM LABORATORY</span>
+</a>
+<nav aria-label="Hauptnavigation" class="nav-menu" id="primaryNav">
+<a class="nav-link" href="index.html#home">Startseite</a><a class="nav-link" href="index.html#ebook">E-Book</a><a class="nav-link" href="index.html#online">Coaching</a><a aria-current="page" class="nav-link active" href="exercises.html">Übungsbibliothek</a><a class="nav-link" href="blog.html">Blog</a><a class="nav-link" href="index.html#free-guides">Kostenlose Guides</a><a class="nav-link" href="index.html#bmr">Kalorienrechner</a>
+</nav>
+<div class="header-actions">
+<label class="theme-switch header-theme-switch" title="Darstellung ändern">
+<input aria-label="Darstellung ändern" id="themeToggle" type="checkbox"/>
+<span aria-hidden="true" class="theme-slider">
+<span class="theme-icon theme-icon--sun">☀️</span>
+<span class="theme-icon theme-icon--moon">🌙</span>
+</span>
+</label>
+<button aria-controls="primaryNav" aria-expanded="false" aria-label="Menü öffnen" class="nav-toggle" id="navToggle" type="button">
+<span></span><span></span><span></span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Hero -->
+<section class="exlib-hero">
+<div class="container">
+<div class="exlib-hero-inner" data-animate="fade-in">
+<h1 class="blog-hero-title">Übungsbibliothek</h1>
+<div aria-label="Farblegende" class="exlib-legend exlib-legend--premium">
+<span class="exlib-legend-label">Muskelrollen</span>
+<div class="exlib-legend-items">
+<span class="legend-item"><span class="legend-dot legend-dot--target"></span> Zielmuskeln</span>
+<span class="legend-item"><span class="legend-dot legend-dot--syn"></span> Unterstützende Muskeln</span>
+<span class="legend-item"><span class="legend-dot legend-dot--stab"></span> Stabilisatoren</span>
+</div>
+</div>
+<div aria-label="Suche und Filter" class="exlib-controls exlib-controls--premium">
+<div class="exlib-controls-head">
+<div class="exlib-controls-heading">
+<span class="exlib-controls-kicker">Übungsfinder</span>
+<h2>Finde die passende Übung</h2>
+<p>Suche direkt oder kombiniere Muskelgruppe und Equipment.</p>
+</div>
+<div aria-live="polite" class="exlib-results-badge">
+<span aria-hidden="true" class="exlib-results-pulse"></span>
+<span id="resultCount">—</span>
+</div>
+</div>
+<div class="exlib-search-wrap exlib-search-wrap--premium">
+<span aria-hidden="true" class="exlib-search-icon">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20">
+<circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"></circle>
+<path d="M16 16L21 21" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</span>
+<input aria-label="Übung suchen" autocomplete="off" class="exlib-search" id="exSearch" placeholder="Übung suchen… z. B. Bench Press, Lat Pulldown, Kabel oder Brust" type="text"/>
+<button aria-label="Suche löschen" class="exlib-clear" id="clearSearch" type="button">×</button>
+<ul class="exlib-suggestions" hidden="" id="searchSuggestions"></ul>
+</div>
+<div class="exlib-filter-grid">
+<div class="exlib-filter-row exlib-filter-card">
+<div class="exlib-filter-card-head">
+<span aria-hidden="true" class="exlib-filter-icon">M</span>
+<div>
+<div class="exlib-filter-label">Muskelgruppe</div>
+<small>Eine oder mehrere Muskelgruppen auswählen</small>
+</div>
+</div>
+<div aria-label="Muskelfilter" class="exlib-chips" id="muscleChips" role="group"></div>
+</div>
+<div class="exlib-filter-row exlib-filter-card">
+<div class="exlib-filter-card-head">
+<span aria-hidden="true" class="exlib-filter-icon">E</span>
+<div>
+<div class="exlib-filter-label">Equipment</div>
+<small>Nach verfügbarem Trainingsgerät filtern</small>
+</div>
+</div>
+<div aria-label="Equipment-Filter" class="exlib-chips" id="equipChips" role="group"></div>
+</div>
+</div>
+<div class="exlib-meta">
+<div class="exlib-filter-hint">
+<span aria-hidden="true" class="exlib-filter-hint-dot"></span>
+<span>Mehrfachauswahl möglich</span>
+</div>
+<button class="exlib-reset" id="resetFilters" type="button">
+<span aria-hidden="true">↺</span>
+                Alle Filter zurücksetzen
+              </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Library -->
+<section class="exlib-section">
+<div class="container">
+<div aria-live="polite" class="exlib-sections" id="muscleSections"></div>
+<div class="exlib-empty" hidden="" id="emptyState">
+<h3>Keine Ergebnisse gefunden…</h3>
+<p>Ändere den Suchbegriff, entferne einen Filter oder versuche: <span class="kbd">Kurzhantel</span> / <span class="kbd">Langhantel</span> / <span class="kbd">Kabel</span>.</p>
+</div>
+<p class="exlib-note">
+          ⚡ Hinweis: Diese Bibliothek dient zur Orientierung. Wenn du einen vollständigen persönlichen Trainingsplan inklusive Volumen und Wiederholungen möchtest,
+          <a href="index.html#online">kontaktiere uns für persönliches Coaching</a>.
+        </p>
+</div>
+</section>
+<!-- Footer (same site style) -->
+<footer class="site-footer">
+<div class="container">
+<div class="footer-card footer-card--premium">
+<div aria-hidden="true" class="footer-glow footer-glow--one"></div>
+<div aria-hidden="true" class="footer-glow footer-glow--two"></div>
+<div class="footer-grid footer-grid--premium">
+<!-- Brand -->
+<div class="footer-col footer-brand">
+<a aria-label="Zur Startseite" class="footer-brand-lockup" href="index.html#home">
+<span aria-hidden="true" class="footer-brand-mark footer-brand-mark--logo">
+<img alt="" loading="lazy" src="images/gym-laboratory-logo.webp"/>
+</span>
+<span class="footer-brand-copy">
+<strong class="footer-brand-title">GYM LABORATORY</strong>
+<small>Training • Ernährung • Wissen</small>
+</span>
+</a>
+<p class="footer-brand-text">
+                Folge uns – wir posten täglich neue Inhalte rund um Training, Ernährung und Fortschritt.
+              </p>
+<div class="footer-social">
+<a class="footer-pill" href="https://www.instagram.com/gymlaboo/" rel="noopener" target="_blank">
+<span class="footer-social-dot">IG</span>
+                  Instagram
+                </a>
+<a class="footer-pill" href="https://www.facebook.com/profile.php?id=61576849801264" rel="noopener" target="_blank">
+<span class="footer-social-dot">f</span>
+                  Facebook
+                </a>
+<a class="footer-pill" href="https://www.tiktok.com/@gymlaboo" rel="noopener" target="_blank">
+<span class="footer-social-dot">♪</span>
+                  TikTok
+                </a>
+<a class="footer-pill" href="https://www.youtube.com/@gymlabo" rel="noopener" target="_blank">
+<span class="footer-social-dot">▶</span>
+                  YouTube
+                </a>
+</div>
+</div>
+<!-- Explore -->
+<div class="footer-col">
+<span class="footer-col-eyebrow">Navigation</span>
+<h4 class="footer-title">Entdecken</h4>
+<ul class="footer-links footer-links--premium">
+<li><a href="index.html#ebook"><span>Muscle Mastery E-Book</span><span>→</span></a></li>
+<li><a href="index.html#online"><span>Online-Coaching</span><span>→</span></a></li>
+<li><a href="index.html#free-guides"><span>Kostenlose Guides</span><span>→</span></a></li>
+<li><a href="blog.html"><span>Blog</span><span>→</span></a></li>
+</ul>
+</div>
+<!-- Contact + legal -->
+<div class="footer-col">
+<span class="footer-col-eyebrow">Support</span>
+<h4 class="footer-title">Kontakt &amp; Rechtliches</h4>
+<div class="footer-contact-box">
+<span class="footer-contact-label">Direkter Kontakt</span>
+<div class="footer-contact-actions">
+<a aria-label="E-Mail-Adresse kopieren" class="footer-icon footer-icon--wide" data-copy-email="contact.labooo@gmail.com" href="#">
+<span class="footer-contact-symbol">✉</span>
+<span>E-Mail</span>
+</a>
+<a aria-label="WhatsApp" class="footer-icon footer-icon--wide" href="https://wa.me/212657994110" rel="noopener" target="_blank">
+<span class="footer-contact-symbol">◉</span>
+<span>WhatsApp</span>
+</a>
+</div>
+</div>
+<ul class="footer-links footer-legal-links">
+<li><a href="#" id="terms-link">Nutzungsbedingungen</a></li>
+<li><a href="#" id="privacy-link">Datenschutzrichtlinie</a></li>
+</ul>
+</div>
+<!-- Newsletter -->
+<div class="footer-col footer-newsletter-card">
+<span class="footer-col-eyebrow">Newsletter</span>
+<h4 class="footer-title">Updates direkt per E-Mail</h4>
+<p class="footer-muted">
+                Erhalte neue Tipps zu Training, Ernährung und unseren neuesten Guides direkt in dein Postfach.
+              </p>
+<form action="https://docs.google.com/forms/d/e/1FAIpQLSf1J3YBh-Xstf0M2CuExO_WGVY75-u4iBIj2NMQHoWoRmXLrg/formResponse" class="newsletter" method="POST" onsubmit="newsletterSuccess()" target="hidden_iframe">
+<div class="newsletter-field">
+<span aria-hidden="true" class="newsletter-mail-icon">✉</span>
+<input name="entry.364924139" placeholder="E-Mail-Adresse eingeben" required="" type="email"/>
+</div>
+<button type="submit">
+<span>Abonnieren</span>
+<span aria-hidden="true">→</span>
+</button>
+</form>
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+<p class="newsletter-success" id="newsletter-success" style="display:none;"></p>
+<span class="footer-newsletter-note">Kein Spam. Nur neue Inhalte.</span>
+</div>
+</div>
+<div class="footer-bottom footer-bottom--premium">
+<span class="footer-copyright">
+              © 2026 Gym Laboratory. Alle Rechte vorbehalten.
+            </span>
+<span aria-hidden="true" class="footer-bottom-line"></span>
+<a class="footer-backtop" href="#top">
+<span>Nach oben</span>
+<span aria-hidden="true" class="footer-backtop-arrow">↑</span>
+</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Legal modal overlay and container -->
+<div class="legal-modal-overlay" id="legalOverlay" style="display: none;"></div>
+<div class="legal-modal" id="legalModal" style="display: none;">
+<div class="legal-modal-content">
+<span class="legal-close" id="legalCloseBtn">×</span>
+<h3 id="legalModalTitle"></h3>
+<div class="legal-modal-body" id="legalModalBody"></div>
+</div>
+</div>
+<!-- Hidden detailed legal content for Terms of Service and Privacy Policy -->
+<div id="terms-content" style="display:none;">
+<p><strong>Letzte Aktualisierung:</strong> 07. Januar 2026</p>
+<p>Willkommen auf der Website von GYM LABORATORY. Durch die Nutzung dieser Website oder eines unserer Angebote bestätigst du, dass du diese Bedingungen gelesen und verstanden hast und ihnen zustimmst.</p>
+<p><strong>1) Definitionen</strong></p>
+<p><strong>Website:</strong> Die Plattform GYM LABORATORY und die damit verbundenen Inhalte.</p>
+<p><strong>Angebote:</strong> Dazu gehören Lerninhalte, die Übungsbibliothek, der Blog, der Kalorienrechner, Online-Coaching und digitale Bücher (E-Books).</p>
+<p><strong>Nutzer:</strong> Jede Person, die die Website besucht oder eines der Angebote nutzt.</p>
+<p><strong>Inhalte:</strong> Alle Texte, Bilder, Trainingsprogramme, Artikel, Videos, Übungen und Lernmaterialien, die auf der Website verfügbar sind.</p>
+<p><strong>2) Annahme der Bedingungen</strong><br/>Durch die Nutzung der Website erklärst du dich mit diesen Bedingungen einverstanden. Wenn du ihnen nicht zustimmst, musst du die Nutzung der Website und ihrer Angebote sofort einstellen.</p>
+<p><strong>3) Art der Angebote und keine Ergebnisgarantie</strong><br/>GYM LABORATORY bietet Bildungs- und Informationsinhalte zu Fitness und Ernährung. Dabei gilt:<br/>Ergebnisse unterscheiden sich von Person zu Person und hängen unter anderem von Konsequenz, Alter, Genetik, Gesundheitszustand und Lebensstil ab.<br/>Empfehlungen oder Programme dienen als allgemeine Orientierung oder basieren beim persönlichen Coaching auf den von dir bereitgestellten Angaben.</p>
+<p><strong>4) Gesundheitshinweis und medizinische Verantwortung (sehr wichtig)</strong><br/>Die Website ersetzt keinen Arzt oder medizinisches Fachpersonal. Durch die Nutzung unserer Angebote bestätigst du Folgendes:<br/>Wenn du an einer Krankheit oder gesundheitlichen Beeinträchtigung leidest (z. B. Herz-Kreislauf-Erkrankungen, Bluthochdruck, Diabetes, Verletzungen oder andere medizinische Beschwerden), solltest du vor Beginn eines Programms, Trainings oder einer Ernährungsumstellung ärztlichen Rat einholen.<br/>Du nutzt die Inhalte und Angebote der Website auf eigene Verantwortung.<br/>Wir übernehmen keine Haftung für Verletzungen oder Schäden, die durch falsche Anwendung, fehlende fachliche Beratung oder unsachgemäße Nutzung der Informationen entstehen.</p>
+<p><strong>5) Digitale Bücher und Online-Coaching</strong><br/>Wir können digitale Produkte und Dienstleistungen anbieten, zum Beispiel:<br/>E-Books<br/>Persönliches Coaching / Online-Trainingsprogramme<br/>Dabei gilt:<br/>Diese Angebote sind digital und nicht materiell.<br/>Nach der Bereitstellung bzw. Zusendung eines Produkts oder Programms an den Nutzer kann eine Rückgabe aufgrund der digitalen Natur des Inhalts nicht garantiert werden.</p>
+<p><strong>6) Zahlung und Zahlungsmethoden</strong><br/>Zahlungen können unter anderem über PayPal, Banküberweisung oder Western Union akzeptiert werden. Weitere Zahlungsmethoden können künftig hinzukommen.<br/>Der Nutzer ist dafür verantwortlich, bei der Zahlung korrekte Angaben zu machen und gegebenenfalls anfallende Überweisungsgebühren zu tragen.</p>
+<p><strong>7) Rückerstattungsrichtlinie (Refund Policy)</strong><br/>Derzeit bieten wir aufgrund der Art digitaler Inhalte und Online-Dienstleistungen keine allgemeine Rückerstattungsregelung an. In Ausnahmefällen können Anfragen nach unserem Ermessen geprüft werden.</p>
+<p><strong>8) Geistiges Eigentum</strong><br/>Alle Inhalte auf der Website von GYM LABORATORY (Artikel, Programme, Design, Texte, Bilder usw.) gehören zur Website. Inhalte dürfen ohne Genehmigung weder kopiert noch erneut veröffentlicht oder verkauft werden. Tipps und Informationen dürfen für persönliche oder Bildungszwecke genutzt werden, um Wissen zu verbreiten und das Fitnessniveau in Marokko und der arabischen Welt zu verbessern, sofern die Inhalte nicht als eigene ausgegeben oder kommerziell genutzt werden.</p>
+<p><strong>9) Unzulässige Nutzung</strong><br/>Es ist untersagt, die Inhalte ohne Genehmigung kommerziell zu verwenden oder störende bzw. schädliche Daten oder Nachrichten zu versenden.</p>
+<p><strong>10) Externe Links</strong><br/>Die Website kann Links zu anderen Plattformen wie Instagram, TikTok oder YouTube enthalten. Für die Inhalte oder Richtlinien dieser Websites sind wir nicht verantwortlich.</p>
+<p><strong>11) Änderungen der Bedingungen</strong><br/>Wir behalten uns das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Die weitere Nutzung der Website nach einer Aktualisierung gilt als Zustimmung zu den neuen Bedingungen.</p>
+<p><strong>12) Kontakt und Support</strong><br/>Bei Fragen oder Anliegen zu unseren Angeboten kannst du uns per E-Mail kontaktieren:<br/>📩 contact.labooo@gmail.com<br/>Voraussichtliche Antwortzeit: 24 bis 72 Stunden.</p>
+</div>
+<div id="privacy-content" style="display:none;">
+<p><strong>Letzte Aktualisierung:</strong> 07. Januar 2026</p>
+<p>Bei GYM LABORATORY respektieren wir deine Privatsphäre und verpflichten uns zum Schutz deiner Daten. Diese Richtlinie erklärt, welche Informationen wir erfassen und wie wir sie verwenden.</p>
+<p><strong>1) Welche Informationen wir erfassen</strong></p>
+<p>Wir erfassen nur die minimal erforderlichen Daten, zum Beispiel:</p>
+<p><strong>a) E-Mail-Adresse (Newsletter)</strong><br/>Wenn du unseren Newsletter abonnierst, erfassen wir gegebenenfalls nur deine E-Mail-Adresse. Sie wird verwendet, um Tipps zu Ernährung und Training sowie Updates zu Artikeln und neuen Inhalten zu senden.</p>
+<p><strong>b) Daten für das Online-Coaching</strong><br/>Beim Ausfüllen des Coaching-Formulars kannst du Angaben wie Ziel, Größe und Gewicht, Alter, Aktivitätsniveau sowie Informationen zu Ernährung und Training und gegebenenfalls Gesundheitsinformationen angeben. ⚠️ Diese Informationen werden ausschließlich verwendet, um ein passendes Programm für dich zu erstellen.</p>
+<p><strong>2) Wie wir deine Daten verwenden</strong><br/>Wir verwenden deine Daten ausschließlich, um Coaching- und Ernährungsprogramme bereitzustellen, den Newsletter an Personen zu senden, die dem zugestimmt haben, und dich bezüglich unserer Angebote zu kontaktieren.</p>
+<p><strong>3) Keine Weitergabe von Daten</strong><br/>Wir verkaufen oder teilen deine personenbezogenen Daten nicht mit Dritten; deine Daten bleiben privat und vertraulich. Eine technische Weitergabe kann lediglich im Zusammenhang mit Zahlungen erfolgen (z. B. PayPal oder Banküberweisung), da diese Dienste Zahlungsdaten zur Abwicklung der Transaktion benötigen.</p>
+<p><strong>4) Datenschutz</strong><br/>Wir verpflichten uns, angemessene Sicherheitsmaßnahmen zu ergreifen, um deine Daten vor unbefugtem Zugriff, Offenlegung oder Veränderung zu schützen.</p>
+<p><strong>5) Cookies</strong><br/>Die Website kann Cookies verwenden, um die Nutzererfahrung zu verbessern, zum Beispiel um den Dunkelmodus zu speichern und die Leistung der Website zu optimieren.</p>
+<p><strong>6) Rechte der Nutzer</strong><br/>Du kannst jederzeit verlangen, dass deine E-Mail-Adresse aus dem Newsletter-Verteiler entfernt wird, und uns kontaktieren, um die Löschung deiner Coaching-Daten zu beantragen.</p>
+<p><strong>7) Änderungen dieser Richtlinie</strong><br/>Wir können diese Datenschutzrichtlinie aktualisieren, wenn neue Angebote oder Funktionen hinzukommen (zum Beispiel künftig Benutzerkonten). Aktualisierungen werden auf dieser Seite veröffentlicht.</p>
+<p><strong>8) Kontakt</strong><br/>Bei Anliegen zu Datenschutz oder Daten: 📩 contact.labooo@gmail.com<br/>Wir antworten innerhalb von 24 bis 72 Stunden.</p>
+</div>
+<script>
+      // Newsletter success handler function to show a thank you message after form submission.
+      function newsletterSuccess() {
+        const msgEl = document.getElementById('newsletter-success');
+        if (msgEl) {
+          msgEl.textContent = 'Vielen Dank für deine Anmeldung!';
+          msgEl.style.display = 'block';
+          setTimeout(() => {
+            msgEl.style.display = 'none';
+          }, 4000);
+        }
+      }
+
+      // =========================
+      // 1) Theme + small UX
+      // =========================
+      document.addEventListener("DOMContentLoaded", () => {
+      // reveal animated elements on this page
+      document.querySelectorAll('[data-animate]').forEach(el => el.classList.add('revealed'));
+
+        const toggle = document.getElementById("themeToggle");
+        const saved = localStorage.getItem("theme");
+        const startDark =
+          saved === "dark" ||
+          (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+        document.body.classList.toggle("dark", startDark);
+        toggle.checked = startDark;
+
+        toggle.addEventListener("change", () => {
+          const isDark = toggle.checked;
+          document.body.classList.toggle("dark", isDark);
+          localStorage.setItem("theme", isDark ? "dark" : "light");
+        });
+
+        // Newsletter form submission is handled by Google Form. The thank-you
+        // message is displayed by the newsletterSuccess() handler on submit.
+
+        // Back-to-top button (same site behavior)
+        const backBtn = document.createElement("button");
+        backBtn.className = "back-to-top";
+        backBtn.setAttribute("aria-label", "Nach oben");
+        backBtn.innerHTML = "↑";
+        document.body.appendChild(backBtn);
+
+        backBtn.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 400) backBtn.classList.add("show");
+          else backBtn.classList.remove("show");
+        });
+      });
+
+      // =========================
+      // 2) Exercises library data
+      // =========================
+      // Exercise images should be placed in:
+      // images/muscles/
+      // Using the following filenames:
+      // chest.webp, back.webp, shoulders.webp, legs.webp, glutes.webp, biceps.webp, triceps.webp,
+      // abs.webp, calves.webp, forearms.webp, traps.webp, quads.webp
+      // Additional images can follow the same pattern.
+
+      const MUSCLES = [
+        { key: "all", ar: "Alle", en: "Alle", img: "" },
+        { key: "chest", ar: "Brust", en: "Brustmuskulatur", img: "images/muscles/chest.webp" },
+        { key: "back", ar: "Rücken", en: "Rückenmuskulatur", img: "images/muscles/back.webp" },
+        { key: "shoulders", ar: "Schultern", en: "Schultermuskulatur", img: "images/muscles/shoulders.webp" },
+        { key: "legs", ar: "Beine", en: "Beine (Grundübungen)", img: "images/muscles/legs.webp" },
+        // ✅ New quads section: isolated exercises for the quadriceps
+        { key: "quads", ar: "Quadrizeps", en: "Quadrizeps", img: "images/muscles/quads.webp" },
+        { key: "glutes", ar: "Gesäß", en: "Gesäßmuskulatur", img: "images/muscles/glutes.webp" },
+        { key: "biceps", ar: "Bizeps", en: "Bizeps", img: "images/muscles/biceps.webp" },
+        { key: "triceps", ar: "Trizeps", en: "Trizeps", img: "images/muscles/triceps.webp" },
+        { key: "abs", ar: "Bauch", en: "Bauchmuskulatur", img: "images/muscles/abs.webp" },
+        { key: "calves", ar: "Waden", en: "Waden", img: "images/muscles/calves.webp" },
+        { key: "forearms", ar: "Unterarme", en: "Unterarme", img: "images/muscles/forearms.webp" },
+        { key: "traps", ar: "Trapez", en: "Trapezmuskel", img: "images/muscles/traps.webp" },
+      ];
+
+      const EQUIPMENT = [
+        { key: "all", ar: "Alle" },
+        { key: "barbell", ar: "Langhantel" },
+        { key: "dumbbell", ar: "Kurzhantel" },
+        { key: "cable", ar: "Kabel" },
+        { key: "machine", ar: "Maschine" },
+        { key: "bands", ar: "Widerstandsband" },
+        { key: "bodyweight", ar: "Körpergewicht" },
+        { key: "kettlebell", ar: "Kettlebell" },
+      ];
+
+      // ✅ Each exercise: name + primary muscle + equipment tags + involved muscles (Primary/Secondary)
+      const EXERCISES = [
+        {"name": "Bench Press", "muscle": "chest", "equip": ["barbell"], "desc": "Langhantel-Bankdrücken zum Aufbau von Kraft und Brustmasse mit guter Möglichkeit zur progressiven Überlastung.", "image": "images/exercises/bench-press.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Oberer Rücken", "Rumpf"], "keywords": ["bench", "press", "Langhantel", "Brust", "barbell"]},
+        {"name": "Incline Bench Press", "muscle": "chest", "equip": ["barbell"], "desc": "Schrägbankdrücken, das den oberen Brustbereich stärker beansprucht und von der vorderen Schulter unterstützt wird.", "image": "images/exercises/incline-bench-press.webp", "targets": ["Obere Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Oberer Rücken", "Rumpf"], "keywords": ["incline", "bench", "Langhantel", "Brust", "schräg"]},
+        {"name": "Decline Bench Press", "muscle": "chest", "equip": ["barbell"], "desc": "Negatives Bankdrücken mit Fokus auf die untere Brust, das bei manchen Personen die Schulter weniger belastet.", "image": "images/exercises/decline-bench-press.webp", "targets": ["Untere Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Oberer Rücken", "Rumpf"], "keywords": ["decline", "bench", "Brust", "Langhantel"]},
+        {"name": "Dumbbell Bench Press", "muscle": "chest", "equip": ["dumbbell"], "desc": "Kurzhantel-Bankdrücken vergrößert den Bewegungsumfang und hilft, beide Seiten ausgeglichen zu trainieren.", "image": "images/exercises/dumbbell-bench-press.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Oberer Rücken", "Rumpf"], "keywords": ["dumbbell", "press", "Kurzhantel", "Brust"]},
+        {"name": "Incline Dumbbell Press", "muscle": "chest", "equip": ["dumbbell"], "desc": "Schräges Kurzhanteldrücken mit Fokus auf die obere Brust und sehr gutem Bewegungsumfang.", "image": "images/exercises/incline-dumbbell-press.webp", "targets": ["Obere Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Oberer Rücken", "Rumpf"], "keywords": ["incline", "dumbbell", "Kurzhantel", "Brust", "schräg"]},
+        {"name": "Dumbbell Fly", "muscle": "chest", "equip": ["dumbbell"], "desc": "Kurzhantel-Flys für eine stärkere Dehnung der Brust; halte die Ellenbogen leicht gebeugt.", "image": "images/exercises/dumbbell-fly.webp", "targets": ["Brust"], "synergists": ["Vordere Schultern"], "stabilizers": ["Bizeps", "Rumpf"], "keywords": ["fly", "Kurzhantel", "Brust"]},
+        {"name": "Cable Fly", "muscle": "chest", "equip": ["cable"], "desc": "Kabel-Flys bieten über die gesamte Bewegung gleichmäßige Spannung und erlauben eine einfache Winkelanpassung.", "image": "images/exercises/cable-fly.webp", "targets": ["Brust"], "synergists": ["Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["cable", "fly", "Kabel", "Brust"]},
+        {"name": "High-to-Low Cable Fly", "muscle": "chest", "equip": ["cable"], "desc": "Kabel-Flys von oben nach unten mit Fokus auf die untere Brust und starker Spannung.", "image": "images/exercises/high-to-low-cable-fly.webp", "targets": ["Untere Brust"], "synergists": ["Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["high to low", "Kabel", "fly", "Brust"]},
+        {"name": "Low-to-High Cable Fly", "muscle": "chest", "equip": ["cable"], "desc": "Kabel-Flys von unten nach oben zur gezielten Beanspruchung der oberen Brust.", "image": "images/exercises/low-to-high-cable-fly.webp", "targets": ["Obere Brust"], "synergists": ["Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["low to high", "Kabel", "fly", "Brust"]},
+        {"name": "Pec Deck Machine Fly", "muscle": "chest", "equip": ["machine"], "desc": "Die Pec-Deck-Maschine isoliert die Brust und erleichtert einen kontrollierten Bewegungsweg.", "image": "images/exercises/pec-deck-machine-fly.webp", "targets": ["Brust"], "synergists": ["Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["pec deck", "machine", "Maschine", "Brust"]},
+        {"name": "Push-Up", "muscle": "chest", "equip": ["bodyweight"], "desc": "Sehr gute Körpergewichtsübung für Brust und Trizeps, die sich durch Neigung oder Zusatzgewicht steigern lässt.", "image": "images/exercises/push-up.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf", "Oberer Rücken"], "keywords": ["push up", "Körpergewicht", "Brust"]},
+        {"name": "Weighted Push-Up", "muscle": "chest", "equip": ["bodyweight"], "desc": "Liegestütze mit zusätzlichem Widerstand, zum Beispiel durch Gewichtsgürtel oder Rucksack, für mehr Belastung.", "image": "images/exercises/weighted-push-up.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf", "Oberer Rücken"], "keywords": ["weighted", "push up", "Brust"]},
+        {"name": "Dips (Chest Focus)", "muscle": "chest", "equip": ["bodyweight"], "desc": "Dips mit nach vorn geneigtem Oberkörper, um die Brust stärker zu betonen; abhängig von Beweglichkeit und Schulterverträglichkeit.", "image": "images/exercises/dips-chest-focus.webp", "targets": ["Untere Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf", "Oberer Rücken"], "keywords": ["dips", "Körpergewicht", "Brust"]},
+        {"name": "Pull-Up", "muscle": "back", "equip": ["bodyweight"], "desc": "Kräftiger vertikaler Zug für den Latissimus. Halte die Schultern unten und leicht nach hinten.", "image": "images/exercises/pull-up.webp", "targets": ["Latissimus"], "synergists": ["Bizeps", "Oberer Rücken"], "stabilizers": ["Rumpf", "Unterarme"], "keywords": ["pull up", "chin up", "Körpergewicht", "Rücken", "Latissimus"]},
+        {"name": "Lat Pulldown", "muscle": "back", "equip": ["cable", "machine"], "desc": "Vertikales Ziehen am Kabelzug mit Fokus auf den Latissimus und sehr guter Kontrolle.", "image": "images/exercises/lat-pulldown.webp", "targets": ["Latissimus"], "synergists": ["Bizeps", "Oberer Rücken"], "stabilizers": ["Rumpf", "Unterarme"], "keywords": ["lat pulldown", "Latziehen", "Kabel", "Rücken"]},
+        {"name": "Seated Cable Row", "muscle": "back", "equip": ["cable"], "desc": "Horizontales Kabelrudern mit Fokus auf die mittlere Rückenmuskulatur und aktivem Zurückziehen der Schulterblätter.", "image": "images/exercises/seated-cable-row.webp", "targets": ["Mittlerer Rücken", "Latissimus"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf", "Unterarme"], "keywords": ["row", "cable row", "Ziehen", "Kabel", "Rücken"]},
+        {"name": "Barbell Row", "muscle": "back", "equip": ["barbell"], "desc": "Langhantelrudern für mehr Rückendichte. Halte die Wirbelsäule in einer neutralen Position.", "image": "images/exercises/barbell-row.webp", "targets": ["Mittlerer Rücken", "Latissimus"], "synergists": ["Bizeps"], "stabilizers": ["Beinbeuger", "Rumpf"], "keywords": ["barbell row", "Rudern", "Langhantel", "Rücken"]},
+        {"name": "One-Arm Dumbbell Row", "muscle": "back", "equip": ["dumbbell"], "desc": "Einarmiges Kurzhantelrudern hilft, Seitenunterschiede auszugleichen und den Bewegungsumfang zu vergrößern.", "image": "images/exercises/one-arm-dumbbell-row.webp", "targets": ["Latissimus", "Mittlerer Rücken"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf", "Unterarme"], "keywords": ["one arm row", "dumbbell row", "Kurzhantel", "Rücken"]},
+        {"name": "Chest-Supported Row", "muscle": "back", "equip": ["dumbbell", "machine"], "desc": "Brustgestütztes Rudern auf Bank oder Maschine reduziert Schwung und isoliert den Rücken stärker.", "image": "images/exercises/chest-supported-row.webp", "targets": ["Mittlerer Rücken"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf", "Unterarme"], "keywords": ["supported row", "row", "Rücken"]},
+        {"name": "T-Bar Row", "muscle": "back", "equip": ["barbell", "machine"], "desc": "T-Bar-Rudern für mehr Rückendichte mit einem starken Winkel für die mittlere Rückenmuskulatur.", "image": "images/exercises/t-bar-row.webp", "targets": ["Mittlerer Rücken"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf", "Beinbeuger"], "keywords": ["t-bar row", "Rücken", "Rudern"]},
+        {"name": "Straight-Arm Pulldown", "muscle": "back", "equip": ["cable"], "desc": "Pulldown mit gestreckten Armen zur Isolation des Latissimus mit geringer Beteiligung des Bizeps.", "image": "images/exercises/straight-arm-pulldown.webp", "targets": ["Latissimus"], "synergists": ["Hintere Schulter", "Trapez"], "stabilizers": ["Rumpf"], "keywords": ["straight arm", "pulldown", "Kabel", "Latissimus"]},
+        {"name": "Face Pull", "muscle": "back", "equip": ["cable", "bands"], "desc": "Face Pulls stärken den oberen Rücken und unterstützen eine bessere Schulterposition.", "image": "images/exercises/face-pull.webp", "targets": ["Hintere Schulter", "Trapez"], "synergists": ["Mittlerer Rücken"], "stabilizers": ["Rumpf"], "keywords": ["face pull", "Kabel", "Widerstandsband", "Rücken", "Hintere Schulter"]},
+        {"name": "Back Extension", "muscle": "back", "equip": ["bodyweight", "machine"], "desc": "Rückenstrecken stärkt je nach Ausführung den unteren Rücken sowie Beinbeuger und Gesäß.", "image": "images/exercises/back-extension.webp", "targets": ["Unterer Rücken"], "synergists": ["Gesäß", "Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["back extension", "hyperextension", "Rücken"]},
+        {"name": "Deadlift", "muscle": "back", "equip": ["barbell"], "desc": "Der Deadlift ist eine umfassende Kraftübung, die unteren und oberen Rücken gemeinsam mit den Beinen trainiert.", "image": "images/exercises/deadlift.webp", "targets": ["Unterer Rücken", "Latissimus"], "synergists": ["Gesäß", "Beinbeuger", "Trapez"], "stabilizers": ["Rumpf", "Unterarme"], "keywords": ["deadlift", "Langhantel", "Rücken", "Ziehen"]},
+        {"name": "Romanian Deadlift", "muscle": "back", "equip": ["barbell", "dumbbell"], "desc": "Romanian Deadlifts konzentrieren sich auf die Beinbeuger und beanspruchen zusätzlich stark den unteren Rücken.", "image": "images/exercises/romanian-deadlift.webp", "targets": ["Beinbeuger", "Unterer Rücken"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf", "Unterarme"], "keywords": ["rdl", "romanian", "Langhantel", "Kurzhantel"]},
+        {"name": "Shoulder Press", "muscle": "shoulders", "equip": ["dumbbell", "machine", "barbell"], "desc": "Schulterdrücken zum Aufbau von Kraft und Muskelmasse, stehend oder mit Kurzhanteln bzw. an der Maschine.", "image": "images/exercises/shoulder-press.webp", "targets": ["Vordere Schultern", "Seitliche Schultern"], "synergists": ["Trizeps"], "stabilizers": ["Rumpf", "Oberer Rücken"], "keywords": ["shoulder press", "press", "Schulter", "Kurzhantel", "Langhantel"]},
+        {"name": "Seated Dumbbell Press", "muscle": "shoulders", "equip": ["dumbbell"], "desc": "Sitzendes Kurzhanteldrücken reduziert Schwung und verbessert die Kontrolle.", "image": "images/exercises/seated-dumbbell-press.webp", "targets": ["Vordere Schultern"], "synergists": ["Trizeps", "Seitliche Schultern"], "stabilizers": ["Rumpf"], "keywords": ["seated", "dumbbell", "press", "Schulter"]},
+        {"name": "Arnold Press", "muscle": "shoulders", "equip": ["dumbbell"], "desc": "Der Arnold Press kombiniert eine Rotation mit dem Drücken und vergrößert den Bewegungsumfang für vordere und seitliche Schulter.", "image": "images/exercises/arnold-press.webp", "targets": ["Vordere Schultern"], "synergists": ["Seitliche Schultern", "Trizeps"], "stabilizers": ["Rumpf"], "keywords": ["arnold", "press", "Kurzhantel", "Schulter"]},
+        {"name": "Lateral Raise", "muscle": "shoulders", "equip": ["dumbbell"], "desc": "Seitheben zum Aufbau breiter Schultern; ohne Schwung ausführen.", "image": "images/exercises/lateral-raise.webp", "targets": ["Seitliche Schultern"], "synergists": ["Vordere Schultern"], "stabilizers": ["Trapez", "Rumpf"], "keywords": ["lateral raise", "Fly", "Kurzhantel", "Seitliche Schulter"]},
+        {"name": "Cable Lateral Raise", "muscle": "shoulders", "equip": ["cable"], "desc": "Kabel-Seitheben bietet gleichmäßige Spannung und erleichtert einen präziseren Bewegungsweg.", "image": "images/exercises/cable-lateral-raise.webp", "targets": ["Seitliche Schultern"], "synergists": ["Vordere Schultern"], "stabilizers": ["Trapez", "Rumpf"], "keywords": ["cable lateral", "Fly", "Kabel", "Schulter"]},
+        {"name": "Machine Lateral Raise", "muscle": "shoulders", "equip": ["machine"], "desc": "Die Seithebe-Maschine ermöglicht eine einfache Isolation des seitlichen Deltamuskels.", "image": "images/exercises/machine-lateral-raise.webp", "targets": ["Seitliche Schultern"], "synergists": [""], "stabilizers": ["Rumpf"], "keywords": ["machine lateral", "Maschine", "Schulter"]},
+        {"name": "Front Raise", "muscle": "shoulders", "equip": ["dumbbell", "cable", "barbell"], "desc": "Frontheben zielt auf die vordere Schulter; bei bereits hohem Druckvolumen nicht übertreiben.", "image": "images/exercises/front-raise.webp", "targets": ["Vordere Schultern"], "synergists": ["Seitliche Schulter"], "stabilizers": ["Rumpf"], "keywords": ["front raise", "vorne", "Schulter"]},
+        {"name": "Rear Delt Fly", "muscle": "shoulders", "equip": ["dumbbell", "machine", "cable"], "desc": "Reverse Flys verbessern die Schulterbalance und stärken den hinteren Deltamuskel.", "image": "images/exercises/rear-delt-fly.webp", "targets": ["Hintere Schultern"], "synergists": ["Mittlerer Rücken"], "stabilizers": ["Rumpf"], "keywords": ["rear delt fly", "reverse fly", "Hintere Schulter"]},
+        {"name": "Reverse Pec Deck", "muscle": "shoulders", "equip": ["machine"], "desc": "Der Reverse Pec Deck isoliert den hinteren Deltamuskel mit einem festen Bewegungsweg.", "image": "images/exercises/reverse-pec-deck.webp", "targets": ["Hintere Schultern"], "synergists": ["Mittlerer Rücken"], "stabilizers": ["Rumpf"], "keywords": ["reverse pec deck", "machine", "Hintere Schulter"]},
+        {"name": "Upright Row", "muscle": "shoulders", "equip": ["barbell", "cable"], "desc": "Aufrechtes Rudern beansprucht seitliche Schulter und Trapez; wähle eine angenehme Griffbreite.", "image": "images/exercises/upright-row.webp", "targets": ["Seitliche Schultern", "Trapez"], "synergists": ["Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["upright row", "Aufrechtes Rudern", "Schulter"]},
+        {"name": "Landmine Press", "muscle": "shoulders", "equip": ["barbell"], "desc": "Der Landmine Press bietet einen schulterfreundlichen Druckwinkel und eignet sich für viele Trainierende.", "image": "images/exercises/landmine-press.webp", "targets": ["Vordere Schultern"], "synergists": ["Seitliche Schultern", "Trizeps"], "stabilizers": ["Rumpf"], "keywords": ["landmine", "press", "Langhantel", "Schulter"]},
+        {"name": "Barbell Curl", "muscle": "biceps", "equip": ["barbell"], "desc": "Klassische Langhantel-Curls zum Aufbau des Bizeps mit guter Möglichkeit zur Laststeigerung.", "image": "images/exercises/barbell-curl.webp", "targets": ["Bizeps"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf", "Vordere Schulter"], "keywords": ["curl", "barbell", "Bizeps", "Langhantel"]},
+        {"name": "Dumbbell Curl", "muscle": "biceps", "equip": ["dumbbell"], "desc": "Kurzhantel-Curls erlauben eine Drehung des Handgelenks und eine bessere Kontrolle jedes Arms.", "image": "images/exercises/dumbbell-curl.webp", "targets": ["Bizeps"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["curl", "dumbbell", "Kurzhantel", "Bizeps"]},
+        {"name": "Incline Dumbbell Curl", "muscle": "biceps", "equip": ["dumbbell"], "desc": "Schrägbank-Kurzhantel-Curls erhöhen die Dehnung des Bizeps und betonen den langen Kopf.", "image": "images/exercises/incline-dumbbell-curl.webp", "targets": ["Bizeps"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["incline curl", "schräg", "Bizeps", "Kurzhantel"]},
+        {"name": "Hammer Curl", "muscle": "biceps", "equip": ["dumbbell"], "desc": "Hammer Curls konzentrieren sich auf den Brachialis und die Unterarme.", "image": "images/exercises/hammer-curl.webp", "targets": ["Bizeps", "Brachialis"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["hammer", "curl", "Kurzhantel", "Unterarm"]},
+        {"name": "Cable Curl", "muscle": "biceps", "equip": ["cable"], "desc": "Kabel-Curls liefern über den gesamten Bewegungsweg gleichmäßige Spannung.", "image": "images/exercises/cable-curl.webp", "targets": ["Bizeps"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["cable curl", "Kabel", "Bizeps"]},
+        {"name": "Preacher Curl", "muscle": "biceps", "equip": ["barbell", "machine", "dumbbell"], "desc": "Preacher Curls reduzieren Schwung und fixieren den Oberarm für eine stärkere Bizeps-Isolation.", "image": "images/exercises/preacher-curl.webp", "targets": ["Bizeps"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["preacher", "curl", "Bizeps"]},
+        {"name": "Concentration Curl", "muscle": "biceps", "equip": ["dumbbell"], "desc": "Concentration Curls ermöglichen eine starke Isolation und sehr kontrollierte Ausführung.", "image": "images/exercises/concentration-curl.webp", "targets": ["Bizeps"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["concentration", "curl", "Bizeps", "Kurzhantel"]},
+        {"name": "Chin-Up (Biceps)", "muscle": "biceps", "equip": ["bodyweight"], "desc": "Chin-Ups mit engem bzw. Untergriff erhöhen die Beteiligung des Bizeps.", "image": "images/exercises/chin-up-biceps.webp", "targets": ["Bizeps"], "synergists": ["Latissimus"], "stabilizers": ["Rumpf", "Unterarme"], "keywords": ["chin up", "Körpergewicht", "Bizeps"]},
+        {"name": "Close-Grip Bench Press", "muscle": "triceps", "equip": ["barbell"], "desc": "Enges Bankdrücken erhöht die Belastung des Trizeps, während die Brust weiterhin mitarbeitet.", "image": "images/exercises/close-grip-bench-press.webp", "targets": ["Trizeps"], "synergists": ["Brust", "Vordere Schultern"], "stabilizers": ["Rumpf", "Oberer Rücken"], "keywords": ["close grip", "bench", "Trizeps", "Langhantel"]},
+        {"name": "Triceps Pushdown", "muscle": "triceps", "equip": ["cable"], "desc": "Trizepsdrücken am Kabel isoliert den Trizeps; halte die Ellenbogen möglichst ruhig.", "image": "images/exercises/triceps-pushdown.webp", "targets": ["Trizeps"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["pushdown", "cable", "Trizeps", "Kabel"]},
+        {"name": "Overhead Triceps Extension", "muscle": "triceps", "equip": ["dumbbell", "cable"], "desc": "Überkopf-Trizepsstrecken zielt besonders auf den langen Kopf des Trizeps.", "image": "images/exercises/overhead-triceps-extension.webp", "targets": ["Trizeps (langer Kopf)"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["overhead", "extension", "Trizeps"]},
+        {"name": "Skull Crushers", "muscle": "triceps", "equip": ["barbell", "dumbbell"], "desc": "Skull Crushers sind eine wirkungsvolle Trizepsübung; kontrolliere dabei die Ellenbogenposition.", "image": "images/exercises/skull-crushers.webp", "targets": ["Trizeps"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["skull crushers", "Trizeps", "Langhantel", "Kurzhantel"]},
+        {"name": "Dips (Triceps Focus)", "muscle": "triceps", "equip": ["bodyweight"], "desc": "Dips mit aufrechtem Oberkörper verlagern den Schwerpunkt stärker auf den Trizeps.", "image": "images/exercises/dips-triceps-focus.webp", "targets": ["Trizeps"], "synergists": ["Brust", "Vordere Schultern"], "stabilizers": ["Rumpf", "Oberer Rücken"], "keywords": ["dips", "Trizeps", "Körpergewicht"]},
+        {"name": "Diamond Push-Up", "muscle": "triceps", "equip": ["bodyweight"], "desc": "Diamant-Liegestütze erhöhen die Belastung des Trizeps.", "image": "images/exercises/diamond-push-up.webp", "targets": ["Trizeps"], "synergists": ["Brust"], "stabilizers": ["Rumpf"], "keywords": ["diamond", "push up", "Trizeps"]},
+        {"name": "Cable Overhead Extension (Rope)", "muscle": "triceps", "equip": ["cable"], "desc": "Überkopf-Kabelstrecken mit Seil bietet gleichmäßige Spannung und ist oft angenehm für die Handgelenke.", "image": "images/exercises/cable-overhead-extension-rope.webp", "targets": ["Trizeps (langer Kopf)"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["rope", "overhead", "cable", "Trizeps"]},
+        {"name": "Squat", "muscle": "legs", "equip": ["barbell"], "desc": "Kniebeugen sind eine Grundübung für Kraft in Quadrizeps und Gesäß. Wähle eine für dich komfortable Tiefe.", "image": "images/exercises/squat.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf", "Unterer Rücken"], "keywords": ["squat", "Kniebeuge", "Langhantel", "Beine"]},
+        {"name": "Front Squat", "muscle": "legs", "equip": ["barbell"], "desc": "Frontkniebeugen betonen den Quadrizeps stärker und fördern eine aufrechte Oberkörperposition.", "image": "images/exercises/front-squat.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf", "Oberer Rücken"], "keywords": ["front squat", "Frontkniebeuge", "Langhantel"]},
+        {"name": "Leg Press", "muscle": "legs", "equip": ["machine"], "desc": "Die Beinpresse ermöglicht viel Trainingsvolumen für Quadrizeps und Gesäß, ohne hohe Anforderungen an das Gleichgewicht.", "image": "images/exercises/leg-press.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["leg press", "Maschine", "Beine"]},
+        {"name": "Hack Squat", "muscle": "legs", "equip": ["machine"], "desc": "Die Hackenschmidt-Maschine betont den Quadrizeps und führt die Bewegung auf einer festen Bahn.", "image": "images/exercises/hack-squat.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["hack squat", "Maschine", "Quadrizeps"]},
+        {"name": "Lunge", "muscle": "legs", "equip": ["dumbbell", "bodyweight"], "desc": "Ausfallschritte fördern Stabilität und helfen, Unterschiede zwischen den Beinen auszugleichen.", "image": "images/exercises/lunge.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf", "Stabilisatoren"], "keywords": ["lunge", "Lunge", "Kurzhantel", "Beine"]},
+        {"name": "Bulgarian Split Squat", "muscle": "legs", "equip": ["dumbbell", "bodyweight"], "desc": "Bulgarian Split Squats sind eine anspruchsvolle Übung für Quadrizeps und Gesäß mit zusätzlicher Balancearbeit.", "image": "images/exercises/bulgarian-split-squat.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf", "Stabilisatoren"], "keywords": ["bulgarian", "split squat", "Bulgarian", "Kurzhantel"]},
+        {"name": "Leg Extension", "muscle": "legs", "equip": ["machine"], "desc": "Beinstrecken an der Maschine isoliert den Quadrizeps; kontrolliere den Bewegungsumfang.", "image": "images/exercises/leg-extension.webp", "targets": ["Quadrizeps"], "synergists": [""], "stabilizers": ["Rumpf"], "keywords": ["leg extension", "Maschine", "Quadrizeps"]},
+        {"name": "Leg Curl", "muscle": "legs", "equip": ["machine"], "desc": "Beinbeugen an der Maschine isoliert die hintere Oberschenkelmuskulatur und lässt sich gut kontrollieren und belasten.", "image": "images/exercises/leg-curl.webp", "targets": ["Beinbeuger"], "synergists": [""], "stabilizers": ["Rumpf"], "keywords": ["leg curl", "Maschine", "Beinbeuger"]},
+        {"name": "Hip Hinge Good Morning", "muscle": "legs", "equip": ["barbell"], "desc": "Good Mornings trainieren Beinbeuger und unteren Rücken; eher für Fortgeschrittene und mit angemessenem Gewicht.", "image": "images/exercises/hip-hinge-good-morning.webp", "targets": ["Beinbeuger", "Unterer Rücken"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["good morning", "Langhantel", "Beinbeuger"]},
+        {"name": "Calf Raise (Standing)", "muscle": "calves", "equip": ["machine", "bodyweight"], "desc": "Stehendes Wadenheben zum Aufbau der Wadenmuskulatur; oben kurz halten.", "image": "images/exercises/calf-raise-standing.webp", "targets": ["Waden"], "synergists": [""], "stabilizers": ["Fuß/Sprunggelenk"], "keywords": ["calf raise", "standing", "Waden"]},
+        {"name": "Calf Raise (Seated)", "muscle": "calves", "equip": ["machine"], "desc": "Sitzendes Wadenheben betont besonders den Soleus.", "image": "images/exercises/calf-raise-seated.webp", "targets": ["Waden (Soleus)"], "synergists": [""], "stabilizers": ["Fuß/Sprunggelenk"], "keywords": ["seated calf", "Waden", "Maschine"]},
+        {"name": "Hip Thrust", "muscle": "glutes", "equip": ["barbell", "machine"], "desc": "Hip Thrusts gehören zu den stärksten Gesäßübungen und erzeugen oben eine hohe Spannung.", "image": "images/exercises/hip-thrust.webp", "targets": ["Gesäß"], "synergists": ["Beinbeuger", "Quadrizeps"], "stabilizers": ["Rumpf", "Unterer Rücken"], "keywords": ["hip thrust", "Gesäß", "Langhantel"]},
+        {"name": "Glute Bridge", "muscle": "glutes", "equip": ["bodyweight", "barbell"], "desc": "Die Glute Bridge ist eine einfachere Alternative zum Hip Thrust und lässt sich leicht steigern.", "image": "images/exercises/glute-bridge.webp", "targets": ["Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["glute bridge", "Gesäß"]},
+        {"name": "Cable Kickback", "muscle": "glutes", "equip": ["cable"], "desc": "Kabel-Kickbacks isolieren das Gesäß und erlauben eine gute Kontrolle des Arbeitswinkels.", "image": "images/exercises/cable-kickback.webp", "targets": ["Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["kickback", "cable", "Gesäß", "Kabel"]},
+        {"name": "Step-Up", "muscle": "glutes", "equip": ["dumbbell", "bodyweight"], "desc": "Step-Ups trainieren Gesäß und Quadrizeps und fordern gleichzeitig die Stabilität.", "image": "images/exercises/step-up.webp", "targets": ["Gesäß"], "synergists": ["Quadrizeps"], "stabilizers": ["Rumpf", "Stabilisatoren"], "keywords": ["step up", "Gesäß", "Beine"]},
+        {"name": "Cable Crunch", "muscle": "abs", "equip": ["cable"], "desc": "Kabel-Crunches erlauben progressive Überlastung und einen vollständigen Bewegungsumfang der Rumpfbeugung.", "image": "images/exercises/cable-crunch.webp", "targets": ["Bauchmuskeln"], "synergists": [""], "stabilizers": ["Hüftbeuger", "Unterer Rücken"], "keywords": ["cable crunch", "Crunch", "Kabel", "Bauch"]},
+        {"name": "Weighted Crunch", "muscle": "abs", "equip": ["bodyweight", "machine"], "desc": "Crunches mit Zusatzgewicht bauen die Bauchmuskulatur wie jede andere Muskelgruppe durch steigende Belastung auf.", "image": "images/exercises/weighted-crunch.webp", "targets": ["Bauchmuskeln"], "synergists": [""], "stabilizers": ["Hüftbeuger"], "keywords": ["weighted crunch", "Bauch"]},
+        {"name": "Hanging Leg Raise", "muscle": "abs", "equip": ["bodyweight"], "desc": "Hängendes Beinheben zielt auf den unteren Bauchbereich und stärkt zusätzlich die Griffkraft.", "image": "images/exercises/hanging-leg-raise.webp", "targets": ["Bauchmuskeln"], "synergists": ["Hüftbeuger"], "stabilizers": ["Unterarme", "Latissimus"], "keywords": ["hanging leg raise", "Körpergewicht", "Bauch"]},
+        {"name": "Ab Wheel Rollout", "muscle": "abs", "equip": ["bodyweight"], "desc": "Ab-Wheel-Rollouts fordern die Bauchmuskulatur vor allem in der Anti-Extension-Stabilität.", "image": "images/exercises/ab-wheel-rollout.webp", "targets": ["Bauchmuskeln"], "synergists": ["Latissimus"], "stabilizers": ["Schultern", "Unterer Rücken"], "keywords": ["ab wheel", "rollout", "Bauch"]},
+        {"name": "Plank", "muscle": "abs", "equip": ["bodyweight"], "desc": "Der Plank ist eine isometrische Übung, die sich sehr gut für Rumpfkraft und Stabilität eignet.", "image": "images/exercises/plank.webp", "targets": ["Bauchmuskeln", "Rumpf"], "synergists": ["Schulter"], "stabilizers": ["Unterer Rücken"], "keywords": ["plank", "Plank", "Bauch"]},
+        {"name": "Side Plank", "muscle": "abs", "equip": ["bodyweight"], "desc": "Der Side Plank stärkt die schrägen Bauchmuskeln und verbessert die Beckenstabilität.", "image": "images/exercises/side-plank.webp", "targets": ["Schräge Bauchmuskeln"], "synergists": ["Gluteus medius"], "stabilizers": ["Schulter"], "keywords": ["side plank", "Schräge Bauchmuskeln", "Bauch"]},
+        {"name": "Pallof Press", "muscle": "abs", "equip": ["cable", "bands"], "desc": "Der Pallof Press trainiert Anti-Rotation des Rumpfs und unterstützt die Stabilität des unteren Rückens.", "image": "images/exercises/pallof-press.webp", "targets": ["Rumpf"], "synergists": ["Schräge Bauchmuskeln"], "stabilizers": ["Schultern"], "keywords": ["pallof", "press", "Kabel", "Widerstandsband", "Rumpf"]},
+        {"name": "Wrist Curl", "muscle": "forearms", "equip": ["dumbbell", "barbell"], "desc": "Handgelenk-Curls trainieren die Beugemuskulatur des Unterarms; langsam und kontrolliert ausführen.", "image": "images/exercises/wrist-curl.webp", "targets": ["Unterarme"], "synergists": [""], "stabilizers": [""], "keywords": ["wrist curl", "Unterarm", "Handgelenk"]},
+        {"name": "Reverse Curl", "muscle": "forearms", "equip": ["barbell", "dumbbell"], "desc": "Reverse Curls betonen Unterarm und Brachialis.", "image": "images/exercises/reverse-curl.webp", "targets": ["Unterarme"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf"], "keywords": ["reverse curl", "Unterarm"]},
+        {"name": "Farmer's Carry", "muscle": "forearms", "equip": ["dumbbell", "kettlebell"], "desc": "Farmer's Carries stärken Griffkraft, Unterarme und Rumpf.", "image": "images/exercises/farmer-s-carry.webp", "targets": ["Unterarme", "Griffkraft"], "synergists": ["Trapez"], "stabilizers": ["Rumpf"], "keywords": ["farmers carry", "carry", "Unterarm", "Griff"]},
+        {"name": "Dead Hang", "muscle": "forearms", "equip": ["bodyweight"], "desc": "Dead Hangs trainieren Griffkraft und Unterarme durch statische Haltezeit.", "image": "images/exercises/dead-hang.webp", "targets": ["Unterarme", "Griffkraft"], "synergists": ["Latissimus"], "stabilizers": ["Rumpf"], "keywords": ["dead hang", "Griff", "Unterarm"]},
+        {"name": "Barbell Shrug", "muscle": "traps", "equip": ["barbell"], "desc": "Langhantel-Shrugs vergrößern den Trapezmuskel; die Schultern nach oben heben, ohne zu kreisen.", "image": "images/exercises/barbell-shrug.webp", "targets": ["Trapez"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["shrug", "barbell", "Trapez", "Langhantel"]},
+        {"name": "Dumbbell Shrug", "muscle": "traps", "equip": ["dumbbell"], "desc": "Kurzhantel-Shrugs erlauben je nach Person einen angenehmen und größeren Bewegungsumfang.", "image": "images/exercises/dumbbell-shrug.webp", "targets": ["Trapez"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["shrug", "dumbbell", "Trapez", "Kurzhantel"]},
+        // Added new exercises to expand the library
+        {"name": "Flat Chest Press Machine", "muscle": "chest", "equip": ["machine"], "desc": "Die flache Brustpresse an der Maschine isoliert die Brust und bietet einen festen Bewegungsweg mit Rückenunterstützung.", "image": "images/exercises/flat-chest-press-machine.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["machine press", "flat press", "Brust", "Maschine"]},
+        {"name": "Incline Chest Press Machine", "muscle": "chest", "equip": ["machine"], "desc": "Die schräge Brustpresse an der Maschine betont die obere Brust und erlaubt eine einfache Gewichtskontrolle.", "image": "images/exercises/incline-chest-press-machine.webp", "targets": ["Obere Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["incline machine", "Brust", "Maschine"]},
+        {"name": "Decline Chest Press Machine", "muscle": "chest", "equip": ["machine"], "desc": "Die negative Brustpresse an der Maschine zielt auf die untere Brust und kann die Schulterbelastung reduzieren.", "image": "images/exercises/decline-chest-press-machine.webp", "targets": ["Untere Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["decline machine", "Brust", "Maschine"]},
+        {"name": "Cable Crossover", "muscle": "chest", "equip": ["cable"], "desc": "Kabel-Crossover trainiert die Brust mit überkreuzter Zugbewegung und flexibel anpassbarem Winkel.", "image": "images/exercises/cable-crossover.webp", "targets": ["Brust"], "synergists": ["Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["cable crossover", "Kabel", "Brust"]},
+        {"name": "Decline Dumbbell Fly", "muscle": "chest", "equip": ["dumbbell"], "desc": "Negative Kurzhantel-Flys auf der Schrägbank betonen die untere Brust mit großem Bewegungsumfang.", "image": "images/exercises/decline-dumbbell-fly.webp", "targets": ["Untere Brust"], "synergists": ["Vordere Schultern"], "stabilizers": ["Bizeps", "Rumpf"], "keywords": ["decline fly", "Kurzhantel", "Brust"]},
+        {"name": "Inverted Row", "muscle": "back", "equip": ["bodyweight"], "desc": "Inverted Rows sind horizontale Körpergewichtszüge, die die mittlere Rückenmuskulatur und den Latissimus stärken.", "image": "images/exercises/inverted-row.webp", "targets": ["Mittlerer Rücken", "Latissimus"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf", "Gesäß"], "keywords": ["inverted row", "row", "Körpergewicht", "Rücken"]},
+        {"name": "Reverse Fly", "muscle": "back", "equip": ["dumbbell"], "desc": "Reverse Flys trainieren hintere Schulter und oberen Rücken aus einer vorgebeugten Position.", "image": "images/exercises/reverse-fly.webp", "targets": ["Hintere Schulter", "Trapez"], "synergists": ["Mittlerer Rücken"], "stabilizers": ["Rumpf"], "keywords": ["reverse fly", "Kurzhantel", "Hintere Schulter"]},
+        {"name": "Lateral Raise", "muscle": "shoulders", "equip": ["dumbbell"], "desc": "Seitheben stärkt die seitlichen Schultern über einen vollständigen Bewegungsumfang.", "image": "images/exercises/lateral-raise.webp", "targets": ["Seitliche Schultern"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["lateral raise", "raise", "Kurzhantel", "Schulter"]},
+        {"name": "Front Raise", "muscle": "shoulders", "equip": ["dumbbell"], "desc": "Frontheben stärkt die vorderen Schultern bei möglichst aufrechtem Oberkörper.", "image": "images/exercises/front-raise.webp", "targets": ["Vordere Schultern"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["front raise", "Kurzhantel", "Schulter"]},
+        {"name": "Rear Delt Fly", "muscle": "shoulders", "equip": ["dumbbell"], "desc": "Reverse Flys isolieren die hintere Schulter und unterstützen eine bessere Rücken- und Schulterhaltung.", "image": "images/exercises/rear-delt-fly.webp", "targets": ["Hintere Schultern"], "synergists": ["Trapez", "Mittlerer Rücken"], "stabilizers": ["Rumpf"], "keywords": ["rear delt", "fly", "Kurzhantel", "Schulter"]},
+        {"name": "Upright Row", "muscle": "shoulders", "equip": ["barbell", "dumbbell"], "desc": "Aufrechtes Rudern führt das Gewicht nah am Körper nach oben und beansprucht Trapez sowie seitliche Schultern.", "image": "images/exercises/upright-row.webp", "targets": ["Trapez", "Seitliche Schultern"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf"], "keywords": ["upright row", "row", "Schulter", "Langhantel", "Kurzhantel"]},
+        {"name": "Goblet Squat", "muscle": "legs", "equip": ["dumbbell", "kettlebell"], "desc": "Goblet Squats halten das Gewicht vor der Brust und betonen Quadrizeps und Gesäß.", "image": "images/exercises/goblet-squat.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf", "Unterer Rücken"], "keywords": ["goblet squat", "Kniebeuge", "Kurzhantel", "Kettlebell"]},
+        {"name": "Sumo Deadlift", "muscle": "legs", "equip": ["barbell"], "desc": "Sumo Deadlifts mit breitem Stand betonen Gesäß und Beinbeuger und eignen sich für schwere Lasten.", "image": "images/exercises/sumo-deadlift.webp", "targets": ["Gesäß", "Beinbeuger"], "synergists": ["Quadrizeps"], "stabilizers": ["Rumpf", "Unterer Rücken"], "keywords": ["sumo deadlift", "Deadlift", "Beine", "Langhantel"]},
+        {"name": "Stiff-Leg Deadlift", "muscle": "legs", "equip": ["barbell", "dumbbell"], "desc": "Stiff-Leg Deadlifts mit fast gestreckten Beinen isolieren Beinbeuger und unteren Rücken.", "image": "images/exercises/stiff-leg-deadlift.webp", "targets": ["Beinbeuger", "Unterer Rücken"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["stiff leg deadlift", "Deadlift", "Beinbeuger", "Langhantel"]},
+        {"name": "Glute-Ham Raise", "muscle": "legs", "equip": ["machine"], "desc": "Glute-Ham Raises entwickeln Kraft in Beinbeugern und Gesäß an einem speziellen Gerät.", "image": "images/exercises/glute-ham-raise.webp", "targets": ["Beinbeuger", "Gesäß"], "synergists": ["Waden"], "stabilizers": ["Rumpf"], "keywords": ["glute ham raise", "ghr", "Maschine", "Beine"]},
+        {"name": "Kettlebell Swing", "muscle": "legs", "equip": ["kettlebell"], "desc": "Kettlebell Swings trainieren Gesäß und Beinbeuger und fördern eine explosive Hüftstreckung.", "image": "images/exercises/kettlebell-swing.webp", "targets": ["Gesäß", "Beinbeuger"], "synergists": ["Latissimus", "Trapez"], "stabilizers": ["Rumpf"], "keywords": ["kettlebell swing", "Kettlebell", "Swing"]},
+        {"name": "Donkey Calf Raise", "muscle": "calves", "equip": ["bodyweight", "machine"], "desc": "Donkey Calf Raises mit nach vorn geneigtem Oberkörper ermöglichen einen größeren Bewegungsumfang für die Waden.", "image": "images/exercises/donkey-calf-raise.webp", "targets": ["Waden"], "synergists": [""], "stabilizers": ["Fuß/Sprunggelenk"], "keywords": ["donkey calf", "raise", "Waden"]},
+        {"name": "Hip Abduction Machine", "muscle": "glutes", "equip": ["machine"], "desc": "Die Hüftabduktionsmaschine stärkt den Gluteus medius und unterstützt die Hüftstabilität.", "image": "images/exercises/hip-abduction-machine.webp", "targets": ["Gluteus medius"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["hip abduction", "machine", "Gesäß"]},
+        {"name": "Spider Curl", "muscle": "biceps", "equip": ["dumbbell", "barbell"], "desc": "Spider Curls werden bäuchlings auf einer Schrägbank ausgeführt und isolieren besonders den kurzen Bizepskopf.", "image": "images/exercises/spider-curl.webp", "targets": ["Bizeps"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["spider curl", "Bizeps", "Kurzhantel"]},
+        {"name": "Cable Hammer Curl", "muscle": "biceps", "equip": ["cable"], "desc": "Kabel-Hammer-Curls liefern konstante Spannung und trainieren Brachialis und Bizeps.", "image": "images/exercises/cable-hammer-curl.webp", "targets": ["Bizeps", "Brachialis"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["hammer curl", "cable", "Bizeps"]},
+        {"name": "Triceps Kickback", "muscle": "triceps", "equip": ["dumbbell"], "desc": "Kurzhantel-Kickbacks stärken den Trizeps, während der Oberarm möglichst ruhig bleibt.", "image": "images/exercises/triceps-kickback.webp", "targets": ["Trizeps"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["triceps kickback", "Kurzhantel", "Trizeps"]},
+        {"name": "Mountain Climber", "muscle": "abs", "equip": ["bodyweight"], "desc": "Mountain Climbers sind eine dynamische Übung für Bauch und Rumpf, die Fitness und Ausdauer verbessert.", "image": "images/exercises/mountain-climber.webp", "targets": ["Bauchmuskeln", "Rumpf"], "synergists": ["Schultern", "Quadrizeps"], "stabilizers": ["Hände"], "keywords": ["mountain climber", "Bauch", "Körpergewicht"]},
+        {"name": "Russian Twist", "muscle": "abs", "equip": ["bodyweight", "dumbbell"], "desc": "Russian Twists trainieren im Sitzen durch kontrollierte Rotation nach rechts und links die schrägen Bauchmuskeln.", "image": "images/exercises/russian-twist.webp", "targets": ["Schräge Bauchmuskeln", "Bauchmuskeln"], "synergists": [""], "stabilizers": ["Rumpf"], "keywords": ["russian twist", "twist", "Bauch"]},
+        {"name": "Bicycle Crunch", "muscle": "abs", "equip": ["bodyweight"], "desc": "Bicycle Crunches beanspruchen oberen und unteren Bauch sowie die schrägen Bauchmuskeln.", "image": "images/exercises/bicycle-crunch.webp", "targets": ["Bauchmuskeln"], "synergists": ["Schräge Bauchmuskeln"], "stabilizers": ["Schulter"], "keywords": ["bicycle crunch", "Bauch"]},
+        {"name": "V-Up", "muscle": "abs", "equip": ["bodyweight"], "desc": "V-Ups führen Oberkörper und Beine zu einer V-Form zusammen und trainieren die Bauchmuskulatur umfassend.", "image": "images/exercises/v-up.webp", "targets": ["Bauchmuskeln"], "synergists": ["Hüftbeuger"], "stabilizers": ["Rumpf"], "keywords": ["v up", "Bauch", "Rumpf"]},
+        {"name": "Renegade Row", "muscle": "abs", "equip": ["dumbbell", "bodyweight"], "desc": "Renegade Rows kombinieren Plank und Kurzhantelrudern und stärken Rumpf und Rücken.", "image": "images/exercises/renegade-row.webp", "targets": ["Rumpf", "Mittlerer Rücken"], "synergists": ["Bizeps", "Vordere Schultern"], "stabilizers": ["Rumpf", "Sprunggelenk"], "keywords": ["renegade row", "Rudern", "Bauch", "Kurzhantel"]},
+
+        // ==== Quads-focused exercises ====
+        {"name": "Leg Extension", "muscle": "quads", "equip": ["machine"], "desc": "Beinstrecken isoliert den Quadrizeps und erlaubt eine gut kontrollierbare Belastung.", "image": "images/exercises/leg-extension.webp", "targets": ["Quadrizeps"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["leg extension", "machine", "quads", "Quadrizeps"]},
+        {"name": "Bulgarian Split Squat", "muscle": "quads", "equip": ["dumbbell", "barbell"], "desc": "Bulgarian Split Squats mit dem hinteren Fuß auf einer Bank erhöhen die Belastung des Quadrizeps und fordern die Balance.", "image": "images/exercises/bulgarian-split-squat.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["bulgarian split squat", "split squat", "quads", "Kniebeuge", "Bulgarian"]},
+        {"name": "Walking Lunge", "muscle": "quads", "equip": ["bodyweight", "dumbbell", "barbell"], "desc": "Walking Lunges stärken Quadrizeps und Gesäß und ergänzen das Training um eine Balancekomponente.", "image": "images/exercises/walking-lunge.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß", "Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["walking lunge", "lunge", "quads", "Lunge"]},
+        {"name": "Step-Up", "muscle": "quads", "equip": ["bodyweight", "dumbbell", "barbell"], "desc": "Step-Ups auf eine Bank oder Box steigern Kraft in Quadrizeps und Beinen.", "image": "images/exercises/step-up.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["step up", "quads", "Step-Up"]},
+        {"name": "Sissy Squat", "muscle": "quads", "equip": ["bodyweight"], "desc": "Sissy Squats isolieren den Quadrizeps bei starker Kniebeugung und erfordern gute Balance.", "image": "images/exercises/sissy-squat.webp", "targets": ["Quadrizeps"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["sissy squat", "quads", "Kniebeuge"]}
+
+        // ==== Additional exercises across muscle groups ====
+        // Glutes
+        ,{"name": "Barbell Hip Thrust", "muscle": "glutes", "equip": ["barbell"], "desc": "Langhantel-Hip-Thrusts stärken Gesäß und Beinbeuger und fordern zusätzlich den Rumpf.", "image": "images/exercises/barbell-hip-thrust.webp", "targets": ["Gesäß", "Beinbeuger"], "synergists": ["Quadrizeps"], "stabilizers": ["Rumpf"], "keywords": ["hip thrust", "Gesäß", "Langhantel"]}
+        // Legs (compound)
+        ,{"name": "Leg Press", "muscle": "legs", "equip": ["machine"], "desc": "Die Beinpresse trainiert Quadrizeps, Beinbeuger und Gesäß bei vergleichsweise geringer Belastung des Rückens.", "image": "images/exercises/leg-press.webp", "targets": ["Quadrizeps", "Beinbeuger", "Gesäß"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["leg press", "Maschine", "Beine"]}
+        // Biceps
+        ,{"name": "Concentration Curl", "muscle": "biceps", "equip": ["dumbbell"], "desc": "Concentration Curls isolieren den Bizeps mit der Kurzhantel, während der Ellenbogen am Oberschenkel abgestützt wird.", "image": "images/exercises/concentration-curl.webp", "targets": ["Bizeps"], "synergists": ["Brachialis"], "stabilizers": ["Unterarme"], "keywords": ["concentration curl", "Bizeps", "Kurzhantel"]}
+        // Triceps
+        ,{"name": "Skull Crusher", "muscle": "triceps", "equip": ["barbell", "dumbbell"], "desc": "Skull Crushers im Liegen trainieren alle drei Köpfe des Trizeps und erhöhen die Armkraft.", "image": "images/exercises/skull-crusher.webp", "targets": ["Trizeps"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["skull crusher", "triceps", "Langhantel", "Kurzhantel"]}
+        // Abs
+        ,{"name": "Hanging Leg Raise", "muscle": "abs", "equip": ["bodyweight"], "desc": "Hängendes Beinheben stärkt Bauchmuskeln und Hüftbeuger mit dem eigenen Körpergewicht.", "image": "images/exercises/hanging-leg-raise.webp", "targets": ["Bauchmuskeln"], "synergists": ["Hüftbeuger"], "stabilizers": ["Rumpf", "Hände"], "keywords": ["hanging leg raise", "Beinheben", "Bauch"]}
+        // Calves
+        ,{"name": "Standing Calf Raise", "muscle": "calves", "equip": ["bodyweight", "machine"], "desc": "Stehendes Wadenheben mit Körpergewicht oder Maschine stärkt die Wadenmuskulatur.", "image": "images/exercises/standing-calf-raise.webp", "targets": ["Waden"], "synergists": [], "stabilizers": ["Fuß/Sprunggelenk"], "keywords": ["standing calf raise", "Waden", "Heben"]}
+        // Back
+        ,{"name": "Single-Arm Cable Row", "muscle": "back", "equip": ["cable"], "desc": "Einarmiges Kabelrudern entwickelt Rückenkraft unter konstanter Spannung und hilft, Seitenunterschiede auszugleichen.", "image": "images/exercises/single-arm-cable-row.webp", "targets": ["Latissimus", "Mittlerer Rücken"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf"], "keywords": ["single arm row", "cable row", "Kabel", "Rücken"]}
+        // Shoulders
+        ,{"name": "Cable Lateral Raise", "muscle": "shoulders", "equip": ["cable"], "desc": "Einarmiges Kabel-Seitheben bietet konstante Spannung und stärkt seitliche Schulter sowie Rotatorenmanschette.", "image": "images/exercises/cable-lateral-raise.webp", "targets": ["Seitliche Schultern"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["cable lateral raise", "Kabel", "Schulter"]}
+        // Legs (hamstrings)
+        ,{"name": "Nordic Curl", "muscle": "legs", "equip": ["bodyweight"], "desc": "Nordic Curls nutzen das Körpergewicht, um die Beinbeuger durch ein langsames kontrolliertes Absenken zu stärken.", "image": "images/exercises/nordic-curl.webp", "targets": ["Beinbeuger"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["nordic curl", "Beinbeuger", "Körpergewicht"]}
+        // ==== New Chest exercises ====
+        ,{"name": "Incline Dumbbell Fly", "muscle": "chest", "equip": ["dumbbell"], "desc": "Schrägbank-Kurzhantel-Flys entwickeln die obere Brust über einen großen Bewegungsumfang.", "image": "images/exercises/incline-dumbbell-fly.webp", "targets": ["Obere Brust"], "synergists": ["Vordere Schultern"], "stabilizers": ["Bizeps", "Rumpf"], "keywords": ["incline dumbbell fly", "Schräg-Fly", "Kurzhantel", "Brust"]}
+        ,{"name": "Guillotine Press", "muscle": "chest", "equip": ["barbell"], "desc": "Guillotine Press führt die Langhantel Richtung Hals und betont die obere Brust; leichtes Gewicht und kontrollierte Schulterposition verwenden.", "image": "images/exercises/guillotine-press.webp", "targets": ["Obere Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Oberer Rücken", "Rumpf"], "keywords": ["guillotine press", "Langhantel", "Brust"]}
+        ,{"name": "Dumbbell Squeeze Press", "muscle": "chest", "equip": ["dumbbell"], "desc": "Beim Dumbbell Squeeze Press werden die Kurzhanteln gegeneinander gedrückt, um die Kontraktion der inneren Brust zu erhöhen.", "image": "images/exercises/dumbbell-squeeze-press.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Oberer Rücken", "Rumpf"], "keywords": ["squeeze press", "Kurzhantel", "Brust"]}
+        ,{"name": "Hex Press", "muscle": "chest", "equip": ["dumbbell"], "desc": "Beim Hex Press werden die Kurzhanteln während der gesamten Bewegung zusammengedrückt, um die Brustspannung zu erhöhen.", "image": "images/exercises/hex-press.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Oberer Rücken", "Rumpf"], "keywords": ["hex press", "Kurzhantel", "Brust"]}
+        ,{"name": "Floor Press", "muscle": "chest", "equip": ["barbell", "dumbbell"], "desc": "Floor Presses begrenzen den Bewegungsumfang, betonen Brust und Trizeps und reduzieren die Schulterbelastung.", "image": "images/exercises/floor-press.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Oberer Rücken", "Rumpf"], "keywords": ["floor press", "Brust", "Langhantel", "Kurzhantel"]}
+        ,{"name": "Spoto Press", "muscle": "chest", "equip": ["barbell"], "desc": "Beim Spoto Press wird die Langhantel kurz über der Brust angehalten, um Kontrolle und konstante Brustspannung zu verbessern.", "image": "images/exercises/spoto-press.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Oberer Rücken", "Rumpf"], "keywords": ["spoto press", "Drücken", "Langhantel", "Brust"]}
+        ,{"name": "Pause Bench Press", "muscle": "chest", "equip": ["barbell"], "desc": "Pause Bench Press mit einer kurzen Pause auf der Brust steigert Kraft und Kontrolle.", "image": "images/exercises/pause-bench-press.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Oberer Rücken", "Rumpf"], "keywords": ["pause bench", "Brust", "Langhantel"]}
+        ,{"name": "Larsen Press", "muscle": "chest", "equip": ["barbell"], "desc": "Beim Larsen Press wird ohne Fußkontakt zum Boden gedrückt, wodurch Oberkörper und Rumpf stärker arbeiten müssen.", "image": "images/exercises/larsen-press.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf", "Oberer Rücken"], "keywords": ["larsen press", "Brust", "Langhantel"]}
+        ,{"name": "Single-Arm Dumbbell Press", "muscle": "chest", "equip": ["dumbbell"], "desc": "Einarmiges Kurzhanteldrücken verbessert Gleichgewicht, gleicht Seitenunterschiede aus und fordert den Rumpf.", "image": "images/exercises/single-arm-dumbbell-press.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf", "Oberer Rücken"], "keywords": ["single arm press", "Kurzhantel", "Brust"]}
+        ,{"name": "Resistance Band Chest Press", "muscle": "chest", "equip": ["bands"], "desc": "Brustdrücken mit Widerstandsband ahmt das Bankdrücken mit ansteigendem Widerstand nach und eignet sich gut für zu Hause.", "image": "images/exercises/resistance-band-chest-press.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["band chest press", "Widerstandsband", "Brust"]}
+        ,{"name": "Smith Machine Bench Press", "muscle": "chest", "equip": ["machine"], "desc": "Bankdrücken an der Smith Machine bietet einen festen Bewegungsweg und reduziert die Anforderungen an die Stabilisierung.", "image": "images/exercises/smith-machine-bench-press.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["smith machine press", "Maschine", "Brust"]}
+        ,{"name": "Smith Machine Incline Press", "muscle": "chest", "equip": ["machine"], "desc": "Schrägbankdrücken an der Smith Machine betont die obere Brust bei fest geführter Bewegung.", "image": "images/exercises/smith-machine-incline-press.webp", "targets": ["Obere Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["smith incline press", "Maschine", "Brust"]}
+        ,{"name": "Machine Chest Fly", "muscle": "chest", "equip": ["machine"], "desc": "Brust-Flys an der Maschine isolieren die Brust mit Rückenunterstützung und stabiler Bewegung.", "image": "images/exercises/machine-chest-fly.webp", "targets": ["Brust"], "synergists": ["Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["machine fly", "Maschine", "Brust"]}
+        ,{"name": "Ring Push-Up", "muscle": "chest", "equip": ["bodyweight"], "desc": "Ring-Liegestütze erhöhen durch Instabilität die Anforderungen an Brust, Trizeps und Rumpf.", "image": "images/exercises/ring-push-up.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf", "Schulter"], "keywords": ["ring push up", "Körpergewicht", "Brust"]}
+        ,{"name": "Archer Push-Up", "muscle": "chest", "equip": ["bodyweight"], "desc": "Archer Push-Ups verlagern den Großteil des Körpergewichts auf einen Arm und fördern Brustkraft, Trizepskraft und Beweglichkeit.", "image": "images/exercises/archer-push-up.webp", "targets": ["Brust"], "synergists": ["Trizeps", "Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["archer push up", "Körpergewicht", "Brust"]}
+
+        // ==== New Back exercises ====
+        ,{"name": "Meadows Row", "muscle": "back", "equip": ["barbell"], "desc": "Meadows Rows nutzen eine einseitig gehaltene Landmine-Langhantel und entwickeln Latissimus sowie Rückendichte.", "image": "images/exercises/meadows-row.webp", "targets": ["Latissimus", "Mittlerer Rücken"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf", "Beinbeuger"], "keywords": ["meadows row", "row", "Langhantel", "Rücken"]}
+        ,{"name": "Pendlay Row", "muscle": "back", "equip": ["barbell"], "desc": "Pendlay Rows starten bei jeder Wiederholung vom Boden und fördern Kraft und Explosivität im Rücken.", "image": "images/exercises/pendlay-row.webp", "targets": ["Mittlerer Rücken", "Latissimus"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf", "Beinbeuger"], "keywords": ["pendlay row", "row", "Langhantel", "Rücken"]}
+        ,{"name": "Seal Row", "muscle": "back", "equip": ["barbell"], "desc": "Seal Rows werden bäuchlings auf einer hohen Bank ausgeführt und isolieren die Rückenmuskulatur durch vollständige Brustunterstützung.", "image": "images/exercises/seal-row.webp", "targets": ["Mittlerer Rücken"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf"], "keywords": ["seal row", "row", "Langhantel", "Rücken"]}
+        ,{"name": "Dumbbell Pullover", "muscle": "back", "equip": ["dumbbell"], "desc": "Kurzhantel-Pullover trainieren Latissimus und Brust über einen großen Bewegungsumfang.", "image": "images/exercises/dumbbell-pullover.webp", "targets": ["Latissimus", "Brust"], "synergists": ["Trizeps"], "stabilizers": ["Rumpf"], "keywords": ["dumbbell pullover", "Kurzhantel", "Rücken", "Brust"]}
+        ,{"name": "Lat Prayer (Cable Kneeling Pulldown)", "muscle": "back", "equip": ["cable"], "desc": "Lat Prayer am Kabel wird kniend mit gestreckten Armen nach unten gezogen und zielt auf den Latissimus bei geringer Armbeteiligung.", "image": "images/exercises/lat-prayer.webp", "targets": ["Latissimus"], "synergists": ["Bizeps", "Hintere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["lat prayer", "cable pulldown", "Kabel", "Rücken"]}
+        ,{"name": "Neutral-Grip Lat Pulldown", "muscle": "back", "equip": ["cable", "machine"], "desc": "Lat Pulldowns mit neutralem Griff reduzieren die Belastung der Handgelenke und beanspruchen Latissimus und Bizeps.", "image": "images/exercises/neutral-grip-lat-pulldown.webp", "targets": ["Latissimus"], "synergists": ["Bizeps", "Oberer Rücken"], "stabilizers": ["Rumpf"], "keywords": ["neutral grip pulldown", "lat pulldown", "Kabel", "Rücken"]}
+        ,{"name": "Wide-Grip Pulldown", "muscle": "back", "equip": ["cable", "machine"], "desc": "Lat Pulldowns mit breitem Griff betonen Latissimus und oberen Rücken und reduzieren die Bizepsbeteiligung.", "image": "images/exercises/wide-grip-pulldown.webp", "targets": ["Latissimus", "Oberer Rücken"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf"], "keywords": ["wide grip pulldown", "Kabel", "Rücken"]}
+        ,{"name": "Rope Pulldown", "muscle": "back", "equip": ["cable"], "desc": "Pulldowns mit Seil ermöglichen einen größeren Bewegungsumfang und isolieren den Latissimus bei geringer Bizepsbeteiligung.", "image": "images/exercises/rope-pulldown.webp", "targets": ["Latissimus"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf"], "keywords": ["rope pulldown", "Kabel", "Rücken"]}
+        ,{"name": "Machine Row (Hammer Strength)", "muscle": "back", "equip": ["machine"], "desc": "Rudern an der Hammer-Strength-Maschine bietet ausgeglichene Belastung beider Seiten und erleichtert die Rücken-Isolation.", "image": "images/exercises/machine-row.webp", "targets": ["Mittlerer Rücken"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf"], "keywords": ["machine row", "Maschine", "Rücken"]}
+        ,{"name": "Iso-Lateral Row Machine", "muscle": "back", "equip": ["machine"], "desc": "Die Iso-Lateral-Rudermaschine lässt jeden Arm unabhängig arbeiten und hilft, Seitenunterschiede auszugleichen.", "image": "images/exercises/iso-lateral-row-machine.webp", "targets": ["Latissimus", "Mittlerer Rücken"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf"], "keywords": ["iso lateral row", "Maschine", "Rücken"]}
+        ,{"name": "Assisted Pull-Up Machine", "muscle": "back", "equip": ["machine"], "desc": "Die unterstützte Klimmzugmaschine erleichtert das Erlernen von Klimmzügen durch einstellbare Unterstützung.", "image": "images/exercises/assisted-pull-up-machine.webp", "targets": ["Latissimus"], "synergists": ["Bizeps", "Oberer Rücken"], "stabilizers": ["Rumpf"], "keywords": ["assisted pull up", "Maschine", "Rücken"]}
+        ,{"name": "Trap Bar Deadlift", "muscle": "back", "equip": ["barbell"], "desc": "Trap-Bar-Deadlifts trainieren Gesäß, Beinbeuger und Quadrizeps umfassend und können den unteren Rücken weniger belasten.", "image": "images/exercises/trap-bar-deadlift.webp", "targets": ["Gesäß", "Beinbeuger", "Quadrizeps"], "synergists": ["Trapez", "Oberer Rücken"], "stabilizers": ["Rumpf", "Unterer Rücken"], "keywords": ["trap bar deadlift", "Deadlift", "Langhantel", "Rücken"]}
+        ,{"name": "Rack Pull", "muscle": "back", "equip": ["barbell"], "desc": "Rack Pulls mit verkürztem Bewegungsumfang betonen den oberen Rücken und den oberen Abschnitt des Deadlifts.", "image": "images/exercises/rack-pull.webp", "targets": ["Oberer Rücken", "Trapez"], "synergists": ["Gesäß", "Beinbeuger"], "stabilizers": ["Rumpf", "Unterer Rücken"], "keywords": ["rack pull", "Langhantel", "Rücken"]}
+        ,{"name": "Snatch-Grip Deadlift", "muscle": "back", "equip": ["barbell"], "desc": "Snatch-Grip-Deadlifts mit breitem Griff vergrößern den Bewegungsumfang und stärken Beinbeuger, Gesäß und oberen Rücken.", "image": "images/exercises/snatch-grip-deadlift.webp", "targets": ["Beinbeuger", "Gesäß", "Oberer Rücken"], "synergists": ["Quadrizeps"], "stabilizers": ["Rumpf", "Trapez"], "keywords": ["snatch grip deadlift", "Deadlift", "Langhantel", "Rücken"]}
+        ,{"name": "Band Pulldown", "muscle": "back", "equip": ["bands"], "desc": "Band-Pulldowns trainieren den Latissimus mit einem Widerstandsband und eignen sich gut für das Heimtraining.", "image": "images/exercises/band-pulldown.webp", "targets": ["Latissimus"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf"], "keywords": ["band pulldown", "Widerstandsband", "Rücken"]}
+        ,{"name": "Scapular Pull-Up", "muscle": "back", "equip": ["bodyweight"], "desc": "Scapular Pull-Ups konzentrieren sich auf die Bewegung der Schulterblätter, stärken Trapez und Rhomboiden und verbessern die Schulterkontrolle.", "image": "images/exercises/scapular-pull-up.webp", "targets": ["Trapez", "Rhomboiden"], "synergists": ["Latissimus", "Bizeps"], "stabilizers": ["Rumpf"], "keywords": ["scapular pull up", "Körpergewicht", "Rücken"]}
+
+        // ==== New Shoulders exercises ====
+        ,{"name": "Machine Shoulder Press", "muscle": "shoulders", "equip": ["machine"], "desc": "Schulterdrücken an der Maschine trainiert vordere und seitliche Schulter auf einem festen Bewegungsweg.", "image": "images/exercises/machine-shoulder-press.webp", "targets": ["Vordere Schultern", "Seitliche Schultern"], "synergists": ["Trizeps"], "stabilizers": ["Rumpf"], "keywords": ["machine shoulder press", "Maschine", "Schulter"]}
+        ,{"name": "Smith Machine Shoulder Press", "muscle": "shoulders", "equip": ["machine"], "desc": "Schulterdrücken an der Smith Machine bietet zusätzliche Stabilität und reduziert die Anforderungen an das Gleichgewicht.", "image": "images/exercises/smith-machine-shoulder-press.webp", "targets": ["Vordere Schultern", "Seitliche Schultern"], "synergists": ["Trizeps"], "stabilizers": ["Rumpf"], "keywords": ["smith shoulder press", "Maschine", "Schulter"]}
+        ,{"name": "Dumbbell Z-Press", "muscle": "shoulders", "equip": ["dumbbell"], "desc": "Beim Dumbbell Z-Press sitzt du mit ausgestreckten Beinen am Boden; die Übung stärkt die Schultern und fordert Hüftbeweglichkeit und Balance.", "image": "images/exercises/dumbbell-z-press.webp", "targets": ["Vordere Schultern", "Seitliche Schultern"], "synergists": ["Trizeps"], "stabilizers": ["Rumpf"], "keywords": ["z press", "Kurzhantel", "Schulter"]}
+        ,{"name": "Barbell Push Press", "muscle": "shoulders", "equip": ["barbell"], "desc": "Push Press mit der Langhantel nutzt einen Impuls aus den Beinen, um Explosivkraft zu entwickeln und die Schultern stärker zu belasten.", "image": "images/exercises/barbell-push-press.webp", "targets": ["Vordere Schultern"], "synergists": ["Trizeps", "Quadrizeps"], "stabilizers": ["Rumpf"], "keywords": ["push press", "Langhantel", "Schulter"]}
+        ,{"name": "Bradford Press", "muscle": "shoulders", "equip": ["barbell"], "desc": "Beim Bradford Press wird die Stange abwechselnd vor und hinter dem Kopf bewegt, ohne die Ellenbogen vollständig zu strecken, um die Spannungsdauer zu erhöhen.", "image": "images/exercises/bradford-press.webp", "targets": ["Vordere Schultern", "Seitliche Schultern"], "synergists": ["Trizeps"], "stabilizers": ["Rumpf"], "keywords": ["bradford press", "Langhantel", "Schulter"]}
+        ,{"name": "Cuban Press", "muscle": "shoulders", "equip": ["dumbbell"], "desc": "Der Cuban Press kombiniert Seitheben, Außenrotation und Drücken und stärkt Rotatorenmanschette sowie hintere Schulter.", "image": "images/exercises/cuban-press.webp", "targets": ["Hintere Schulter", "Rotatorenmanschette"], "synergists": ["Seitliche Schultern"], "stabilizers": ["Rumpf"], "keywords": ["cuban press", "Kurzhantel", "Schulter"]}
+        ,{"name": "Leaning Lateral Raise", "muscle": "shoulders", "equip": ["dumbbell"], "desc": "Leaning Lateral Raises vergrößern durch die geneigte Position den Bewegungsumfang und die Belastung der seitlichen Schulter.", "image": "images/exercises/leaning-lateral-raise.webp", "targets": ["Seitliche Schultern"], "synergists": ["Hintere Schulter"], "stabilizers": ["Rumpf"], "keywords": ["leaning lateral raise", "Kurzhantel", "Schulter"]}
+        ,{"name": "Incline Bench Lateral Raise", "muscle": "shoulders", "equip": ["dumbbell"], "desc": "Seitheben auf einer Schrägbank reduziert Schwung und isoliert die seitliche Schulter stärker.", "image": "images/exercises/incline-bench-lateral-raise.webp", "targets": ["Seitliche Schultern"], "synergists": ["Hintere Schulter"], "stabilizers": ["Rumpf"], "keywords": ["incline lateral raise", "Kurzhantel", "Schulter"]}
+        ,{"name": "Behind-the-Back Cable Lateral Raise", "muscle": "shoulders", "equip": ["cable"], "desc": "Kabel-Seitheben hinter dem Körper erhöht die konstante Spannung auf der seitlichen Schulter.", "image": "images/exercises/behind-the-back-cable-lateral-raise.webp", "targets": ["Seitliche Schultern"], "synergists": ["Hintere Schulter"], "stabilizers": ["Rumpf"], "keywords": ["behind the back lateral raise", "Kabel", "Schulter"]}
+        ,{"name": "Cable Y-Raise", "muscle": "shoulders", "equip": ["cable"], "desc": "Cable Y-Raises stärken in einer Y-Bewegung vordere und seitliche Schulter sowie Rotatorenmanschette.", "image": "images/exercises/cable-y-raise.webp", "targets": ["Vordere Schultern", "Seitliche Schultern"], "synergists": ["Hintere Schulter"], "stabilizers": ["Rumpf"], "keywords": ["cable y raise", "Kabel", "Schulter"]}
+        ,{"name": "Dumbbell Y-Raise", "muscle": "shoulders", "equip": ["dumbbell"], "desc": "Dumbbell Y-Raises fördern ein ausgeglichenes Zusammenspiel der vorderen und seitlichen Schultermuskulatur.", "image": "images/exercises/dumbbell-y-raise.webp", "targets": ["Vordere Schultern", "Seitliche Schultern"], "synergists": ["Hintere Schulter"], "stabilizers": ["Rumpf"], "keywords": ["y raise", "Kurzhantel", "Schulter"]}
+        ,{"name": "Rear Delt Cable Cross", "muscle": "shoulders", "equip": ["cable"], "desc": "Rear Delt Cable Cross isoliert die hintere Schulter und unterstützt eine bessere Schulterhaltung.", "image": "images/exercises/rear-delt-cable-cross.webp", "targets": ["Hintere Schulter"], "synergists": ["Rhomboiden", "Mittlerer Trapez"], "stabilizers": ["Rumpf"], "keywords": ["rear delt cable cross", "Kabel", "Schulter"]}
+        ,{"name": "Band Pull Apart", "muscle": "shoulders", "equip": ["bands"], "desc": "Band Pull-Aparts stärken hintere Schulter und Rhomboiden und unterstützen eine bessere Haltung.", "image": "images/exercises/band-pull-apart.webp", "targets": ["Hintere Schulter"], "synergists": ["Rhomboiden"], "stabilizers": ["Rumpf"], "keywords": ["band pull apart", "Widerstandsband", "Schulter"]}
+        ,{"name": "Scaption Raise", "muscle": "shoulders", "equip": ["dumbbell"], "desc": "Scaption Raises werden etwa 45° zwischen Front- und Seitheben ausgeführt und stärken Rotatorenmanschette sowie vordere Schulter.", "image": "images/exercises/scaption-raise.webp", "targets": ["Rotatorenmanschette", "Vordere Schultern"], "synergists": ["Seitliche Schultern"], "stabilizers": ["Rumpf"], "keywords": ["scaption raise", "Kurzhantel", "Schulter"]}
+
+        // ==== New Biceps exercises ====
+        ,{"name": "EZ-Bar Curl", "muscle": "biceps", "equip": ["barbell"], "desc": "EZ-Bar-Curls reduzieren durch die gebogene Stange die Handgelenkbelastung und zielen direkt auf den Bizeps.", "image": "images/exercises/ez-bar-curl.webp", "targets": ["Bizeps"], "synergists": ["Brachialis", "Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["ez bar curl", "Bizeps", "Langhantel"]}
+        ,{"name": "Reverse EZ Curl", "muscle": "biceps", "equip": ["barbell"], "desc": "Reverse EZ Curls betonen Unterarm und Brachialis bei geringerer Bizepsbeteiligung.", "image": "images/exercises/reverse-ez-curl.webp", "targets": ["Unterarme"], "synergists": ["Brachialis", "Bizeps"], "stabilizers": ["Rumpf"], "keywords": ["reverse ez curl", "Reverse Curl", "Langhantel"]}
+        ,{"name": "Drag Curl", "muscle": "biceps", "equip": ["barbell"], "desc": "Drag Curls führen die Stange eng am Körper entlang und erhöhen die Spannungsdauer des Bizeps.", "image": "images/exercises/drag-curl.webp", "targets": ["Bizeps"], "synergists": ["Brachialis"], "stabilizers": ["Rumpf"], "keywords": ["drag curl", "Langhantel", "Bizeps"]}
+        ,{"name": "Bayesian Curl", "muscle": "biceps", "equip": ["cable"], "desc": "Bayesian Curls am Kabel aus einer Position hinter dem Körper betonen den langen Bizepskopf und liefern konstante Spannung.", "image": "images/exercises/bayesian-curl.webp", "targets": ["Bizeps"], "synergists": ["Brachialis"], "stabilizers": ["Rumpf"], "keywords": ["bayesian curl", "Kabel", "Bizeps"]}
+        ,{"name": "Cross-Body Hammer Curl", "muscle": "biceps", "equip": ["dumbbell"], "desc": "Cross-Body Hammer Curls trainieren Brachialis und Unterarm und tragen zu mehr Armdicke bei.", "image": "images/exercises/cross-body-hammer-curl.webp", "targets": ["Brachialis", "Unterarme"], "synergists": ["Bizeps"], "stabilizers": ["Rumpf"], "keywords": ["cross body hammer curl", "Kurzhantel", "Bizeps"]}
+        ,{"name": "Rope Cable Curl", "muscle": "biceps", "equip": ["cable"], "desc": "Rope Cable Curls ermöglichen eine natürliche Handgelenksbewegung und eine gleichmäßige Belastung beider Bizepsseiten.", "image": "images/exercises/rope-cable-curl.webp", "targets": ["Bizeps"], "synergists": ["Brachialis", "Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["rope curl", "Kabel", "Bizeps"]}
+        ,{"name": "High Cable Curl", "muscle": "biceps", "equip": ["cable"], "desc": "High Cable Curls ähneln einer Double-Biceps-Pose und erhöhen die Kontraktion am Ende der Bewegung.", "image": "images/exercises/high-cable-curl.webp", "targets": ["Bizeps"], "synergists": ["Brachialis"], "stabilizers": ["Rumpf"], "keywords": ["high cable curl", "Kabel", "Bizeps"]}
+        ,{"name": "Preacher Curl Machine", "muscle": "biceps", "equip": ["machine"], "desc": "Preacher Curls an der Maschine reduzieren Schwung und isolieren den Bizeps sehr stark.", "image": "images/exercises/preacher-curl-machine.webp", "targets": ["Bizeps"], "synergists": ["Brachialis"], "stabilizers": ["Unterarme"], "keywords": ["preacher curl", "Maschine", "Bizeps"]}
+        ,{"name": "Dumbbell Curl (Alternating Supinating)", "muscle": "biceps", "equip": ["dumbbell"], "desc": "Alternierende Kurzhantel-Curls mit Supination drehen den Unterarm beim Hochführen und erhöhen die Bizepsaktivierung.", "image": "images/exercises/dumbbell-curl-alternating-supinating.webp", "targets": ["Bizeps"], "synergists": ["Brachialis", "Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["alternating curl", "supinating curl", "Kurzhantel", "Bizeps"]}
+        ,{"name": "21s Curl", "muscle": "biceps", "equip": ["barbell"], "desc": "21s Curls kombinieren drei Bewegungsbereiche hintereinander und erzeugen eine sehr hohe Bizepsbelastung.", "image": "images/exercises/21s-curl.webp", "targets": ["Bizeps"], "synergists": ["Brachialis"], "stabilizers": ["Rumpf"], "keywords": ["21s curl", "Bizeps", "Langhantel"]}
+        ,{"name": "Towel Chin-Up", "muscle": "biceps", "equip": ["bodyweight"], "desc": "Towel Chin-Ups erhöhen die Anforderungen an die Griffkraft und beanspruchen Bizeps und Latissimus stärker.", "image": "images/exercises/towel-chin-up.webp", "targets": ["Bizeps"], "synergists": ["Latissimus"], "stabilizers": ["Rumpf", "Unterarme"], "keywords": ["towel chin up", "Körpergewicht", "Bizeps"]}
+        ,{"name": "Band Curl", "muscle": "biceps", "equip": ["bands"], "desc": "Band-Curls bieten mit einem Widerstandsband zunehmende Spannung und isolieren den Bizeps.", "image": "images/exercises/band-curl.webp", "targets": ["Bizeps"], "synergists": ["Brachialis"], "stabilizers": ["Rumpf"], "keywords": ["band curl", "Widerstandsband", "Bizeps"]}
+
+        // ==== New Triceps exercises ====
+        ,{"name": "EZ-Bar Skull Crushers", "muscle": "triceps", "equip": ["barbell"], "desc": "EZ-Bar Skull Crushers reduzieren die Handgelenkbelastung und trainieren alle drei Trizepsköpfe.", "image": "images/exercises/ez-bar-skull-crushers.webp", "targets": ["Trizeps"], "synergists": ["Unterarme"], "stabilizers": ["Schultern", "Rumpf"], "keywords": ["ez bar skull crusher", "Trizeps", "Langhantel"]}
+        ,{"name": "JM Press", "muscle": "triceps", "equip": ["barbell"], "desc": "JM Press kombiniert Elemente von engem Drücken und Skull Crusher und stärkt den Trizeps sowie die Lockout-Kraft beim Bankdrücken.", "image": "images/exercises/jm-press.webp", "targets": ["Trizeps"], "synergists": ["Brust", "Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["jm press", "Trizeps", "Langhantel"]}
+        ,{"name": "Close-Grip Push-Up", "muscle": "triceps", "equip": ["bodyweight"], "desc": "Enge Liegestütze verlagern die Belastung stärker auf den Trizeps und etwas weniger auf die Brust.", "image": "images/exercises/close-grip-push-up.webp", "targets": ["Trizeps"], "synergists": ["Brust", "Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["close grip push up", "Körpergewicht", "Trizeps"]}
+        ,{"name": "Ring Dips", "muscle": "triceps", "equip": ["bodyweight"], "desc": "Ring Dips erhöhen durch Instabilität die Anforderungen an Trizeps und Brust.", "image": "images/exercises/ring-dips.webp", "targets": ["Trizeps"], "synergists": ["Brust", "Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["ring dips", "Körpergewicht", "Trizeps"]}
+        ,{"name": "Bench Dips", "muscle": "triceps", "equip": ["bodyweight"], "desc": "Bench Dips an einer Bank betonen den Trizeps und können für mehr Intensität zusätzlich beladen werden.", "image": "images/exercises/bench-dips.webp", "targets": ["Trizeps"], "synergists": ["Brust", "Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["bench dips", "Körpergewicht", "Trizeps"]}
+        ,{"name": "Cable Kickback", "muscle": "triceps", "equip": ["cable"], "desc": "Kabel-Kickbacks bieten über die gesamte Bewegung konstante Spannung und isolieren den Trizeps.", "image": "images/exercises/cable-kickback.webp", "targets": ["Trizeps"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["cable kickback", "Kabel", "Trizeps"]}
+        ,{"name": "Reverse Grip Pushdown", "muscle": "triceps", "equip": ["cable"], "desc": "Pushdowns im Untergriff verändern den Winkel und können den langen Trizepskopf stärker betonen.", "image": "images/exercises/reverse-grip-pushdown.webp", "targets": ["Trizeps"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["reverse grip pushdown", "Kabel", "Trizeps"]}
+        ,{"name": "Straight Bar Pushdown", "muscle": "triceps", "equip": ["cable"], "desc": "Trizepsdrücken am Kabel mit gerader Stange ist eine klassische Isolationsübung für den Trizeps.", "image": "images/exercises/straight-bar-pushdown.webp", "targets": ["Trizeps"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["straight bar pushdown", "Kabel", "Trizeps"]}
+        ,{"name": "Single-Arm Cable Pushdown", "muscle": "triceps", "equip": ["cable"], "desc": "Einarmige Kabel-Pushdowns helfen, Kraftunterschiede zwischen den Armen auszugleichen.", "image": "images/exercises/single-arm-cable-pushdown.webp", "targets": ["Trizeps"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["single arm pushdown", "Kabel", "Trizeps"]}
+        ,{"name": "Dumbbell Tate Press", "muscle": "triceps", "equip": ["dumbbell"], "desc": "Beim Dumbbell Tate Press werden die Kurzhanteln zueinander geführt, um den Trizeps stark zu belasten und die Handgelenke angenehm zu positionieren.", "image": "images/exercises/dumbbell-tate-press.webp", "targets": ["Trizeps"], "synergists": ["Brust"], "stabilizers": ["Vordere Schultern", "Rumpf"], "keywords": ["tate press", "Kurzhantel", "Trizeps"]}
+        ,{"name": "Dumbbell Floor Press (Triceps Emphasis)", "muscle": "triceps", "equip": ["dumbbell"], "desc": "Kurzhantel-Floor-Press begrenzt den Bewegungsumfang und zwingt den Trizeps zu stärkerer Arbeit.", "image": "images/exercises/dumbbell-floor-press-triceps.webp", "targets": ["Trizeps"], "synergists": ["Brust", "Vordere Schultern"], "stabilizers": ["Rumpf"], "keywords": ["floor press triceps", "Kurzhantel", "Trizeps"]}
+        ,{"name": "Band Pushdown", "muscle": "triceps", "equip": ["bands"], "desc": "Band-Pushdowns sind eine einfache Trizeps-Isolationsübung mit zunehmend stärkerem Widerstand.", "image": "images/exercises/band-pushdown.webp", "targets": ["Trizeps"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["band pushdown", "Widerstandsband", "Trizeps"]}
+        ,{"name": "Overhead Cable Extension (Single Arm)", "muscle": "triceps", "equip": ["cable"], "desc": "Einarmiges Überkopf-Kabelstrecken betont den langen Trizepskopf und liefert konstante Spannung.", "image": "images/exercises/overhead-cable-extension-single-arm.webp", "targets": ["Trizeps"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["overhead extension", "Kabel", "Trizeps"]}
+
+        // ==== New Legs (Compound) exercises ====
+        ,{"name": "Smith Machine Squat", "muscle": "legs", "equip": ["machine"], "desc": "Kniebeugen an der Smith Machine bieten einen festen Bewegungsweg und trainieren Quadrizeps und Gesäß.", "image": "images/exercises/smith-machine-squat.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["smith squat", "Maschine", "Kniebeuge"]}
+        ,{"name": "Safety Bar Squat", "muscle": "legs", "equip": ["barbell"], "desc": "Safety-Bar-Squats reduzieren die Belastung der Schultern und verlagern den Schwerpunkt etwas nach vorn.", "image": "images/exercises/safety-bar-squat.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["safety bar squat", "Langhantel", "Kniebeuge"]}
+        ,{"name": "Box Squat", "muscle": "legs", "equip": ["barbell"], "desc": "Box Squats mit kurzer Sitzpause auf einer Box entwickeln Kraft beim Aufstehen und helfen, die Technik zu kontrollieren.", "image": "images/exercises/box-squat.webp", "targets": ["Gesäß", "Beinbeuger"], "synergists": ["Quadrizeps"], "stabilizers": ["Rumpf"], "keywords": ["box squat", "Kniebeuge", "Langhantel"]}
+        ,{"name": "Pause Squat", "muscle": "legs", "equip": ["barbell"], "desc": "Pause Squats mit einer kurzen Pause in der tiefsten Position verbessern Kontrolle und Kraft aus dem unteren Bewegungsbereich.", "image": "images/exercises/pause-squat.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["pause squat", "Kniebeuge", "Langhantel"]}
+        ,{"name": "Zercher Squat", "muscle": "legs", "equip": ["barbell"], "desc": "Beim Zercher Squat liegt die Langhantel in den Ellenbeugen, wodurch Rumpf und Oberkörper stärker mitarbeiten.", "image": "images/exercises/zercher-squat.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß", "Beinbeuger"], "stabilizers": ["Rumpf", "Oberer Rücken"], "keywords": ["zercher squat", "Langhantel", "Kniebeuge"]}
+        ,{"name": "Hack Squat (Free)", "muscle": "legs", "equip": ["barbell"], "desc": "Freie Hack Squats mit der Langhantel hinter dem Körper betonen den Quadrizeps und können die Kniebelastung anders verteilen.", "image": "images/exercises/hack-squat-free-weight.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß", "Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["hack squat", "frei", "Langhantel", "Kniebeuge"]}
+        ,{"name": "Belt Squat", "muscle": "legs", "equip": ["machine"], "desc": "Belt Squats hängen das Gewicht an der Hüfte auf und belasten den Unterkörper stark bei geringerer Rückenbeanspruchung.", "image": "images/exercises/belt-squat.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["belt squat", "Maschine", "Kniebeuge"]}
+        ,{"name": "Trap Bar Squat", "muscle": "legs", "equip": ["barbell"], "desc": "Trap-Bar-Squats verbinden Eigenschaften von Deadlift und Squat und bieten einen anderen Belastungsreiz.", "image": "images/exercises/trap-bar-squat.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["trap bar squat", "Langhantel", "Kniebeuge"]}
+        ,{"name": "Reverse Lunge", "muscle": "legs", "equip": ["bodyweight", "dumbbell", "barbell"], "desc": "Reverse Lunges reduzieren häufig die Kniebelastung und trainieren Quadrizeps und Gesäß ausgewogen.", "image": "images/exercises/reverse-lunge.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["reverse lunge", "Lunge", "Beine"]}
+        ,{"name": "Curtsy Lunge (Adductors)", "muscle": "legs", "equip": ["bodyweight", "dumbbell"], "desc": "Curtsy Lunges mit Fokus auf die Adduktoren beanspruchen Adduktoren und Gesäß und fördern die Hüftstabilität.", "image": "images/exercises/curtsy-lunge.webp", "targets": ["Gesäß", "Adduktoren"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["curtsy lunge", "Lunge", "Beine"]}
+        ,{"name": "Cossack Squat", "muscle": "legs", "equip": ["bodyweight", "dumbbell"], "desc": "Der Cossack Squat ist eine tiefe seitliche Kniebeuge, die Hüftbeweglichkeit, Quadrizeps und Adduktoren trainiert.", "image": "images/exercises/cossack-squat.webp", "targets": ["Quadrizeps", "Adduktoren", "Beinbeuger"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["cossack squat", "Seitliche Kniebeuge", "Beine"]}
+        ,{"name": "Pistol Squat (Assisted)", "muscle": "legs", "equip": ["bodyweight"], "desc": "Unterstützte Pistol Squats entwickeln einbeinige Kraft und Balance mit zusätzlicher Hilfe.", "image": "images/exercises/pistol-squat-assisted.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["pistol squat", "Körpergewicht", "Beine"]}
+        ,{"name": "Barbell Step-Up (Heavy)", "muscle": "legs", "equip": ["barbell"], "desc": "Schwere Barbell Step-Ups auf Box oder Bank stärken Quadrizeps und Gesäß und fordern die Balance.", "image": "images/exercises/barbell-step-up-heavy.webp", "targets": ["Quadrizeps", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["barbell step up", "Beine", "Kniebeuge"]}
+        ,{"name": "Reverse Hack Squat Machine", "muscle": "legs", "equip": ["machine"], "desc": "Reverse Hack Squats an der Maschine werden in umgekehrter Position ausgeführt und betonen Gesäß und Beinbeuger.", "image": "images/exercises/reverse-hack-squat-machine.webp", "targets": ["Gesäß", "Beinbeuger"], "synergists": ["Quadrizeps"], "stabilizers": ["Rumpf"], "keywords": ["reverse hack squat", "Maschine", "Beine"]}
+
+        // ==== New Quads exercises ====
+        ,{"name": "Heel-Elevated Goblet Squat", "muscle": "quads", "equip": ["dumbbell", "kettlebell"], "desc": "Heel-Elevated Goblet Squats mit erhöhten Fersen verlagern den Schwerpunkt stärker auf den Quadrizeps.", "image": "images/exercises/heel-elevated-goblet-squat.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["heel elevated goblet squat", "Quadrizeps", "Kurzhantel"]}
+        ,{"name": "Heel-Elevated Back Squat", "muscle": "quads", "equip": ["barbell"], "desc": "Heel-Elevated Back Squats mit erhöhten Fersen verlagern den Schwerpunkt nach vorn und erhöhen die Quadrizepsbelastung.", "image": "images/exercises/heel-elevated-back-squat.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["heel elevated back squat", "Quadrizeps", "Langhantel"]}
+        ,{"name": "Narrow-Stance Leg Press", "muscle": "quads", "equip": ["machine"], "desc": "Beinpresse mit engem Stand erhöht die Beanspruchung des Quadrizeps.", "image": "images/exercises/narrow-stance-leg-press.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["narrow leg press", "Maschine", "Quadrizeps"]}
+        ,{"name": "Banded Leg Extension", "muscle": "quads", "equip": ["machine", "bands"], "desc": "Beinstrecken mit zusätzlichem Widerstandsband erhöht den Widerstand besonders am Ende der Bewegung.", "image": "images/exercises/banded-leg-extension.webp", "targets": ["Quadrizeps"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["banded leg extension", "Quadrizeps", "Maschine"]}
+        ,{"name": "Cyclist Squat", "muscle": "quads", "equip": ["barbell"], "desc": "Cyclist Squats werden mit engem Stand und erhöhten Fersen ausgeführt und isolieren den Quadrizeps stärker.", "image": "images/exercises/cyclist-squat.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["cyclist squat", "Quadrizeps", "Langhantel"]}
+        ,{"name": "Spanish Squat", "muscle": "quads", "equip": ["bands"], "desc": "Spanish Squats mit einem Band um die Knie halten den Oberkörper aufrecht, erhöhen die Quadrizepsaktivierung und können den Kniedruck reduzieren.", "image": "images/exercises/spanish-squat.webp", "targets": ["Quadrizeps"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["spanish squat", "Widerstandsband", "Quadrizeps"]}
+        ,{"name": "Hack Squat (Feet Low)", "muscle": "quads", "equip": ["machine"], "desc": "Eine tiefe Fußposition auf der Hack-Squat-Plattform erhöht die Belastung des Quadrizeps.", "image": "images/exercises/hack-squat-feet-low.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["hack squat low feet", "Maschine", "Quadrizeps"]}
+        ,{"name": "Reverse Nordic Curl", "muscle": "quads", "equip": ["bodyweight"], "desc": "Reverse Nordic Curls werden kniend nach hinten abgesenkt und kräftigen sowie dehnen den Quadrizeps gleichzeitig.", "image": "images/exercises/reverse-nordic-curl.webp", "targets": ["Quadrizeps"], "synergists": ["Hüftbeuger"], "stabilizers": ["Rumpf"], "keywords": ["reverse nordic curl", "Quadrizeps", "Körpergewicht"]}
+        ,{"name": "Step-Down (Quad Bias)", "muscle": "quads", "equip": ["bodyweight"], "desc": "Kontrollierte Step-Downs von einer Plattform betonen den Quadrizeps und verbessern die Kontrolle des Knies.", "image": "images/exercises/step-down.webp", "targets": ["Quadrizeps"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["step down", "Quadrizeps", "Körpergewicht"]}
+        ,{"name": "Smith Machine Sissy Squat", "muscle": "quads", "equip": ["machine"], "desc": "Sissy Squats an der Smith Machine bieten zusätzliche Balancehilfe und isolieren den Quadrizeps stärker.", "image": "images/exercises/smith-machine-sissy-squat.webp", "targets": ["Quadrizeps"], "synergists": [], "stabilizers": ["Rumpf"], "keywords": ["smith sissy squat", "Maschine", "Quadrizeps"]}
+
+        // ==== New Glutes exercises ====
+        ,{"name": "Romanian Deadlift (Glute Bias)", "muscle": "glutes", "equip": ["barbell", "dumbbell"], "desc": "Romanian Deadlifts mit Gesäßfokus betonen durch bewusstes Zurückschieben der Hüfte Gesäß und Beinbeuger.", "image": "images/exercises/romanian-deadlift-glute-bias.webp", "targets": ["Gesäß", "Beinbeuger"], "synergists": ["Unterer Rücken"], "stabilizers": ["Rumpf"], "keywords": ["romanian deadlift", "glute bias", "Langhantel", "Kurzhantel"]}
+        ,{"name": "Frog Pumps", "muscle": "glutes", "equip": ["bodyweight"], "desc": "Frog Pumps haben einen kurzen Bewegungsweg; die Fußsohlen liegen zusammen und die Hüfte wird nach oben gedrückt, um das Gesäß zu trainieren.", "image": "images/exercises/frog-pumps.webp", "targets": ["Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["frog pumps", "Gesäß", "Körpergewicht"]}
+        ,{"name": "Hip Thrust Machine", "muscle": "glutes", "equip": ["machine"], "desc": "Die Hip-Thrust-Maschine bietet einen vorgegebenen Bewegungsweg und gezielte Isolation des Gesäßes.", "image": "images/exercises/hip-thrust-machine.webp", "targets": ["Gesäß"], "synergists": ["Beinbeuger", "Quadrizeps"], "stabilizers": ["Rumpf"], "keywords": ["hip thrust machine", "Maschine", "Gesäß"]}
+        ,{"name": "Smith Machine Hip Thrust", "muscle": "glutes", "equip": ["machine"], "desc": "Hip Thrusts an der Smith Machine erlauben hohe Lasten bei großer Stabilität.", "image": "images/exercises/smith-machine-hip-thrust.webp", "targets": ["Gesäß"], "synergists": ["Beinbeuger", "Quadrizeps"], "stabilizers": ["Rumpf"], "keywords": ["smith hip thrust", "Maschine", "Gesäß"]}
+        ,{"name": "Banded Hip Thrust", "muscle": "glutes", "equip": ["bands"], "desc": "Banded Hip Thrusts nutzen ein Widerstandsband, das am Ende der Hüftstreckung stärker belastet.", "image": "images/exercises/banded-hip-thrust.webp", "targets": ["Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["band hip thrust", "Widerstandsband", "Gesäß"]}
+        ,{"name": "Single-Leg Hip Thrust", "muscle": "glutes", "equip": ["bodyweight"], "desc": "Einbeinige Hip Thrusts erhöhen die Gesäßaktivierung und helfen, Seitenunterschiede auszugleichen.", "image": "images/exercises/single-leg-hip-thrust.webp", "targets": ["Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["single leg hip thrust", "Körpergewicht", "Gesäß"]}
+        ,{"name": "Deficit Reverse Lunge", "muscle": "glutes", "equip": ["bodyweight", "dumbbell", "barbell"], "desc": "Deficit Reverse Lunges von einer erhöhten Plattform vergrößern den Bewegungsumfang und beanspruchen Gesäß sowie Beinbeuger stärker.", "image": "images/exercises/deficit-reverse-lunge.webp", "targets": ["Gesäß", "Beinbeuger"], "synergists": ["Quadrizeps"], "stabilizers": ["Rumpf"], "keywords": ["deficit reverse lunge", "Lunge", "Gesäß"]}
+        ,{"name": "Glute Medius Cable Abduction", "muscle": "glutes", "equip": ["cable"], "desc": "Stehende Hüftabduktion am Kabel zielt auf den Gluteus medius und verbessert die seitliche Hüftstabilität.", "image": "images/exercises/glute-medius-cable-abduction.webp", "targets": ["Gluteus medius"], "synergists": ["Gluteus minimus"], "stabilizers": ["Rumpf"], "keywords": ["cable abduction", "Gesäß", "Kabel"]}
+        ,{"name": "Fire Hydrant", "muscle": "glutes", "equip": ["bands"], "desc": "Fire Hydrants heben das Bein seitlich an und stärken, mit oder ohne Band, vor allem den Gluteus medius.", "image": "images/exercises/fire-hydrant.webp", "targets": ["Gluteus medius"], "synergists": ["Gluteus minimus"], "stabilizers": ["Rumpf"], "keywords": ["fire hydrant", "Widerstandsband", "Gesäß"]}
+        ,{"name": "Lateral Band Walk", "muscle": "glutes", "equip": ["bands"], "desc": "Lateral Band Walks verbessern die Hüftstabilität und stärken den Gluteus medius.", "image": "images/exercises/lateral-band-walk.webp", "targets": ["Gluteus medius"], "synergists": ["Gluteus minimus"], "stabilizers": ["Rumpf"], "keywords": ["lateral band walk", "Widerstandsband", "Gesäß"]}
+        ,{"name": "Curtsy Lunge (Glute Bias)", "muscle": "glutes", "equip": ["bodyweight", "dumbbell"], "desc": "Curtsy Lunges mit Gesäßfokus betonen den Gluteus medius und beanspruchen zusätzlich die Adduktoren.", "image": "images/exercises/curtsy-lunge-glute.webp", "targets": ["Gluteus medius", "Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["curtsy lunge glute", "Gesäß", "Lunge"]}
+        ,{"name": "Kneeling Squat (Glutes)", "muscle": "glutes", "equip": ["barbell", "bodyweight"], "desc": "Kneeling Squats aus dem Kniestand trainieren das Gesäß direkt und reduzieren die Belastung des Rückens.", "image": "images/exercises/kneeling-squat-glutes.webp", "targets": ["Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["kneeling squat", "Gesäß", "Kniebeuge"]}
+        ,{"name": "Glute Pull Through", "muscle": "glutes", "equip": ["cable"], "desc": "Glute Pull Throughs am Kabel trainieren die Hüftstreckung und stärken das Gesäß.", "image": "images/exercises/glute-pull-through.webp", "targets": ["Gesäß"], "synergists": ["Beinbeuger"], "stabilizers": ["Rumpf"], "keywords": ["glute pull through", "Kabel", "Gesäß"]}
+        ,{"name": "Reverse Hyperextension", "muscle": "glutes", "equip": ["machine"], "desc": "Reverse Hyperextensions an einem speziellen Gerät stärken Gesäß und Beinbeuger und können die Belastbarkeit des unteren Rückens unterstützen.", "image": "images/exercises/reverse-hyperextension.webp", "targets": ["Gesäß", "Beinbeuger"], "synergists": ["Unterer Rücken"], "stabilizers": ["Rumpf"], "keywords": ["reverse hyperextension", "Maschine", "Gesäß"]}
+
+        // ==== New Abs / Core exercises ====
+        ,{"name": "Decline Sit-Up", "muscle": "abs", "equip": ["bodyweight"], "desc": "Decline Sit-Ups auf einer Schrägbank erhöhen den Widerstand für die Bauchmuskulatur.", "image": "images/exercises/decline-sit-up.webp", "targets": ["Bauchmuskeln"], "synergists": ["Hüftbeuger"], "stabilizers": ["Rumpf"], "keywords": ["decline sit up", "Bauch", "Körpergewicht"]}
+        ,{"name": "Decline Weighted Sit-Up", "muscle": "abs", "equip": ["dumbbell"], "desc": "Decline Sit-Ups mit Zusatzgewicht steigern die Belastung der Bauchmuskeln zusätzlich.", "image": "images/exercises/decline-weighted-sit-up.webp", "targets": ["Bauchmuskeln"], "synergists": ["Hüftbeuger"], "stabilizers": ["Rumpf"], "keywords": ["weighted decline sit up", "Bauch", "Kurzhantel"]}
+        ,{"name": "Toe Touch Crunch", "muscle": "abs", "equip": ["bodyweight"], "desc": "Toe Touch Crunches führen die Hände zu den Zehen und betonen den oberen Bauchbereich.", "image": "images/exercises/toe-touch-crunch.webp", "targets": ["Oberer Bauch"], "synergists": ["Hüftbeuger"], "stabilizers": ["Rumpf"], "keywords": ["toe touch crunch", "Bauch", "Körpergewicht"]}
+        ,{"name": "Dead Bug", "muscle": "abs", "equip": ["bodyweight"], "desc": "Dead Bugs bewegen diagonal gegenüberliegende Arme und Beine, während der Rumpf stabil bleibt, und trainieren die tiefe Rumpfmuskulatur.", "image": "images/exercises/dead-bug.webp", "targets": ["Rumpf"], "synergists": ["Schräge Bauchmuskeln"], "stabilizers": [], "keywords": ["dead bug", "Rumpf", "Körpergewicht"]}
+        ,{"name": "Hollow Body Hold", "muscle": "abs", "equip": ["bodyweight"], "desc": "Beim Hollow Body Hold wird der gesamte Körper in einer hohlen Position angespannt, um Rumpfkraft und Ausdauer zu verbessern.", "image": "images/exercises/hollow-body-hold.webp", "targets": ["Rumpf"], "synergists": ["Hüftbeuger"], "stabilizers": [], "keywords": ["hollow hold", "Rumpf", "Körpergewicht"]}
+        ,{"name": "Hollow Body Rock", "muscle": "abs", "equip": ["bodyweight"], "desc": "Hollow Body Rocks halten die Spannung des Hollow Holds während einer kontrollierten Schaukelbewegung aufrecht.", "image": "images/exercises/hollow-body-rock.webp", "targets": ["Rumpf"], "synergists": ["Hüftbeuger"], "stabilizers": [], "keywords": ["hollow rock", "Rumpf", "Körpergewicht"]}
+        ,{"name": "Lying Leg Raise", "muscle": "abs", "equip": ["bodyweight"], "desc": "Liegendes Beinheben trainiert den unteren Bauchbereich und die Hüftbeuger.", "image": "images/exercises/lying-leg-raise.webp", "targets": ["Unterer Bauch"], "synergists": ["Hüftbeuger"], "stabilizers": ["Rumpf"], "keywords": ["lying leg raise", "Bauch", "Körpergewicht"]}
+        ,{"name": "Reverse Crunch", "muscle": "abs", "equip": ["bodyweight"], "desc": "Reverse Crunches ziehen die Knie im Liegen Richtung Brust und betonen den unteren Bauchbereich.", "image": "images/exercises/reverse-crunch.webp", "targets": ["Unterer Bauch"], "synergists": ["Hüftbeuger"], "stabilizers": ["Rumpf"], "keywords": ["reverse crunch", "Bauch", "Körpergewicht"]}
+        ,{"name": "Cable Woodchopper", "muscle": "abs", "equip": ["cable"], "desc": "Cable Woodchoppers trainieren die schrägen Bauchmuskeln und entwickeln Rotationskraft.", "image": "images/exercises/cable-woodchopper.webp", "targets": ["Schräge Bauchmuskeln"], "synergists": ["Bauchmuskeln"], "stabilizers": ["Rumpf"], "keywords": ["woodchopper", "Kabel", "Bauch"]}
+        ,{"name": "Landmine Rotation", "muscle": "abs", "equip": ["barbell"], "desc": "Landmine Rotations verbessern die Rotationskraft des Rumpfs und beanspruchen die schrägen Bauchmuskeln.", "image": "images/exercises/landmine-rotation.webp", "targets": ["Schräge Bauchmuskeln"], "synergists": ["Schultern", "Oberer Rücken"], "stabilizers": ["Rumpf"], "keywords": ["landmine rotation", "Bauch", "Langhantel"]}
+        ,{"name": "Hanging Knee Raise", "muscle": "abs", "equip": ["bodyweight"], "desc": "Hängendes Knieheben ist eine leichtere Variante des Beinhebens und zielt auf den unteren Bauchbereich.", "image": "images/exercises/hanging-knee-raise.webp", "targets": ["Unterer Bauch"], "synergists": ["Hüftbeuger"], "stabilizers": ["Schulter", "Rumpf", "Unterarme"], "keywords": ["hanging knee raise", "Bauch", "Körpergewicht"]}
+        ,{"name": "Dragon Flag", "muscle": "abs", "equip": ["bodyweight"], "desc": "Dragon Flags sind eine fortgeschrittene Übung, bei der der Körper über die Schultern angehoben wird und der gesamte Rumpf stark arbeitet.", "image": "images/exercises/dragon-flag.webp", "targets": ["Rumpf"], "synergists": ["Hüftbeuger"], "stabilizers": ["Schulter", "Unterarme"], "keywords": ["dragon flag", "Bauch", "Körpergewicht"]}
+        ,{"name": "Suitcase Carry", "muscle": "abs", "equip": ["dumbbell"], "desc": "Suitcase Carries mit Gewicht in nur einer Hand stärken die schrägen Bauchmuskeln und die seitliche Stabilität.", "image": "images/exercises/suitcase-carry.webp", "targets": ["Schräge Bauchmuskeln"], "synergists": ["Schultern", "Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["suitcase carry", "Rumpf", "Kurzhantel"]}
+        ,{"name": "Turkish Get-Up", "muscle": "abs", "equip": ["dumbbell", "kettlebell"], "desc": "Der Turkish Get-Up führt vom Liegen zum Stehen mit einem Gewicht und fordert Rumpf und Schulter über mehrere Bewegungsphasen.", "image": "images/exercises/turkish-get-up.webp", "targets": ["Rumpf"], "synergists": ["Schultern", "Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["turkish get up", "Rumpf", "Kurzhantel"]}
+
+        // ==== New Calves exercises ====
+        ,{"name": "Single-Leg Calf Raise", "muscle": "calves", "equip": ["bodyweight"], "desc": "Einbeiniges Wadenheben auf den Zehenspitzen trainiert jede Wade einzeln.", "image": "images/exercises/single-leg-calf-raise.webp", "targets": ["Waden"], "synergists": [], "stabilizers": ["Fuß/Sprunggelenk"], "keywords": ["single leg calf raise", "Waden", "Körpergewicht"]}
+        ,{"name": "Leg Press Calf Press", "muscle": "calves", "equip": ["machine"], "desc": "Wadenpressen an der Beinpresse erlaubt hohe Lasten bei gut abgestütztem Rücken.", "image": "images/exercises/leg-press-calf-press.webp", "targets": ["Waden"], "synergists": [], "stabilizers": ["Fuß/Sprunggelenk"], "keywords": ["leg press calf", "Waden", "Maschine"]}
+        ,{"name": "Calf Raise on Hack Squat Machine", "muscle": "calves", "equip": ["machine"], "desc": "Wadenheben an der Hack-Squat-Maschine ermöglicht einen großen Bewegungsumfang und hohe Belastung.", "image": "images/exercises/calf-raise-hack-squat-machine.webp", "targets": ["Waden"], "synergists": [], "stabilizers": ["Fuß/Sprunggelenk"], "keywords": ["hack squat calf raise", "Waden", "Maschine"]}
+        ,{"name": "Calf Raise on Smith Machine", "muscle": "calves", "equip": ["machine"], "desc": "Wadenheben an der Smith Machine erleichtert die Gewichtssteuerung und bietet zusätzliche Balance.", "image": "images/exercises/calf-raise-smith-machine.webp", "targets": ["Waden"], "synergists": [], "stabilizers": ["Fuß/Sprunggelenk"], "keywords": ["smith machine calf raise", "Waden", "Maschine"]}
+        ,{"name": "Tibialis Raise", "muscle": "calves", "equip": ["bodyweight"], "desc": "Tibialis Raises heben den Vorfuß an, stärken den vorderen Schienbeinmuskel und verbessern die Balance rund um das Sprunggelenk.", "image": "images/exercises/tibialis-raise.webp", "targets": ["Vorderer Schienbeinmuskel"], "synergists": [], "stabilizers": ["Fuß/Sprunggelenk"], "keywords": ["tibialis raise", "Waden", "Körpergewicht"]}
+        ,{"name": "Jump Rope", "muscle": "calves", "equip": ["bodyweight"], "desc": "Seilspringen trainiert die Wadenzugausdauer und verbessert Kondition sowie muskuläre Ausdauer.", "image": "images/exercises/jump-rope.webp", "targets": ["Waden"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["jump rope", "Waden", "Körpergewicht"]}
+        ,{"name": "Seated Calf Raise (Single Leg)", "muscle": "calves", "equip": ["machine"], "desc": "Einbeiniges sitzendes Wadenheben betont besonders den tiefer liegenden Soleus.", "image": "images/exercises/seated-calf-raise-single-leg.webp", "targets": ["Waden"], "synergists": [], "stabilizers": ["Fuß/Sprunggelenk"], "keywords": ["single leg seated calf raise", "Waden", "Maschine"]}
+        ,{"name": "Bent-Knee Calf Raise", "muscle": "calves", "equip": ["dumbbell"], "desc": "Wadenheben mit gebeugtem Knie betont den Soleus stärker als die Variante mit gestrecktem Bein.", "image": "images/exercises/bent-knee-calf-raise.webp", "targets": ["Waden"], "synergists": [], "stabilizers": ["Fuß/Sprunggelenk"], "keywords": ["bent knee calf raise", "Waden", "Kurzhantel"]}
+        ,{"name": "Farmer Walk on Toes", "muscle": "calves", "equip": ["bodyweight", "dumbbell"], "desc": "Gehen auf den Zehenspitzen mit Zusatzgewicht stärkt die Waden und fordert gleichzeitig die Rumpfstabilität.", "image": "images/exercises/farmer-walk-on-toes.webp", "targets": ["Waden"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["farmer walk toes", "Waden", "Kurzhantel"]}
+
+        // ==== New Forearms / Grip exercises ====
+        ,{"name": "Wrist Roller", "muscle": "forearms", "equip": ["dumbbell"], "desc": "Mit einem Wrist Roller werden Unterarme trainiert, indem ein Seil kontrolliert auf- und abgewickelt wird.", "image": "images/exercises/wrist-roller.webp", "targets": ["Unterarme"], "synergists": [], "stabilizers": ["Schultern"], "keywords": ["wrist roller", "Unterarm", "Griff"]}
+        ,{"name": "Plate Pinch Hold", "muscle": "forearms", "equip": ["dumbbell"], "desc": "Beim Plate Pinch Hold werden Gewichtsscheiben zwischen den Fingern gehalten, um Griffkraft und Unterarme zu stärken.", "image": "images/exercises/plate-pinch-hold.webp", "targets": ["Unterarme"], "synergists": [], "stabilizers": ["Schultern"], "keywords": ["plate pinch", "Unterarm", "Griff"]}
+        ,{"name": "Captains of Crush Grippers", "muscle": "forearms", "equip": ["dumbbell"], "desc": "Captains-of-Crush-Gripper trainieren mit hohem Widerstand Griffkraft und Unterarmmuskulatur.", "image": "images/exercises/captains-of-crush-grippers.webp", "targets": ["Unterarme"], "synergists": [], "stabilizers": [], "keywords": ["grippers", "Unterarm", "Griff"]}
+        ,{"name": "Towel Dead Hang", "muscle": "forearms", "equip": ["bodyweight"], "desc": "Towel Dead Hangs erhöhen durch das Hängen an einem Handtuch die Anforderungen an Griffkraft, Unterarme und Armausdauer.", "image": "images/exercises/towel-dead-hang.webp", "targets": ["Unterarme"], "synergists": ["Rücken", "Bizeps"], "stabilizers": ["Schulter"], "keywords": ["towel dead hang", "Unterarm", "Körpergewicht"]}
+        ,{"name": "Fat Grip Dumbbell Hold", "muscle": "forearms", "equip": ["dumbbell"], "desc": "Fat-Grip-Kurzhantel-Holds fordern die Unterarme durch einen dickeren Griff und verbessern die Griffkraft.", "image": "images/exercises/fat-grip-dumbbell-hold.webp", "targets": ["Unterarme"], "synergists": [], "stabilizers": ["Schultern"], "keywords": ["fat grip hold", "Unterarm", "Kurzhantel"]}
+        ,{"name": "Barbell Static Hold", "muscle": "forearms", "equip": ["barbell"], "desc": "Beim statischen Langhantel-Halten wird die Stange über eine bestimmte Zeit gehalten, um Unterarme, Griffkraft und Ausdauer zu stärken.", "image": "images/exercises/barbell-static-hold.webp", "targets": ["Unterarme"], "synergists": [], "stabilizers": ["Schultern", "Rumpf"], "keywords": ["static hold", "Unterarm", "Langhantel"]}
+        ,{"name": "Reverse Wrist Curl", "muscle": "forearms", "equip": ["barbell"], "desc": "Reverse Wrist Curls stärken vor allem die Streckmuskulatur des Unterarms.", "image": "images/exercises/reverse-wrist-curl.webp", "targets": ["Unterarme"], "synergists": [], "stabilizers": [], "keywords": ["reverse wrist curl", "Unterarm", "Langhantel"]}
+        ,{"name": "Hammer Rotation", "muscle": "forearms", "equip": ["dumbbell"], "desc": "Hammer Rotations trainieren Pronation und Supination des Unterarms durch kontrolliertes Drehen der Hand.", "image": "images/exercises/hammer-rotation.webp", "targets": ["Unterarme"], "synergists": [], "stabilizers": [], "keywords": ["hammer rotation", "Unterarm", "Kurzhantel"]}
+        ,{"name": "Rice Bucket Drill", "muscle": "forearms", "equip": ["bodyweight"], "desc": "Beim Rice Bucket Drill wird die Hand in einem Eimer mit Reis in verschiedene Richtungen bewegt, um den Unterarm umfassend zu trainieren.", "image": "images/exercises/rice-bucket-drill.webp", "targets": ["Unterarme"], "synergists": [], "stabilizers": [], "keywords": ["rice bucket drill", "Unterarm", "Griff"]}
+        ,{"name": "Towel Row", "muscle": "forearms", "equip": ["bodyweight"], "desc": "Towel Rows erhöhen durch die Nutzung eines Handtuchs die Anforderungen an die Griffkraft und trainieren Rücken und Bizeps.", "image": "images/exercises/towel-row.webp", "targets": ["Rücken", "Bizeps"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["towel row", "Unterarm", "Rudern"]}
+
+        // ==== New Traps exercises ====
+        ,{"name": "Cable Shrug", "muscle": "traps", "equip": ["cable"], "desc": "Kabel-Shrugs liefern konstante Spannung und stärken den Trapezmuskel.", "image": "images/exercises/cable-shrug.webp", "targets": ["Trapez"], "synergists": ["Rhomboiden"], "stabilizers": ["Unterarme"], "keywords": ["cable shrug", "Trapez", "Kabel"]}
+        ,{"name": "Smith Machine Shrug", "muscle": "traps", "equip": ["machine"], "desc": "Shrugs an der Smith Machine ermöglichen hohe Lasten bei geführter und stabiler Bewegung.", "image": "images/exercises/smith-machine-shrug.webp", "targets": ["Trapez"], "synergists": ["Rhomboiden"], "stabilizers": ["Unterarme"], "keywords": ["smith shrug", "Trapez", "Maschine"]}
+        ,{"name": "Dumbbell Farmer Shrug Walk", "muscle": "traps", "equip": ["dumbbell"], "desc": "Beim Dumbbell Farmer Shrug Walk gehst du mit schweren Kurzhanteln und kombinierst das Tragen mit leichten Shrugs, um Trapez und Griffkraft zu entwickeln.", "image": "images/exercises/dumbbell-farmer-shrug-walk.webp", "targets": ["Trapez"], "synergists": ["Unterarme"], "stabilizers": ["Rumpf"], "keywords": ["farmer shrug walk", "Trapez", "Kurzhantel"]}
+        ,{"name": "Rack Pull (Trap Emphasis)", "muscle": "traps", "equip": ["barbell"], "desc": "Rack Pulls mit Trapezfokus und breiterem Griff verlagern die Belastung stärker auf den Trapez als auf den restlichen Rücken.", "image": "images/exercises/rack-pull-trap-emphasis.webp", "targets": ["Trapez"], "synergists": ["Beinbeuger", "Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["rack pull traps", "Trapez", "Langhantel"]}
+        ,{"name": "High Pull", "muscle": "traps", "equip": ["barbell"], "desc": "High Pulls beginnen vom Boden oder etwa auf Kniehöhe und entwickeln Trapezkraft sowie Explosivität.", "image": "images/exercises/high-pull.webp", "targets": ["Trapez"], "synergists": ["Schultern", "Hintere Schulter"], "stabilizers": ["Rumpf"], "keywords": ["high pull", "Trapez", "Langhantel"]}
+        ,{"name": "Power Shrug", "muscle": "traps", "equip": ["barbell"], "desc": "Power Shrugs sind eine dynamische Shrug-Variante, bei der die Beine den Bewegungsstart unterstützen und dadurch höhere Lasten möglich werden.", "image": "images/exercises/power-shrug.webp", "targets": ["Trapez"], "synergists": ["Gesäß"], "stabilizers": ["Rumpf"], "keywords": ["power shrug", "Trapez", "Langhantel"]}
+        ,{"name": "Snatch-Grip High Pull", "muscle": "traps", "equip": ["barbell"], "desc": "Snatch-Grip High Pulls nutzen einen breiten Griff wie beim Reißen und stärken Trapez sowie Schultern.", "image": "images/exercises/snatch-grip-high-pull.webp", "targets": ["Trapez"], "synergists": ["Schultern", "Oberer Rücken"], "stabilizers": ["Rumpf"], "keywords": ["snatch grip high pull", "Trapez", "Langhantel"]}
+        ,{"name": "Face Pull Shrug Combo", "muscle": "traps", "equip": ["cable"], "desc": "Die Kombination aus Face Pull und Shrug trainiert Trapez und hintere Schulter in einer Bewegung.", "image": "images/exercises/face-pull-shrug-combo.webp", "targets": ["Trapez", "Hintere Schulter"], "synergists": ["Rhomboiden"], "stabilizers": ["Rumpf"], "keywords": ["face pull shrug", "Trapez", "Kabel"]}
+        ,{"name": "Incline Bench Shrug", "muscle": "traps", "equip": ["dumbbell"], "desc": "Incline Bench Shrugs verändern durch die Schrägbank den Zugwinkel und betonen den oberen Trapez.", "image": "images/exercises/incline-bench-shrug.webp", "targets": ["Oberer Trapez"], "synergists": ["Nacken"], "stabilizers": ["Rumpf"], "keywords": ["incline bench shrug", "Trapez", "Kurzhantel"]}
+        ,{"name": "Overhead Shrug", "muscle": "traps", "equip": ["dumbbell"], "desc": "Overhead Shrugs mit Gewicht über dem Kopf trainieren oberen Trapez und Serratus anterior.", "image": "images/exercises/overhead-shrug.webp", "targets": ["Oberer Trapez", "Serratus anterior"], "synergists": ["Schultern", "Rhomboiden"], "stabilizers": ["Rumpf"], "keywords": ["overhead shrug", "Trapez", "Kurzhantel"]}
+      ];
+
+      // =========================
+      // 3) Rendering + filtering
+      // =========================
+      const $ = (s) => document.querySelector(s);
+      const $$ = (s) => Array.from(document.querySelectorAll(s));
+
+      // State: allow selecting multiple muscles and equipments simultaneously.
+      const state = {
+        // Selected muscle keys. Empty array means "all" (no filtering).
+        muscles: [],
+        // Selected equipment keys. Empty array means "all".
+        equips: [],
+        q: "",
+        // Currently expanded muscle section. null means no section pinned to the top.
+        openMuscle: null,
+      };
+
+      function normalize(str) {
+        return (str || "")
+          .toString()
+          .toLowerCase()
+          .trim();
+      }
+
+      function tokenizeQuery(q) {
+        const nq = normalize(q);
+        if (!nq) return [];
+        // split on spaces + common separators (/, commas incl Arabic comma)
+        return nq.split(/[\s,\/]+/).map(s => s.trim()).filter(Boolean);
+      }
+
+
+      function exerciseSearchHay(ex) {
+        const bits = [
+          ex.name,
+          ex.desc || "",
+          ex.muscle,
+          ...(ex.equip || []),
+          ...(ex.targets || []),
+          ...(ex.synergists || []),
+          ...(ex.stabilizers || []),
+          ...(ex.keywords || []),
+        ];
+        return normalize(bits.join(" "));
+      }function buildChips() {
+        // Muscles
+        const musWrap = document.getElementById("muscleChips");
+        musWrap.innerHTML = MUSCLES.map((m) => {
+          // Determine if this chip is active. When no muscles selected, highlight "all" chip.
+          const isActive = state.muscles.length === 0 ? m.key === "all" : state.muscles.includes(m.key);
+          const active = isActive ? "active" : "";
+          const label = m.ar;
+          // Use English name as a tooltip for extra context
+          return `<button type="button" class="exlib-chip ${active}" data-type="muscle" data-key="${m.key}" title="${m.en}">
+              ${label}
+            </button>`;
+        }).join("");
+
+        // Equipment
+        const eqWrap = document.getElementById("equipChips");
+        eqWrap.innerHTML = EQUIPMENT.map((e) => {
+          // Determine active state for equipment chips. When none selected, highlight "all" chip.
+          const isActive = state.equips.length === 0 ? e.key === "all" : state.equips.includes(e.key);
+          const active = isActive ? "active" : "";
+          return `<button type="button" class="exlib-chip ${active}" data-type="equip" data-key="${e.key}" title="${e.ar}">
+              ${e.ar}
+            </button>`;
+        }).join("");
+
+        // Click handlers for muscle chips (multi-select)
+        $$("#muscleChips .exlib-chip").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const key = btn.dataset.key;
+            if (key === "all") {
+              // Selecting "all" clears all selections
+              state.muscles = [];
+            } else {
+              const idx = state.muscles.indexOf(key);
+              if (idx >= 0) {
+                // Deselect
+                state.muscles.splice(idx, 1);
+              } else {
+                // Add selection
+                state.muscles.push(key);
+              }
+            }
+            buildChips();
+            render();
+          });
+        });
+
+        // Click handlers for equipment chips (multi-select)
+        $$("#equipChips .exlib-chip").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const key = btn.dataset.key;
+            if (key === "all") {
+              state.equips = [];
+            } else {
+              const idx = state.equips.indexOf(key);
+              if (idx >= 0) {
+                state.equips.splice(idx, 1);
+              } else {
+                state.equips.push(key);
+              }
+            }
+            buildChips();
+            render();
+          });
+        });
+      }
+
+      function groupExercises(list) {
+        const map = new Map();
+        for (const ex of list) {
+          const k = ex.muscle;
+          if (!map.has(k)) map.set(k, []);
+          map.get(k).push(ex);
+        }
+        return map;
+      }
+
+      function render() {
+        const q = normalize(state.q);
+        const filtered = EXERCISES.filter((ex) => {
+          // A muscle passes if no muscles are selected or this exercise's muscle is selected
+          const okMuscle = state.muscles.length === 0 || state.muscles.includes(ex.muscle);
+          // An equipment passes if no equip selected or if any of its equip tags match a selected equip
+          const okEquip = state.equips.length === 0 || (ex.equip || []).some(eqKey => state.equips.includes(eqKey));
+          const tokens = tokenizeQuery(state.q);
+          const okSearch = tokens.length === 0 || tokens.every(t => exerciseSearchHay(ex).includes(t));
+          return okMuscle && okEquip && okSearch;
+        });
+
+        const grouped = groupExercises(filtered);
+        const wrap = document.getElementById("muscleSections");
+        wrap.innerHTML = "";
+
+        // Count
+        const countEl = document.getElementById("resultCount");
+        countEl.textContent = `Ergebnisse: ${filtered.length} Übungen`;
+
+        const emptyEl = document.getElementById("emptyState");
+        if (emptyEl) {
+          emptyEl.hidden = filtered.length !== 0;
+        }
+
+        // Empty state
+        const empty = document.getElementById("emptyState");
+        empty.hidden = filtered.length !== 0;
+
+        // Order muscles by MUSCLES list
+        // Build the list of muscles to display.  If a muscle is currently open/pinned
+        // (state.openMuscle), move that key to the front so its section appears first.
+        const baseMuscles = MUSCLES.filter(m => m.key !== "all").map(m => m.key);
+        let orderedMuscles;
+        if (state.openMuscle && baseMuscles.includes(state.openMuscle)) {
+          orderedMuscles = [state.openMuscle, ...baseMuscles.filter(k => k !== state.openMuscle)];
+        } else {
+          orderedMuscles = baseMuscles;
+        }
+
+        orderedMuscles.forEach((musKey) => {
+          const items = grouped.get(musKey);
+          if (!items || items.length === 0) return;
+
+          const m = MUSCLES.find(x => x.key === musKey);
+
+          const section = document.createElement("section");
+          section.className = "exlib-muscle";
+          section.setAttribute("data-muscle", musKey);
+
+          section.innerHTML = `
+            <div class="exlib-muscle-head">
+              <div class="exlib-muscle-info">
+                <div class="exlib-muscle-img">
+                  <img src="${m.img}" alt="${m.ar}" onerror="this.style.display='none'; this.parentElement.classList.add('missing');" />
+                  <span class="exlib-img-placeholder">Bild hier einfügen</span>
+                  <span class="exlib-img-fn">${(m.img || "").split("/").pop()}</span>
+                </div>
+                <div>
+                  <h2 class="exlib-muscle-title">${m.ar}</h2>
+                  <p class="exlib-muscle-sub">${m.en} • ${items.length} Übungen</p>
+                </div>
+              </div>
+              <button type="button" class="exlib-jump" data-jump="${musKey}" title="Nach diesem Muskel filtern">
+                Filtern
+              </button>
+            </div>
+
+            <div class="exlib-cards">
+              ${items.map(cardTemplate).join("")}
+            </div>
+          `;
+          // Append the section to the container.  We'll adjust the open state below.
+          wrap.appendChild(section);
+
+          // Set open/closed state based on the global openMuscle.  This controls whether
+          // the cards are visible and whether the arrow indicator rotates.
+          if (state.openMuscle === musKey) {
+            section.classList.add('open');
+          } else {
+            section.classList.remove('open');
+          }
+
+          // Filter (jump) button: clicking sets the muscle filter to only this muscle.
+          section.querySelector(".exlib-jump").addEventListener("click", (ev) => {
+            ev.stopPropagation();
+            // Set the filter to only this muscle (multi-select array becomes single entry)
+            state.muscles = [musKey];
+            buildChips();
+            // Do not change openMuscle when filtering; leave current pinned state.
+            render();
+            // Scroll to the top of the section after filtering.
+            window.scrollTo({ top: section.offsetTop - 120, behavior: "smooth" });
+          });
+
+          // Toggle expand/pin on header click (excluding the jump button)
+          const headEl = section.querySelector(".exlib-muscle-head");
+          headEl.addEventListener("click", (ev) => {
+            // Ignore clicks on the jump button
+            if (ev.target.closest('.exlib-jump')) return;
+            // Determine if this muscle is already open
+            if (state.openMuscle === musKey) {
+              // Close it: clear openMuscle
+              state.openMuscle = null;
+            } else {
+              // Open this muscle: set openMuscle to musKey
+              state.openMuscle = musKey;
+            }
+            // Re-render the list with new ordering
+            render();
+            // After DOM updated, scroll to the opened section (if any)
+            setTimeout(() => {
+              const newSection = document.querySelector(`[data-muscle="${musKey}"]`);
+              if (newSection) {
+                window.scrollTo({ top: newSection.offsetTop - 120, behavior: 'smooth' });
+              }
+            }, 50);
+          });
+        });
+
+        // Tag click => set equipment filter to only this tag
+        $$(".exlib-tag[data-equip]").forEach((tag) => {
+          tag.addEventListener("click", () => {
+            const key = tag.dataset.equip;
+            state.equips = [key];
+            buildChips();
+            render();
+          });
+        });
+      }
+
+      function labelForEquip(key) {
+        const item = EQUIPMENT.find(e => e.key === key);
+        return item ? item.ar : key;
+      }
+
+      function cardTemplate(ex) {
+        const equipTags = (ex.equip || []).map((k) => `
+          <button type="button"
+                  class="exlib-tag"
+                  data-equip="${k}"
+                  title="Filter: ${labelForEquip(k)}">
+            ${labelForEquip(k)}
+          </button>
+        `).join("");
+
+        const targets = (ex.targets || []).filter(Boolean).map(t =>
+          `<span class="exlib-role-chip exlib-role-chip--target">${t}</span>`
+        ).join("");
+
+        const synergists = (ex.synergists || []).filter(Boolean).map(t =>
+          `<span class="exlib-role-chip exlib-role-chip--synergist">${t}</span>`
+        ).join("");
+
+        const stabilizers = (ex.stabilizers || []).filter(Boolean).map(t =>
+          `<span class="exlib-role-chip exlib-role-chip--stabilizer">${t}</span>`
+        ).join("");
+
+        const muscleMeta = MUSCLES.find((m) => m.key === ex.muscle);
+        const muscleLabel = muscleMeta ? muscleMeta.ar : "";
+
+        return `
+          <article class="exlib-card exlib-card--wide" data-hay="${exerciseSearchHay(ex)}">
+            <div class="exlib-wide-media">
+              <div class="exlib-ex-img" data-fn="${(ex.image || '').split('/').pop()}">
+                <img
+                  src="${ex.image}"
+                  alt="${ex.name}"
+                  loading="lazy"
+                  onerror="this.style.display='none'; this.parentElement.classList.add('missing');"
+                />
+                <span class="exlib-img-placeholder">Bild hier einfügen</span>
+              </div>
+
+              <div class="exlib-wide-equipment">${equipTags}</div>
+            </div>
+
+            <div class="exlib-wide-content">
+              <div class="exlib-wide-heading">
+                <span class="exlib-wide-muscle">${muscleLabel}</span>
+                <h3 class="exlib-ex-name">${ex.name}</h3>
+              </div>
+
+              <p class="exlib-ex-desc">${ex.desc || ""}</p>
+
+              <div class="exlib-wide-roles" aria-label="Beteiligte Muskeln">
+                ${targets ? `
+                  <div class="exlib-wide-role">
+                    <span class="exlib-wide-role-name exlib-wide-role-name--target">
+                      <span class="legend-dot legend-dot--target"></span>
+                      Ziel
+                    </span>
+                    <div class="exlib-wide-role-values">${targets}</div>
+                  </div>
+                ` : ""}
+
+                ${synergists ? `
+                  <div class="exlib-wide-role">
+                    <span class="exlib-wide-role-name exlib-wide-role-name--synergist">
+                      <span class="legend-dot legend-dot--syn"></span>
+                      Unterstützt
+                    </span>
+                    <div class="exlib-wide-role-values">${synergists}</div>
+                  </div>
+                ` : ""}
+
+                ${stabilizers ? `
+                  <div class="exlib-wide-role">
+                    <span class="exlib-wide-role-name exlib-wide-role-name--stabilizer">
+                      <span class="legend-dot legend-dot--stab"></span>
+                      Stabilisiert
+                    </span>
+                    <div class="exlib-wide-role-values">${stabilizers}</div>
+                  </div>
+                ` : ""}
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      // =========================
+      // 4) Wire up controls
+      // =========================
+      document.addEventListener("DOMContentLoaded", () => {
+        buildChips();
+        render();
+
+        const search = document.getElementById("exSearch");
+        const clear = document.getElementById("clearSearch");
+        const reset = document.getElementById("resetFilters");
+        const suggestionsEl = document.getElementById("searchSuggestions");
+        const searchWrap = document.querySelector(".exlib-search-wrap");
+
+        /**
+         * Populate the suggestions dropdown based on the current search query.
+         * It extracts matching exercise names and keywords containing the typed string.
+         */
+        function updateSuggestions() {
+          if (!suggestionsEl) return;
+          const query = (search.value || "").trim().toLowerCase();
+          if (!query) {
+            suggestionsEl.innerHTML = "";
+            suggestionsEl.hidden = true;
+            return;
+          }
+          const set = new Set();
+          EXERCISES.forEach((ex) => {
+            const nameLc = (ex.name || "").toLowerCase();
+            if (nameLc.includes(query)) set.add(ex.name);
+            (ex.keywords || []).forEach((kw) => {
+              const kwLc = kw.toLowerCase();
+              if (kwLc.includes(query)) set.add(kw);
+            });
+          });
+          const all = Array.from(set);
+          // Sort results: those starting with query come first
+          all.sort((a, b) => {
+            const aLc = a.toLowerCase();
+            const bLc = b.toLowerCase();
+            const aStarts = aLc.startsWith(query);
+            const bStarts = bLc.startsWith(query);
+            if (aStarts && !bStarts) return -1;
+            if (!aStarts && bStarts) return 1;
+            return aLc.localeCompare(bLc);
+          });
+          const top = all.slice(0, 6);
+          suggestionsEl.innerHTML = top.map((s) => `<li tabindex="0">${s}</li>`).join("");
+          suggestionsEl.hidden = top.length === 0;
+        }
+
+        /** Hide the suggestions dropdown */
+        function hideSuggestions() {
+          if (suggestionsEl) suggestionsEl.hidden = true;
+        }
+
+        const applySearch = () => {
+          state.q = search.value || "";
+          clear.style.opacity = state.q.trim() ? "1" : "0";
+          clear.style.pointerEvents = state.q.trim() ? "auto" : "none";
+          render();
+          // Only scroll to results if no suggestions are visible
+          if (state.q && state.q.trim().length > 0 && (typeof suggestionsEl === 'undefined' || suggestionsEl.hidden)) {
+            document.getElementById("muscleSections")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        };
+
+        // Update suggestions then apply search when typing
+        search.addEventListener("input", () => {
+          updateSuggestions();
+          applySearch();
+        });
+
+        // Show suggestions on focus or click
+        search.addEventListener("focus", updateSuggestions);
+        search.addEventListener("click", updateSuggestions);
+
+        // Select suggestion via click
+        suggestionsEl?.addEventListener("click", (e) => {
+          const target = e.target;
+          if (target && target.tagName === "LI") {
+            search.value = target.textContent || "";
+            applySearch();
+            hideSuggestions();
+            search.focus();
+          }
+        });
+
+        // Hide suggestions when clicking outside
+        document.addEventListener("click", (e) => {
+          if (!searchWrap.contains(e.target)) {
+            hideSuggestions();
+          }
+        });
+
+        clear.addEventListener("click", () => {
+          search.value = "";
+          updateSuggestions();
+          applySearch();
+          search.focus();
+        });
+
+        reset.addEventListener("click", () => {
+          // Clear all filters
+          state.muscles = [];
+          state.equips = [];
+          state.q = "";
+          search.value = "";
+          buildChips();
+          render();
+          hideSuggestions();
+        });
+      });
+    </script>
+<!-- Script to copy email address to clipboard and display toast -->
+<script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const emailIcons = document.querySelectorAll('a[data-copy-email]');
+        emailIcons.forEach(function (icon) {
+          icon.addEventListener('click', function (ev) {
+            ev.preventDefault();
+            const mail = icon.getAttribute('data-copy-email');
+            if (!mail) return;
+            navigator.clipboard.writeText(mail).then(function () {
+              const existing = document.querySelector('.email-copy-toast');
+              if (existing) existing.remove();
+              const toast = document.createElement('div');
+              toast.className = 'email-copy-toast';
+              toast.textContent = 'E-Mail-Adresse kopiert!';
+              document.body.appendChild(toast);
+              setTimeout(function () {
+                toast.remove();
+              }, 3000);
+            });
+          });
+        });
+      });
+    </script>
+<!-- Additional script for legal modals and newsletter -->
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const legalOverlay = document.getElementById('legalOverlay');
+        const legalModal = document.getElementById('legalModal');
+        const legalModalTitle = document.getElementById('legalModalTitle');
+        const legalModalBody = document.getElementById('legalModalBody');
+        const legalCloseBtn = document.getElementById('legalCloseBtn');
+        // Show modal with HTML content from hidden divs
+        function showLegal(title, html) {
+          if (legalModalTitle) legalModalTitle.textContent = title;
+          if (legalModalBody) legalModalBody.innerHTML = html;
+          if (legalOverlay) legalOverlay.style.display = 'flex';
+          if (legalModal) legalModal.style.display = 'block';
+        }
+        const termsLink = document.getElementById('terms-link');
+        const privacyLink = document.getElementById('privacy-link');
+        if (termsLink) {
+          termsLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const termsEl = document.getElementById('terms-content');
+            const html = termsEl ? termsEl.innerHTML : '';
+            showLegal('Nutzungsbedingungen', html);
+          });
+        }
+        if (privacyLink) {
+          privacyLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const privacyEl = document.getElementById('privacy-content');
+            const html = privacyEl ? privacyEl.innerHTML : '';
+            showLegal('Datenschutzrichtlinie', html);
+          });
+        }
+        if (legalCloseBtn) {
+          legalCloseBtn.addEventListener('click', function() {
+            if (legalOverlay) legalOverlay.style.display = 'none';
+            if (legalModal) legalModal.style.display = 'none';
+          });
+        }
+        if (legalOverlay) {
+          legalOverlay.addEventListener('click', function() {
+            legalOverlay.style.display = 'none';
+            legalModal.style.display = 'none';
+          });
+        }
+        // Newsletter form submission is handled by Google Form. No client-side interception needed here.
+      });
+    </script>
+<script defer="" src="mobile-enhancements.js"></script></body>
+</html>

@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Persönliches Coaching-Formular</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;family=Tajawal:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Base site styles -->
+<link href="style.css" rel="stylesheet"/>
+<style>
+      /* Prevent iOS Safari auto-zoom and font boosting on mobile */
+      /* Ensure text size adjusts normally and inputs have at least 16px font to avoid zooming when tapped */
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+      /* Avoid horizontal scrolling on this page by preventing overflow and
+         constraining the maximum width. Without this, narrow mobile screens
+         can accumulate a small horizontal scroll offset and cause steps to
+         appear off‑center when navigating the form. */
+      html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+      }
+
+      /* Checkmark indicator for selected coaching package
+         Each plan icon will display a small checkmark badge on its emoji
+         circle when selected. This provides a clear visual confirmation of
+         which package is chosen while keeping the hover/tap details unchanged. */
+      .plan-icons-grid.offer-options .plan-icon .icon-circle {
+        position: relative;
+      }
+      .plan-icons-grid.offer-options .plan-icon.selected .icon-circle::after {
+        content: '✔';
+        font-size: 0.75rem;
+        position: absolute;
+        top: -0.35rem;
+        right: -0.35rem;
+        width: 1.1rem;
+        height: 1.1rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--accent);
+        color: var(--light);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      }
+      /* Additional styles for coaching form page */
+      /* Define accent colors used in this page */
+      :root {
+        /* Use existing theme colors for accent buttons and progress */
+        --accent: var(--h2);
+        --accent-hover: var(--h1);
+      }
+      .coaching-hero {
+        padding: 80px 0 30px;
+        text-align: center;
+        background: var(--secondary-bg);
+      }
+      .language-selection {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .language-selection .lang-btn {
+        padding: 0.7rem 1.3rem;
+        border-radius: 12px;
+        border: 2px solid var(--h1);
+        background: transparent;
+        color: var(--h1);
+        font-weight: 900;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+      .language-selection .lang-btn:hover {
+        background: rgba(55, 149, 187, 0.15);
+        transform: translateY(-1px);
+      }
+      body.dark .language-selection .lang-btn {
+        border-color: var(--dark-accent);
+        color: var(--dark-accent);
+      }
+      body.dark .language-selection .lang-btn:hover {
+        background: rgba(87, 167, 201, 0.25);
+      }
+      #form-section {
+        margin-top: 40px;
+      }
+      #form-section.hidden {
+        display: none;
+      }
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 700;
+        color: var(--h1);
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.7rem;
+        border-radius: 8px;
+        border: 1px solid rgba(10, 116, 166, 0.3);
+        font-family: inherit;
+        /* Set a minimum font size to prevent mobile browsers from zooming */
+        font-size: 16px;
+      }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+      .form-group button {
+        margin-top: 20px;
+      }
+      /* Progress bar and steps styles */
+      .progressbar {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        counter-reset: step;
+        /* Display items right-to-left so that step 1 appears on the right */
+        direction: ltr;
+        flex-direction: row;
+      }
+      .progress {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        /* Hide the connecting line between steps. We only use the circles to indicate progress */
+        height: 0;
+        background: transparent;
+        transform: translateY(-50%);
+        z-index: 0;
+        transition: width 0.3s ease;
+        border-radius: 2px;
+        width: 0%;
+      }
+      .progress-step {
+        width: 34px;
+        height: 34px;
+        background: var(--secondary-bg);
+        border-radius: 50%;
+        border: 2px solid var(--h1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+        color: var(--h1);
+        font-weight: 700;
+        transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        cursor: pointer;
+      }
+      .progress-step::before {
+        /* Display the step number stored in the data-title attribute. Numbers help users know their progress */
+        content: attr(data-title);
+      }
+      .progress-step.progress-step-active {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+      .step {
+        display: none;
+      }
+      .step.step-active {
+        display: block;
+      }
+      .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+      }
+      .next-btn,
+      .prev-btn,
+      .submit-btn {
+        padding: 0.7rem 1.5rem;
+        border-radius: 10px;
+        border: none;
+        background: var(--accent);
+        color: #fff;
+        cursor: pointer;
+        font-weight: 700;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+      .prev-btn {
+        background: var(--secondary-bg);
+        color: var(--h1);
+      }
+      .next-btn:hover,
+      .submit-btn:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+      }
+      .prev-btn:hover {
+        background: var(--accent-hover);
+        color: #fff;
+        transform: translateY(-2px);
+      }
+      .question-img {
+        width: 100%;
+        max-height: 180px;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        border-radius: 10px;
+      }
+
+      /* ===== Dark mode adjustments =====
+         When the user toggles dark mode, some elements on this page still
+         retain their light backgrounds, making the white text invisible.
+         Override those surfaces to dark colours so the content remains legible. */
+      /* Darken the hero section background in dark mode */
+      body.dark .coaching-hero {
+        background: var(--dark-secondary);
+      }
+      /* Update the “previous” navigation button to suit dark backgrounds */
+      body.dark .prev-btn {
+        background: var(--dark-secondary);
+        color: var(--dark-accent);
+      }
+      body.dark .prev-btn:hover {
+        background: var(--dark-accent);
+        /* Use a dark background on hover to contrast with the accent colour */
+        color: var(--dark-bg);
+      }
+
+      /* ===== Loading state styles =====
+         When the user submits the form, display an animated loading spinner
+         with a message. This helps provide feedback while the PDF is being
+         generated and the WhatsApp message prepared. */
+      #submitLoading {
+        text-align: center;
+        padding: 80px 0;
+      }
+      #submitLoading .loader {
+        margin: 0 auto 20px;
+        border: 5px solid rgba(1, 109, 156, 0.15);
+        border-top: 5px solid var(--accent);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+      }
+      /* Dark mode adjustments for the loader */
+      body.dark #submitLoading .loader {
+        border: 5px solid rgba(87, 167, 201, 0.3);
+        border-top: 5px solid var(--dark-accent);
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+</head>
+<body data-page="coaching">
+<div id="top"></div>
+<!-- Header copied from index for consistent navigation and theme toggle -->
+<header class="site-header" id="siteHeader">
+<div class="container">
+<div class="header-shell">
+<a aria-label="GYM LABORATORY Startseite" class="logo header-brand" href="index.html#home">
+<span aria-hidden="true" class="header-brand-mark header-brand-mark--logo">
+<img alt="" src="images/gym-laboratory-logo.webp"/>
+</span>
+<span class="header-brand-name">GYM LABORATORY</span>
+</a>
+<nav aria-label="Hauptnavigation" class="nav-menu" id="primaryNav">
+<a class="nav-link" href="index.html#home">Startseite</a><a class="nav-link" href="index.html#ebook">E-Book</a><a aria-current="page" class="nav-link active" href="index.html#online">Coaching</a><a class="nav-link" href="exercises.html">Übungsbibliothek</a><a class="nav-link" href="blog.html">Blog</a><a class="nav-link" href="index.html#free-guides">Kostenlose Guides</a><a class="nav-link" href="index.html#bmr">Kalorienrechner</a>
+</nav>
+<div class="header-actions">
+<label class="theme-switch header-theme-switch" title="Darstellung ändern">
+<input aria-label="Darstellung ändern" id="themeToggle" type="checkbox"/>
+<span aria-hidden="true" class="theme-slider">
+<span class="theme-icon theme-icon--sun">☀️</span>
+<span class="theme-icon theme-icon--moon">🌙</span>
+</span>
+</label>
+<button aria-controls="primaryNav" aria-expanded="false" aria-label="Menü öffnen" class="nav-toggle" id="navToggle" type="button">
+<span></span><span></span><span></span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main>
+<section class="coaching-hero">
+<div class="container">
+<h1 class="section-title">Persönliches Coaching-Formular</h1>
+<p class="online-description" data-ar-after="Dieses ausführliche Formular erfasst alle wichtigen Angaben, damit ich dich sicher und effizient zu deinen Zielen führen und dir ein möglichst individuelles Coaching bieten kann." data-dar-after="Dieses ausführliche Formular erfasst alle wichtigen Angaben, damit ich dich sicher und effizient zu deinen Zielen führen und dir ein möglichst individuelles Coaching bieten kann.">
+            Willkommen! Klicke auf „Formular starten“, um deine Angaben auszufüllen.
+            
+            <!-- Add translation attributes for the message shown after language selection. These will be populated in setLanguage() -->
+</p>
+<div class="language-selection">
+<button class="lang-btn" id="lang-ar">Formular starten</button>
+<button class="lang-btn" id="lang-dar" style="display:none;">Formular starten</button>
+</div>
+</div>
+</section>
+<!-- Loading message shown during form submission -->
+<section class="hidden" id="submitLoading">
+<div class="container">
+<div class="loader"></div>
+<!-- The heading and paragraph will be replaced with the correct language at runtime -->
+<h2 class="section-title" data-ar="Deine Angaben werden gesendet..." data-dar="Deine Angaben werden gesendet...">Deine Angaben werden gesendet...</h2>
+<p class="online-description" data-ar="Das Formular wird jetzt gesendet. Bitte warten..." data-dar="Das Formular wird jetzt gesendet. Bitte warten...">Das Formular wird jetzt gesendet. Bitte warten...</p>
+</div>
+</section>
+<section class="hidden" id="form-section">
+<div class="container">
+<!-- Progress bar -->
+<div class="progressbar">
+<div class="progress" id="progress"></div>
+<div class="progress-step progress-step-active" data-title="1"></div>
+<div class="progress-step" data-title="2"></div>
+<div class="progress-step" data-title="3"></div>
+<div class="progress-step" data-title="4"></div>
+<div class="progress-step" data-title="5"></div>
+<div class="progress-step" data-title="6"></div>
+<div class="progress-step" data-title="7"></div>
+</div>
+<form id="coaching-form">
+<!-- Step 1: Basic Information -->
+<div class="step step-active">
+<img alt="" class="question-img" loading="lazy" src="images/form/q01.webp"/>
+<div class="form-group">
+<label data-ar="E-Mail-Adresse *" data-dar="E-Mail-Adresse *" for="email"></label>
+<input id="email" required="" type="email"/>
+</div>
+<div class="form-group">
+<label data-ar="Name *" data-dar="Name *" for="name"></label>
+<input id="name" required="" type="text"/>
+</div>
+<div class="form-group">
+<label data-ar="WhatsApp-Nummer *" data-dar="WhatsApp-Nummer *" for="phone"></label>
+<input id="phone" required="" type="tel"/>
+</div>
+<div class="form-group">
+<label data-ar="Was ist dein Hauptziel? *" data-dar="Was ist dein Hauptziel? *" for="goal"></label>
+<select id="goal" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Gewicht verlieren" data-dar="Gewicht verlieren" value="lose_weight"></option>
+<option data-ar="Muskeln aufbauen" data-dar="Muskeln aufbauen" value="build_muscle"></option>
+<option data-ar="Fett verlieren und gleichzeitig Muskeln aufbauen" data-dar="Fett verlieren und gleichzeitig Muskeln aufbauen" value="both"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Geschlecht *" data-dar="Geschlecht *" for="gender"></label>
+<select id="gender" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Männlich" data-dar="Männlich" value="male"></option>
+<option data-ar="Weiblich" data-dar="Weiblich" value="female"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Altersgruppe *" data-dar="Altersgruppe *" for="ageGroup"></label>
+<select id="ageGroup" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Unter 20" data-dar="Unter 20" value="&lt;20"></option>
+<option data-ar="20–29" data-dar="20–29" value="20-29"></option>
+<option data-ar="30–39" data-dar="30–39" value="30-39"></option>
+<option data-ar="40–49" data-dar="40–49" value="40-49"></option>
+<option data-ar="50+" data-dar="50+" value="50+"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Wie groß bist du? (cm) *" data-dar="Wie groß bist du? (cm) *" for="height"></label>
+<!-- Restrict height to a normal range for better validation -->
+<input id="height" max="250" min="100" required="" step="1" type="number"/>
+</div>
+<div class="form-group">
+<label data-ar="Wie viel wiegst du aktuell? (kg) *" data-dar="Wie viel wiegst du aktuell? (kg) *" for="weight"></label>
+<!-- Restrict weight to a normal range for better validation -->
+<input id="weight" max="200" min="30" required="" step="0.1" type="number"/>
+</div>
+<div class="button-group">
+<button class="next-btn" type="button">Weiter</button>
+</div>
+</div>
+<!-- Step 2: Body Composition & Goals -->
+<div class="step">
+<img alt="" class="question-img" loading="lazy" src="images/form/q02.webp"/>
+<div class="form-group">
+<!-- Replace select with interactive body shape image options -->
+<label data-ar="Welche Körperform beschreibt dich aktuell am besten? *" data-dar="Welche Körperform beschreibt dich aktuell am besten? *"></label>
+<div class="body-shape-options" id="bodyShapeOptions">
+<!-- Slender (uses the existing user‑provided image) -->
+<label class="body-shape-option">
+<input name="bodyShapeOption" required="" type="radio" value="slender"/>
+<img alt="Körperform 1" loading="lazy" src="images/form/bodyshape_01.webp"/>
+<!-- Title below each image; translations provided on the span via data attributes -->
+<span class="body-shape-title" data-ar="Schlank" data-dar="Schlank">Schlank</span>
+</label>
+<!-- Slender Soft -->
+<label class="body-shape-option">
+<input name="bodyShapeOption" required="" type="radio" value="slender_soft"/>
+<img alt="Körperform 2" loading="lazy" src="images/form/bodyshape_02.webp"/>
+<span class="body-shape-title" data-ar="Schlank &amp; weich" data-dar="Schlank &amp; weich">Schlank &amp; weich</span>
+</label>
+<!-- Defined -->
+<label class="body-shape-option">
+<input name="bodyShapeOption" required="" type="radio" value="defined"/>
+<img alt="Körperform 3" loading="lazy" src="images/form/bodyshape_03.webp"/>
+<span class="body-shape-title" data-ar="Definiert" data-dar="Definiert">Definiert</span>
+</label>
+<!-- Athletic -->
+<label class="body-shape-option">
+<input name="bodyShapeOption" required="" type="radio" value="athletic"/>
+<img alt="Körperform 4" loading="lazy" src="images/form/bodyshape_04.webp"/>
+<span class="body-shape-title" data-ar="Athletisch" data-dar="Athletisch">Athletisch</span>
+</label>
+<!-- Bulky -->
+<label class="body-shape-option">
+<input name="bodyShapeOption" required="" type="radio" value="bulky"/>
+<img alt="Körperform 5" loading="lazy" src="images/form/bodyshape_05.webp"/>
+<span class="body-shape-title" data-ar="Kräftig" data-dar="Kräftig">Kräftig</span>
+</label>
+<!-- Soft Heavy -->
+<label class="body-shape-option">
+<input name="bodyShapeOption" required="" type="radio" value="soft_heavy"/>
+<img alt="Körperform 6" loading="lazy" src="images/form/bodyshape_06.webp"/>
+<span class="body-shape-title" data-ar="Weich &amp; kräftig" data-dar="Weich &amp; kräftig">Weich &amp; kräftig</span>
+</label>
+</div>
+</div>
+<div class="form-group">
+<label data-ar="Wie hoch ist dein aktueller Körperfettanteil? *" data-dar="Wie hoch ist dein aktueller Körperfettanteil? *" for="bodyFat"></label>
+<!-- Show body fat chart image to help choose the percentage -->
+<img alt="" class="bodyfat-chart" loading="lazy" src="images/form/bodyfat_chart.webp"/>
+<select id="bodyFat" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Ca. 8%" data-dar="Ca. 8%" value="8"></option>
+<option data-ar="Ca. 10%" data-dar="Ca. 10%" value="10"></option>
+<option data-ar="Ca. 15%" data-dar="Ca. 15%" value="15"></option>
+<option data-ar="Ca. 20%" data-dar="Ca. 20%" value="20"></option>
+<option data-ar="Ca. 25%" data-dar="Ca. 25%" value="25"></option>
+<option data-ar="Ca. 30%" data-dar="Ca. 30%" value="30"></option>
+<option data-ar="Ca. 35%" data-dar="Ca. 35%" value="35"></option>
+<option data-ar="Ca. 40%" data-dar="Ca. 40%" value="40"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Wie viele Kilogramm Muskelmasse möchtest du aufbauen? *" data-dar="Wie viele Kilogramm Muskelmasse möchtest du aufbauen? *" for="muscleGain"></label>
+<select id="muscleGain" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="2,5 kg" data-dar="2,5 kg" value="2.5"></option>
+<option data-ar="5 kg" data-dar="5 kg" value="5"></option>
+<option data-ar="7,5 kg" data-dar="7,5 kg" value="7.5"></option>
+<option data-ar="10 kg" data-dar="10 kg" value="10"></option>
+<option data-ar="Mehr, wenn möglich" data-dar="Mehr, wenn möglich" value="more"></option>
+<option data-ar="Nicht sicher – bitte beraten" data-dar="Nicht sicher – bitte beraten" value="not_sure"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Wie würdest du deine aktuellen Trainings- und Ernährungsgewohnheiten beschreiben? *" data-dar="Wie würdest du deine aktuellen Trainings- und Ernährungsgewohnheiten beschreiben? *" for="trainingHabits"></label>
+<select id="trainingHabits" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Ich starte bei null" data-dar="Ich starte bei null" value="start_zero"></option>
+<option data-ar="Ich habe gute Gewohnheiten, bin aber nicht konsequent" data-dar="Ich habe gute Gewohnheiten, bin aber nicht konsequent" value="good_habits"></option>
+<option data-ar="Meine Fortschritte sind langsam, aber ich versuche dranzubleiben" data-dar="Meine Fortschritte sind langsam, aber ich versuche dranzubleiben" value="slow_progress"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Was beeinträchtigt deine Kontinuität am meisten? *" data-dar="Was beeinträchtigt deine Kontinuität am meisten? *" for="consistencyChallenge"></label>
+<select id="consistencyChallenge" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Andere Verpflichtungen / wenig Zeit" data-dar="Andere Verpflichtungen / wenig Zeit" value="time_commitments"></option>
+<option data-ar="Motivationsmangel oder Plateau" data-dar="Motivationsmangel oder Plateau" value="plateau_motivation"></option>
+<option data-ar="Verletzungen schränken mich ein" data-dar="Verletzungen schränken mich ein" value="injury_limitations"></option>
+<option data-ar="Ich wechsle Programme zu häufig" data-dar="Ich wechsle Programme zu häufig" value="change_programs"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="In welchen Bereichen fällt dir Fettverlust besonders schwer?" data-dar="In welchen Bereichen fällt dir Fettverlust besonders schwer?"></label>
+<div class="checkbox-group" id="fatAreas">
+<label><input type="checkbox" value="stomach"/><span data-ar="Bauch" data-dar="Bauch"></span></label>
+<label><input type="checkbox" value="chest"/><span data-ar="Brust" data-dar="Brust"></span></label>
+<label><input type="checkbox" value="lower_back"/><span data-ar="Unterer Rücken" data-dar="Unterer Rücken"></span></label>
+<label><input type="checkbox" value="legs"/><span data-ar="Beine" data-dar="Beine"></span></label>
+<label><input type="checkbox" value="arms"/><span data-ar="Arme" data-dar="Arme"></span></label>
+<label><input type="checkbox" value="hips"/><span data-ar="Hüfte" data-dar="Hüfte"></span></label>
+<label><input type="checkbox" value="sides"/><span data-ar="Seiten" data-dar="Seiten"></span></label>
+<label><input type="checkbox" value="all_equal"/><span data-ar="Überall ungefähr gleich schwer" data-dar="Überall ungefähr gleich schwer"></span></label>
+</div>
+</div>
+<div class="form-group">
+<label data-ar="Welche Muskelgruppen möchtest du besonders fokussieren?" data-dar="Welche Muskelgruppen möchtest du besonders fokussieren?"></label>
+<div class="checkbox-group" id="focusMuscles">
+<label><input type="checkbox" value="chest"/><span data-ar="Brust" data-dar="Brust"></span></label>
+<label><input type="checkbox" value="back"/><span data-ar="Rücken" data-dar="Rücken"></span></label>
+<label><input type="checkbox" value="arms"/><span data-ar="Arme" data-dar="Arme"></span></label>
+<label><input type="checkbox" value="shoulders"/><span data-ar="Schultern" data-dar="Schultern"></span></label>
+<label><input type="checkbox" value="legs"/><span data-ar="Beine" data-dar="Beine"></span></label>
+<label><input type="checkbox" value="glutes"/><span data-ar="Gesäß" data-dar="Gesäß"></span></label>
+<label><input type="checkbox" value="calves"/><span data-ar="Waden" data-dar="Waden"></span></label>
+<label><input type="checkbox" value="equal"/><span data-ar="Alles gleichmäßig entwickeln" data-dar="Alles gleichmäßig entwickeln"></span></label>
+</div>
+</div>
+<!-- Ask how long the person has been focusing on improving their body -->
+<div class="form-group">
+<label data-ar="Seit wann arbeitest du gezielt daran, deinen Körper zu verbessern? *" data-dar="Seit wann arbeitest du gezielt daran, deinen Körper zu verbessern? *" for="trainingYears"></label>
+<select id="trainingYears" required="">
+<!-- Duration options to answer when the person started focusing on body improvement -->
+<option disabled="" selected="" value=""></option>
+<option data-ar="0–6 Monate" data-dar="0–6 Monate" value="0-6m"></option>
+<option data-ar="6–12 Monate" data-dar="6–12 Monate" value="6-12m"></option>
+<option data-ar="1–3 Jahre" data-dar="1–3 Jahre" value="1-3y"></option>
+<option data-ar="Mehr als 3 Jahre" data-dar="Mehr als 3 Jahre" value="3+y"></option>
+</select>
+</div>
+<!-- Add a question about training experience level (gym) -->
+<div class="form-group">
+<label data-ar="Wie würdest du deine Trainingserfahrung im Fitnessstudio einschätzen? *" data-dar="Wie würdest du deine Trainingserfahrung im Fitnessstudio einschätzen? *" for="trainingExperience"></label>
+<select id="trainingExperience" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Anfänger" data-dar="Anfänger" value="beginner"></option>
+<option data-ar="Mittelstufe" data-dar="Mittelstufe" value="intermediate"></option>
+<option data-ar="Fortgeschritten" data-dar="Fortgeschritten" value="advanced"></option>
+</select>
+</div>
+<div class="button-group">
+<button class="prev-btn" type="button">Zurück</button>
+<button class="next-btn" type="button">Weiter</button>
+</div>
+</div>
+<!-- Step 3: Reasons & Motivations -->
+<div class="step">
+<img alt="" class="question-img" loading="lazy" src="images/form/q03.webp"/>
+<div class="form-group">
+<label data-ar="Was sind deine wichtigsten Gründe, deinen Körper zu verändern?" data-dar="Was sind deine wichtigsten Gründe, deinen Körper zu verändern?"></label>
+<div class="checkbox-group" id="changeReasons">
+<label><input type="checkbox" value="confidence"/><span data-ar="Mehr Selbstvertrauen" data-dar="Mehr Selbstvertrauen"></span></label>
+<label><input type="checkbox" value="health"/><span data-ar="Gesundheit verbessern" data-dar="Gesundheit verbessern"></span></label>
+<label><input type="checkbox" value="comfort"/><span data-ar="Mich in meinem Körper wohler fühlen" data-dar="Mich in meinem Körper wohler fühlen"></span></label>
+<label><input type="checkbox" value="prove_self"/><span data-ar="Mir selbst beweisen, was ich kann" data-dar="Mir selbst beweisen, was ich kann"></span></label>
+</div>
+</div>
+<div class="form-group">
+<!-- Ask whether the person feels uncomfortable about their body in front of others -->
+<label data-ar="Fühlst du dich wegen deines Körpers vor anderen unwohl? *" data-dar="Fühlst du dich wegen deines Körpers vor anderen unwohl? *" for="improvementPeriod"></label>
+<select id="improvementPeriod" required="">
+<!-- Frequency options to answer how often the person feels uncomfortable -->
+<option disabled="" selected="" value=""></option>
+<option data-ar="Meistens" data-dar="Meistens" value="mostly"></option>
+<option data-ar="Manchmal" data-dar="Manchmal" value="sometimes"></option>
+<option data-ar="Selten / nie" data-dar="Selten / nie" value="rarely"></option>
+</select>
+</div>
+<div class="form-group">
+<!-- Update the satisfaction statement: use proper Arabic quotes and punctuation -->
+<label data-ar="Wie sehr stimmst du der Aussage zu: „Ich bin mit meiner aktuellen Situation unzufrieden, weiß, dass mehr möglich ist, und brauche einen Plan, dem ich vertrauen kann.“? *" data-dar="Wie sehr stimmst du der Aussage zu: „Ich bin mit meiner aktuellen Situation unzufrieden, weiß, dass mehr möglich ist, und brauche einen Plan, dem ich vertrauen kann.“? *" for="selfSatisfaction">
+</label>
+<select id="selfSatisfaction" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="1 – Stimme voll zu" data-dar="1 – Stimme voll zu" value="1"></option>
+<option data-ar="2" data-dar="2" value="2"></option>
+<option data-ar="3" data-dar="3" value="3"></option>
+<option data-ar="4" data-dar="4" value="4"></option>
+<option data-ar="5 – Stimme überhaupt nicht zu" data-dar="5 – Stimme überhaupt nicht zu" value="5"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Wie sehr stimmst du der Aussage zu: „Ich brauche externe Motivation oder Kontrolle, um konsequent zu bleiben.“? *" data-dar="Wie sehr stimmst du der Aussage zu: „Ich brauche externe Motivation oder Kontrolle, um konsequent zu bleiben.“? *" for="externalAccountability"></label>
+<select id="externalAccountability" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="1 – Stimme voll zu" data-dar="1 – Stimme voll zu" value="1"></option>
+<option data-ar="2" data-dar="2" value="2"></option>
+<option data-ar="3" data-dar="3" value="3"></option>
+<option data-ar="4" data-dar="4" value="4"></option>
+<option data-ar="5 – Stimme überhaupt nicht zu" data-dar="5 – Stimme überhaupt nicht zu" value="5"></option>
+</select>
+</div>
+<div class="button-group">
+<button class="prev-btn" type="button">Zurück</button>
+<button class="next-btn" type="button">Weiter</button>
+</div>
+</div>
+<!-- Step 4: Programs & Knowledge -->
+<div class="step">
+<img alt="" class="question-img" loading="lazy" src="images/form/q04.webp"/>
+<div class="form-group">
+<label data-ar="Hast du eines der folgenden Programme oder Methoden ausprobiert?" data-dar="Hast du eines der folgenden Programme oder Methoden ausprobiert?"></label>
+<div class="checkbox-group" id="programsTried">
+<label><input type="checkbox" value="online_program"/><span data-ar="Online-Trainingsprogramm" data-dar="Online-Trainingsprogramm"></span></label>
+<label><input type="checkbox" value="custom_program"/><span data-ar="Individuell erstelltes Programm" data-dar="Individuell erstelltes Programm"></span></label>
+<label><input type="checkbox" value="personal_trainer"/><span data-ar="Personal Trainer / Coach" data-dar="Personal Trainer / Coach"></span></label>
+<label><input type="checkbox" value="calorie_counting"/><span data-ar="Kalorien zählen" data-dar="Kalorien zählen"></span></label>
+<label><input type="checkbox" value="keto"/><span data-ar="Keto-Programm" data-dar="Keto-Programm"></span></label>
+<label><input type="checkbox" value="intermittent_fasting"/><span data-ar="Intervallfasten" data-dar="Intervallfasten"></span></label>
+<label><input type="checkbox" value="paid_meal_plans"/><span data-ar="Bezahlte Ernährungspläne" data-dar="Bezahlte Ernährungspläne"></span></label>
+<label><input type="checkbox" value="none"/><span data-ar="Nichts davon" data-dar="Nichts davon"></span></label>
+</div>
+</div>
+<div class="form-group">
+<label data-ar="Nutzt du eine App, um dein Training zu tracken? *" data-dar="Nutzt du eine App, um dein Training zu tracken? *" for="trainingAppUsed"></label>
+<select id="trainingAppUsed" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Ja" data-dar="Ja" value="yes"></option>
+<option data-ar="Früher genutzt" data-dar="Früher genutzt" value="used_before"></option>
+<option data-ar="Nein" data-dar="Nein" value="no"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Planst du Supplements wie Protein oder Kreatin zu verwenden? *" data-dar="Planst du Supplements wie Protein oder Kreatin zu verwenden? *" for="supplementsPlanned"></label>
+<select id="supplementsPlanned" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Ja" data-dar="Ja" value="yes"></option>
+<option data-ar="Schon einmal verwendet" data-dar="Schon einmal verwendet" value="used_before"></option>
+<option data-ar="Nein" data-dar="Nein" value="no"></option>
+<option data-ar="Nicht sicher – bitte beraten" data-dar="Nicht sicher – bitte beraten" value="unsure"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Wie schätzt du dein Wissen über Training und Ernährung ein? *" data-dar="Wie schätzt du dein Wissen über Training und Ernährung ein? *" for="knowledgeLevel"></label>
+<select id="knowledgeLevel" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Sehr gut / Experte" data-dar="Sehr gut / Experte" value="expert"></option>
+<option data-ar="Unsicher, aber motiviert" data-dar="Unsicher, aber motiviert" value="confused"></option>
+<option data-ar="Ich lese viel, weiß aber nicht, was richtig ist" data-dar="Ich lese viel, weiß aber nicht, was richtig ist" value="read_lot"></option>
+<option data-ar="Ich habe Bro-Science ausprobiert und suche nach evidenzbasierten Informationen" data-dar="Ich habe Bro-Science ausprobiert und suche nach evidenzbasierten Informationen" value="bro_science"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Wie viele Schritte machst du täglich? *" data-dar="Wie viele Schritte machst du täglich? *" for="stepsPerDay"></label>
+<select id="stepsPerDay" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Unter 5.000 Schritte" data-dar="Unter 5.000 Schritte" value="&lt;5000"></option>
+<option data-ar="5.000–10.000 Schritte" data-dar="5.000–10.000 Schritte" value="5000-10000"></option>
+<option data-ar="10.000–15.000 Schritte" data-dar="10.000–15.000 Schritte" value="10000-15000"></option>
+<option data-ar="Mehr als 15.000 Schritte" data-dar="Mehr als 15.000 Schritte" value="&gt;15000"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Wie oft machst du Cardio? *" data-dar="Wie oft machst du Cardio? *" for="cardioFrequency"></label>
+<select id="cardioFrequency" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Selten" data-dar="Selten" value="rarely"></option>
+<option data-ar="Manchmal" data-dar="Manchmal" value="sometimes"></option>
+<option data-ar="Mehrmals" data-dar="Mehrmals" value="often"></option>
+<option data-ar="Regelmäßig" data-dar="Regelmäßig" value="regularly"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Wie sicher fühlst du dich bei Kniebeugen, Bankdrücken und Kreuzheben? *" data-dar="Wie sicher fühlst du dich bei Kniebeugen, Bankdrücken und Kreuzheben? *" for="compoundComfort"></label>
+<select id="compoundComfort" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Noch nie gemacht" data-dar="Noch nie gemacht" value="never"></option>
+<option data-ar="Ich lerne noch" data-dar="Ich lerne noch" value="learning"></option>
+<option data-ar="Ich mache sie regelmäßig und sicher" data-dar="Ich mache sie regelmäßig und sicher" value="comfortable"></option>
+<option data-ar="Wegen einer Verletzung nicht geeignet" data-dar="Wegen einer Verletzung nicht geeignet" value="not_suitable"></option>
+</select>
+</div>
+<div class="form-group">
+<!-- Clarify the available training days question -->
+<label data-ar="An welchen Tagen kannst du trainieren?" data-dar="An welchen Tagen kannst du trainieren?"></label>
+<div class="checkbox-group" id="availableDays">
+<label><input type="checkbox" value="monday"/><span data-ar="Montag" data-dar="Montag"></span></label>
+<label><input type="checkbox" value="tuesday"/><span data-ar="Dienstag" data-dar="Dienstag"></span></label>
+<label><input type="checkbox" value="wednesday"/><span data-ar="Mittwoch" data-dar="Mittwoch"></span></label>
+<label><input type="checkbox" value="thursday"/><span data-ar="Donnerstag" data-dar="Donnerstag"></span></label>
+<label><input type="checkbox" value="friday"/><span data-ar="Freitag" data-dar="Freitag"></span></label>
+<label><input type="checkbox" value="saturday"/><span data-ar="Samstag" data-dar="Samstag"></span></label>
+<label><input type="checkbox" value="sunday"/><span data-ar="Sonntag" data-dar="Sonntag"></span></label>
+</div>
+</div>
+<!-- Removed the number of workouts per week question; the available days question above covers this information -->
+<div class="form-group">
+<label data-ar="Wie lang sollte eine ideale Trainingseinheit für dich dauern? *" data-dar="Wie lang sollte eine ideale Trainingseinheit für dich dauern? *" for="sessionDuration"></label>
+<select id="sessionDuration" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="30 Minuten" data-dar="30 Minuten" value="30"></option>
+<option data-ar="60 Minuten" data-dar="60 Minuten" value="60"></option>
+</select>
+</div>
+<div class="button-group">
+<button class="prev-btn" type="button">Zurück</button>
+<button class="next-btn" type="button">Weiter</button>
+</div>
+</div>
+<!-- Step 5: Environment & Injuries -->
+<div class="step">
+<img alt="" class="question-img" loading="lazy" src="images/form/q05.webp"/>
+<div class="form-group">
+<label data-ar="Welche Trainingsumgebung steht dir zur Verfügung? *" data-dar="Welche Trainingsumgebung steht dir zur Verfügung? *" for="trainingEnvironment"></label>
+<select id="trainingEnvironment" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Voll ausgestattetes Fitnessstudio" data-dar="Voll ausgestattetes Fitnessstudio" value="full_gym"></option>
+<option data-ar="Fitnessstudio mit begrenzter Ausstattung" data-dar="Fitnessstudio mit begrenzter Ausstattung" value="limited_gym"></option>
+<option data-ar="Home-Gym" data-dar="Home-Gym" value="home_gym"></option>
+<option data-ar="Nur freie Gewichte / Kurzhanteln" data-dar="Nur freie Gewichte / Kurzhanteln" value="dumbbells"></option>
+<option data-ar="Nur Widerstandsbänder" data-dar="Nur Widerstandsbänder" value="bands"></option>
+<option data-ar="Nur Körpergewicht" data-dar="Nur Körpergewicht" value="bodyweight"></option>
+<option data-ar="Sonstiges" data-dar="Sonstiges" value="other"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Hast du Verletzungen, die dein Training beeinflussen? *" data-dar="Hast du Verletzungen, die dein Training beeinflussen? *" for="injuriesSelect"></label>
+<select id="injuriesSelect" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Nein" data-dar="Nein" value="none"></option>
+<option data-ar="Schulter" data-dar="Schulter" value="shoulder"></option>
+<option data-ar="Ellbogen" data-dar="Ellbogen" value="elbow"></option>
+<option data-ar="Unterer Rücken" data-dar="Unterer Rücken" value="lower_back"></option>
+<option data-ar="Knie" data-dar="Knie" value="knee"></option>
+<option data-ar="Sonstiges" data-dar="Sonstiges" value="other"></option>
+</select>
+</div>
+<div class="form-group" id="injuriesOtherGroup" style="display:none;">
+<label data-ar="Bitte beschreibe die Verletzung" data-dar="Bitte beschreibe die Verletzung" for="injuriesOther"></label>
+<textarea id="injuriesOther" rows="2"></textarea>
+</div>
+<div class="form-group">
+<label data-ar="Wie würdest du deine Kalorienzufuhr im Verhältnis zu deinem Ziel einschätzen? *" data-dar="Wie würdest du deine Kalorienzufuhr im Verhältnis zu deinem Ziel einschätzen? *" for="caloriesRelative"></label>
+<select id="caloriesRelative" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Weiß ich nicht" data-dar="Weiß ich nicht" value="unknown"></option>
+<option data-ar="Deutlich zu hoch" data-dar="Deutlich zu hoch" value="much_more"></option>
+<option data-ar="Deutlich zu niedrig" data-dar="Deutlich zu niedrig" value="much_less"></option>
+<option data-ar="Nahe am Ziel" data-dar="Nahe am Ziel" value="close"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Wie würdest du deine Proteinzufuhr im Verhältnis zu deinem Ziel einschätzen? *" data-dar="Wie würdest du deine Proteinzufuhr im Verhältnis zu deinem Ziel einschätzen? *" for="proteinRelative"></label>
+<select id="proteinRelative" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Weiß ich nicht" data-dar="Weiß ich nicht" value="unknown"></option>
+<option data-ar="Deutlich zu hoch" data-dar="Deutlich zu hoch" value="much_more"></option>
+<option data-ar="Deutlich zu niedrig" data-dar="Deutlich zu niedrig" value="much_less"></option>
+<option data-ar="Nahe am Ziel" data-dar="Nahe am Ziel" value="close"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Welche Schwierigkeiten hast du dabei, dich an deine Ernährung zu halten?" data-dar="Welche Schwierigkeiten hast du dabei, dich an deine Ernährung zu halten?"></label>
+<div class="checkbox-group" id="nutritionDifficulties">
+<label><input type="checkbox" value="committed"/><span data-ar="Meistens konsequent" data-dar="Meistens konsequent"></span></label>
+<label><input type="checkbox" value="quality"/><span data-ar="Ich kann die Qualität meiner Lebensmittel nicht gut kontrollieren" data-dar="Ich kann die Qualität meiner Lebensmittel nicht gut kontrollieren"></span></label>
+<label><input type="checkbox" value="eat_out"/><span data-ar="Ich esse oft außer Haus" data-dar="Ich esse oft außer Haus"></span></label>
+<label><input type="checkbox" value="weekends"/><span data-ar="Wochenenden" data-dar="Wochenenden"></span></label>
+<label><input type="checkbox" value="evenings"/><span data-ar="Abends" data-dar="Abends"></span></label>
+</div>
+</div>
+<div class="form-group">
+<label data-ar="Hast du Allergien oder Ernährungsbeschränkungen? *" data-dar="Hast du Allergien oder Ernährungsbeschränkungen? *" for="dietaryRestrictions"></label>
+<select id="dietaryRestrictions" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Nein" data-dar="Nein" value="none"></option>
+<option data-ar="Ohne Milchprodukte" data-dar="Ohne Milchprodukte" value="dairy_free"></option>
+<option data-ar="Glutenfrei" data-dar="Glutenfrei" value="gluten_free"></option>
+<option data-ar="Vegetarisch" data-dar="Vegetarisch" value="vegetarian"></option>
+<option data-ar="Vegan" data-dar="Vegan" value="vegan"></option>
+<option data-ar="Sonstiges" data-dar="Sonstiges" value="other"></option>
+</select>
+</div>
+<div class="form-group" id="restrictionsOtherGroup" style="display:none;">
+<label data-ar="Bitte nenne andere Einschränkungen" data-dar="Bitte nenne andere Einschränkungen" for="restrictionsOther"></label>
+<textarea id="restrictionsOther" rows="2"></textarea>
+</div>
+<div class="button-group">
+<button class="prev-btn" type="button">Zurück</button>
+<button class="next-btn" type="button">Weiter</button>
+</div>
+</div>
+<!-- Step 6: Lifestyle & Coaching -->
+<div class="step">
+<img alt="" class="question-img" loading="lazy" src="images/form/q06.webp"/>
+<div class="form-group">
+<label data-ar="Wie würdest du deinen Alltag beschreiben? *" data-dar="Wie würdest du deinen Alltag beschreiben? *" for="busySchedule"></label>
+<select id="busySchedule" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Meine Tage sind sehr voll" data-dar="Meine Tage sind sehr voll" value="very_busy"></option>
+<option data-ar="Ich finde manchmal Zeit zum Entspannen" data-dar="Ich finde manchmal Zeit zum Entspannen" value="sometimes_relax"></option>
+<option data-ar="Ich plane bewusst Zeit für Prioritäten ein" data-dar="Ich plane bewusst Zeit für Prioritäten ein" value="leave_space"></option>
+<option data-ar="Ich kann meine Zeit weitgehend selbst einteilen" data-dar="Ich kann meine Zeit weitgehend selbst einteilen" value="control_time"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Was brauchst du von mir als Coach? *" data-dar="Was brauchst du von mir als Coach? *" for="coachingNeeds"></label>
+<select id="coachingNeeds" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Persönliche Betreuung" data-dar="Persönliche Betreuung" value="personal_tracking"></option>
+<option data-ar="Training- und Ernährungsberatung" data-dar="Training- und Ernährungsberatung" value="guidance"></option>
+<option data-ar="Beides" data-dar="Beides" value="both"></option>
+<option data-ar="Sonstiges" data-dar="Sonstiges" value="other"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Fühlst du dich wohl dabei, andere in deine Ziele einzubeziehen? *" data-dar="Fühlst du dich wohl dabei, andere in deine Ziele einzubeziehen? *" for="involveOthers"></label>
+<select id="involveOthers" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Ja" data-dar="Ja" value="yes"></option>
+<option data-ar="Nein" data-dar="Nein" value="no"></option>
+<option data-ar="Kommt darauf an" data-dar="Kommt darauf an" value="depends"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Wer unterstützt dich am meisten? *" data-dar="Wer unterstützt dich am meisten? *" for="supportPerson"></label>
+<select id="supportPerson" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Partner/in" data-dar="Partner/in" value="partner"></option>
+<option data-ar="Ein Elternteil" data-dar="Ein Elternteil" value="parent"></option>
+<option data-ar="Bruder oder Schwester" data-dar="Bruder oder Schwester" value="sibling"></option>
+<option data-ar="Freund/in" data-dar="Freund/in" value="friend"></option>
+<option data-ar="Kollege/Kollegin" data-dar="Kollege/Kollegin" value="colleague"></option>
+<option data-ar="Sonstiges" data-dar="Sonstiges" value="other"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Seit wann folgst du der GYMLABO-Seite? *" data-dar="Seit wann folgst du der GYMLABO-Seite? *" for="pageFollowingDuration"></label>
+<select id="pageFollowingDuration" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Ich folge ihr nicht" data-dar="Ich folge ihr nicht" value="not_following"></option>
+<option data-ar="Erst kürzlich entdeckt" data-dar="Erst kürzlich entdeckt" value="discovered_recently"></option>
+<option data-ar="Weniger als 6 Monate" data-dar="Weniger als 6 Monate" value="&lt;6m"></option>
+<option data-ar="6–12 Monate" data-dar="6–12 Monate" value="6-12m"></option>
+<option data-ar="1–2 Jahre" data-dar="1–2 Jahre" value="1-2y"></option>
+<option data-ar="Mehr als 2 Jahre" data-dar="Mehr als 2 Jahre" value="&gt;2y"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Welcher Bereich interessiert dich am meisten?" data-dar="Welcher Bereich interessiert dich am meisten?"></label>
+<div class="checkbox-group" id="interestFields">
+<label><input type="checkbox" value="nutrition"/><span data-ar="Ernährung" data-dar="Ernährung"></span></label>
+<label><input type="checkbox" value="training"/><span data-ar="Training" data-dar="Training"></span></label>
+<label><input type="checkbox" value="habits"/><span data-ar="Gewohnheiten aufbauen" data-dar="Gewohnheiten aufbauen"></span></label>
+<label><input type="checkbox" value="additional_questions"/><span data-ar="Zusätzliche Fragen" data-dar="Zusätzliche Fragen"></span></label>
+</div>
+</div>
+<div class="form-group">
+<!-- Clarify that the supplements in question are pre‑workout powders -->
+<label data-ar="Nutzt du ein Pre-Workout-Supplement? *" data-dar="Nutzt du ein Pre-Workout-Supplement? *" for="preWorkoutUse"></label>
+<select id="preWorkoutUse" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Ja, fast jedes Mal" data-dar="Ja, fast jedes Mal" value="almost_every_time"></option>
+<option data-ar="Manchmal" data-dar="Manchmal" value="sometimes"></option>
+<option data-ar="Nein" data-dar="Nein" value="no"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Wann trainierst du am liebsten? *" data-dar="Wann trainierst du am liebsten? *" for="preferredTrainingTime"></label>
+<select id="preferredTrainingTime" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Morgens" data-dar="Morgens" value="morning"></option>
+<option data-ar="Abends" data-dar="Abends" value="evening"></option>
+<option data-ar="Sonstiges" data-dar="Sonstiges" value="other"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Wie viele Stunden schläfst du durchschnittlich pro Nacht? *" data-dar="Wie viele Stunden schläfst du durchschnittlich pro Nacht? *" for="sleepHours"></label>
+<select id="sleepHours" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Weniger als 6 Stunden" data-dar="Weniger als 6 Stunden" value="&lt;6"></option>
+<option data-ar="6–7 Stunden" data-dar="6–7 Stunden" value="6-7"></option>
+<option data-ar="8 Stunden oder mehr" data-dar="8 Stunden oder mehr" value="&gt;8"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Kannst du dir einen strukturierten Ernährungsplan finanziell leisten? *" data-dar="Kannst du dir einen strukturierten Ernährungsplan finanziell leisten? *" for="financialAbility"></label>
+<select id="financialAbility" required="">
+<option disabled="" selected="" value=""></option>
+<option data-ar="Ja" data-dar="Ja" value="yes"></option>
+<option data-ar="Nein" data-dar="Nein" value="no"></option>
+</select>
+</div>
+<div class="form-group">
+<label data-ar="Zusätzliche Informationen zu deinem Lebensstil" data-dar="Zusätzliche Informationen zu deinem Lebensstil" for="lifestyleAdditional"></label>
+<textarea id="lifestyleAdditional" rows="3"></textarea>
+</div>
+<div class="button-group">
+<button class="prev-btn" type="button">Zurück</button>
+<button class="next-btn" type="button">Weiter</button>
+</div>
+</div>
+<!-- Step 7: Additional Info & Submit -->
+<div class="step">
+<img alt="" class="question-img" loading="lazy" src="images/form/q07.webp"/>
+<div class="form-group">
+<label data-ar="Möchtest du noch etwas ergänzen oder anmerken?" data-dar="Möchtest du noch etwas ergänzen oder anmerken?" for="additionalInfo"></label>
+<textarea id="additionalInfo" rows="4"></textarea>
+</div>
+<!-- Offer selection question -->
+<div class="form-group">
+<label data-ar="Welches Angebot hast du gewählt? *" data-dar="Welches Angebot hast du gewählt? *"></label>
+<!-- Use plan icon style with popup details on hover -->
+<div class="plan-icons-grid offer-options" id="offerOptions">
+<!-- Basic plan -->
+<label class="plan-icon offer-option plan-basic">
+<input name="offer" required="" type="radio" value="basic"/>
+<div class="icon-circle"><span class="icon-emoji">📦</span></div>
+<span class="plan-label">BASIS</span>
+<!-- Hidden span used to map selected offer to its translated name. This is not displayed to the user. -->
+<span class="offer-title" data-ar="Basispaket" data-dar="Basispaket" style="display:none"></span>
+<div class="plan-popup" role="dialog">
+<h3 data-ar="Basispaket" data-dar="Basispaket">Basispaket</h3>
+<!-- Updated price for Basic plan -->
+<p class="plan-price"><span>50 €</span> <small data-ar="Einmalig" data-dar="Einmalig">Einmalig</small></p>
+<ul class="plan-features">
+<li data-ar="Individueller Trainingsplan" data-dar="Individueller Trainingsplan">Individueller Trainingsplan</li>
+<li data-ar="Individueller Ernährungsplan" data-dar="Individueller Ernährungsplan">Individueller Ernährungsplan</li>
+<li data-ar="Wöchentlicher Check-in" data-dar="Wöchentlicher Check-in">Wöchentlicher Check-in</li>
+</ul>
+</div>
+</label>
+<!-- Standard plan -->
+<label class="plan-icon offer-option plan-standard">
+<input name="offer" required="" type="radio" value="standard"/>
+<div class="icon-circle"><span class="icon-emoji">⭐</span></div>
+<span class="plan-label">STANDARD</span>
+<!-- Hidden span used to map selected offer to its translated name. -->
+<span class="offer-title" data-ar="Standardpaket" data-dar="Standardpaket" style="display:none"></span>
+<div class="plan-popup" role="dialog">
+<h3 data-ar="Standardpaket" data-dar="Standardpaket">Standardpaket</h3>
+<!-- Updated price for Standard plan -->
+<p class="plan-price"><span>80 €</span> <small data-ar="pro Monat" data-dar="pro Monat">pro Monat</small></p>
+<ul class="plan-features">
+<li data-ar="Individueller Trainingsplan" data-dar="Individueller Trainingsplan">Individueller Trainingsplan</li>
+<li data-ar="Individueller Ernährungsplan" data-dar="Individueller Ernährungsplan">Individueller Ernährungsplan</li>
+<li data-ar="Ausführlicher wöchentlicher Check-in" data-dar="Ausführlicher wöchentlicher Check-in">Ausführlicher wöchentlicher Check-in</li>
+<li data-ar="Wöchentliche Anpassungen (Training + Ernährung)" data-dar="Wöchentliche Anpassungen (Training + Ernährung)">Wöchentliche Anpassungen (Training + Ernährung)</li>
+<li data-ar="WhatsApp-Support an 5 Tagen pro Woche (Antwort innerhalb von 12 Std.)" data-dar="WhatsApp-Support an 5 Tagen pro Woche (Antwort innerhalb von 12 Std.)">WhatsApp-Support an 5 Tagen pro Woche (Antwort innerhalb von 12 Std.)</li>
+</ul>
+</div>
+</label>
+<!-- Premium VIP plan -->
+<label class="plan-icon offer-option plan-vip">
+<input name="offer" required="" type="radio" value="premium_vip"/>
+<div class="icon-circle"><span class="icon-emoji">🏆</span></div>
+<span class="plan-label">PREMIUM VIP</span>
+<!-- Hidden span used to map selected offer to its translated name. -->
+<span class="offer-title" data-ar="Premium-Paket" data-dar="Premium-Paket" style="display:none"></span>
+<div class="plan-popup" role="dialog">
+<h3 data-ar="Premium-Paket" data-dar="Premium-Paket">Premium-Paket</h3>
+<!-- Updated price for Premium VIP plan -->
+<p class="plan-price"><span>150 €</span> <small data-ar="pro Monat" data-dar="pro Monat">pro Monat</small></p>
+<ul class="plan-features">
+<li data-ar="Alles aus STANDARD +" data-dar="Alles aus STANDARD +">Alles aus STANDARD +</li>
+<li data-ar="Schnelle Antworten (6–12 Std.)" data-dar="Schnelle Antworten (6–12 Std.)">Schnelle Antworten (6–12 Std.)</li>
+<li data-ar="Technik-Korrektur per Video" data-dar="Technik-Korrektur per Video">Technik-Korrektur per Video</li>
+<li data-ar="Anpassungen bei Reisen / Stress / Ramadan" data-dar="Anpassungen bei Reisen / Stress / Ramadan">Anpassungen bei Reisen / Stress / Ramadan</li>
+<li data-ar="Priorisierte Betreuung + täglicher Support" data-dar="Priorisierte Betreuung + täglicher Support">Priorisierte Betreuung + täglicher Support</li>
+</ul>
+</div>
+</label>
+<!-- Not sure plan -->
+<label class="plan-icon offer-option plan-not-sure">
+<input name="offer" required="" type="radio" value="not_sure"/>
+<div class="icon-circle"><span class="icon-emoji">❓</span></div>
+<span class="plan-label">NOCH UNSICHER</span>
+<!-- Hidden span used to map selected offer to its translated name. -->
+<span class="offer-title" data-ar="Noch nicht sicher" data-dar="Noch nicht sicher" style="display:none"></span>
+<div class="plan-popup" role="dialog">
+<h3 data-ar="Noch nicht sicher" data-dar="Noch nicht sicher">Noch nicht sicher</h3>
+<p class="plan-price"><span>—</span> <small data-ar="" data-dar=""></small></p>
+<ul class="plan-features">
+<li data-ar="Du kannst das Angebot später auswählen" data-dar="Du kannst das Angebot später auswählen">Du kannst das Angebot später auswählen</li>
+</ul>
+</div>
+</label>
+</div>
+</div>
+<div class="button-group">
+<button class="prev-btn" type="button">Zurück</button>
+<button class="submit-btn" type="submit">Formular senden</button>
+</div>
+</div>
+</form>
+</div>
+</section>
+<!-- Thank you message shown after submission -->
+<section class="hidden" id="thankYouMessage">
+<div class="container">
+<h2 class="section-title" data-ar="Danke! Ich melde mich so schnell wie möglich bei dir." data-dar="Danke! Ich melde mich so schnell wie möglich bei dir.">Danke! Ich melde mich so schnell wie möglich bei dir.</h2>
+<p class="online-description" data-ar="Deine Angaben wurden erfolgreich gesendet. Ich melde mich so schnell wie möglich." data-dar="Deine Angaben wurden erfolgreich gesendet. Ich melde mich so schnell wie möglich.">Deine Angaben wurden erfolgreich gesendet. Ich melde mich so schnell wie möglich.</p>
+</div>
+</section>
+</main>
+<script>
+      // Newsletter success handler function to show a thank you message after form submission.
+      function newsletterSuccess() {
+        const msgEl = document.getElementById('newsletter-success');
+        if (msgEl) {
+          msgEl.textContent = 'Vielen Dank für deine Anmeldung!';
+          msgEl.style.display = 'block';
+          setTimeout(() => {
+            msgEl.style.display = 'none';
+          }, 4000);
+        }
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        // Theme toggle initialization
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+        const darkPref =
+          savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.body.classList.toggle('dark', darkPref);
+        themeToggle.checked = darkPref;
+        themeToggle.addEventListener('change', () => {
+          const isDark = themeToggle.checked;
+          document.body.classList.toggle('dark', isDark);
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+
+        const langSelection = document.querySelector('.language-selection');
+        const formSection = document.getElementById('form-section');
+        const form = document.getElementById('coaching-form');
+        const steps = Array.from(document.querySelectorAll('.step'));
+        const progress = document.getElementById('progress');
+        const progressSteps = Array.from(document.querySelectorAll('.progress-step'));
+        let currentStep = 0;
+        let currentLang = null;
+
+        // Make the progress steps clickable so users can revisit previous steps easily
+        progressSteps.forEach((ps, idx) => {
+          ps.style.cursor = 'pointer';
+          ps.addEventListener('click', () => {
+            // Only allow navigating to steps that have already been visited
+            if (idx <= currentStep) {
+              currentStep = idx;
+              showStep();
+            }
+          });
+        });
+
+        // Highlight the selected body shape image option when chosen
+        const bodyShapeOptionsEl = document.getElementById('bodyShapeOptions');
+        if (bodyShapeOptionsEl) {
+          const radios = bodyShapeOptionsEl.querySelectorAll('input[type="radio"]');
+          radios.forEach((radio) => {
+            radio.addEventListener('change', function () {
+              bodyShapeOptionsEl.querySelectorAll('label').forEach((lbl) => lbl.classList.remove('selected'));
+              this.parentElement.classList.add('selected');
+            });
+          });
+        }
+
+        // Highlight the selected offer option when chosen
+        const offerOptionsEl = document.getElementById('offerOptions');
+        if (offerOptionsEl) {
+          const offers = offerOptionsEl.querySelectorAll('input[type="radio"]');
+          // When a radio changes (user actually selects a plan), mark it as selected
+          // but do not forcibly hide the popup. We also keep the expanded state
+          // on the chosen label so the details remain visible after selection.
+          offers.forEach((radio) => {
+            radio.addEventListener('change', function () {
+              // Unselect and unexpand all other offer labels
+              offerOptionsEl.querySelectorAll('label').forEach((lbl) => {
+                lbl.classList.remove('selected');
+                lbl.classList.remove('expanded');
+              });
+              // Mark the chosen label as selected and keep its details expanded
+              const parentLabel = this.parentElement;
+              parentLabel.classList.add('selected');
+              parentLabel.classList.add('expanded');
+            });
+          });
+
+          // --------------------------------------------------------------
+          // Mobile/touch support for plan popup details
+          //
+          // On mobile there is no hover state, so we toggle an `.expanded` class
+          // on the tapped label to reveal its plan-popup. The first tap
+          // expands the details without selecting the radio. A second tap
+          // (when the label is already expanded) allows the radio to be selected.
+          // We also close other expanded popups when opening a new one, and
+          // collapse all popups when clicking elsewhere on the document. This
+          // logic does not affect desktop behaviour, where hover still works via CSS.
+          const offerLabels = offerOptionsEl.querySelectorAll('label.plan-icon');
+          offerLabels.forEach((lbl) => {
+            lbl.addEventListener('click', function (e) {
+              // Prevent the global click listener from closing this popup
+              e.stopPropagation();
+              // Collapse all other expanded plan icons
+              offerLabels.forEach((other) => {
+                if (other !== this) other.classList.remove('expanded');
+              });
+              // Toggle expanded state on this label (open details or close)
+              this.classList.toggle('expanded');
+              // Automatically select the corresponding radio when tapping/clicking the icon
+              const radioInput = this.querySelector('input[type="radio"]');
+              if (radioInput && !radioInput.checked) {
+                radioInput.checked = true;
+                // Dispatch a change event so any listeners update selection classes
+                const event = new Event('change', { bubbles: true });
+                radioInput.dispatchEvent(event);
+              }
+            });
+          });
+          // Clicking anywhere outside the plan icons collapses all popups
+          document.addEventListener('click', function (e) {
+            if (!e.target.closest('#offerOptions .plan-icon')) {
+              offerLabels.forEach((lbl) => lbl.classList.remove('expanded'));
+            }
+          });
+        }
+
+        // Update text for all elements having data-ar / data-dar
+        function updateTranslations() {
+          const elements = document.querySelectorAll('[data-ar]');
+          elements.forEach((el) => {
+            const text = el.getAttribute('data-' + currentLang);
+            if (text !== null) {
+              el.textContent = text;
+            }
+          });
+        }
+
+        function showStep() {
+          steps.forEach((stepEl, idx) => {
+            stepEl.classList.toggle('step-active', idx === currentStep);
+          });
+          const progressWidth = (currentStep / (steps.length - 1)) * 100;
+          progress.style.width = progressWidth + '%';
+          progressSteps.forEach((ps, idx) => {
+            if (idx <= currentStep) {
+              ps.classList.add('progress-step-active');
+            } else {
+              ps.classList.remove('progress-step-active');
+            }
+          });
+
+          // Automatically scroll to the very top of the page when switching steps so the user starts
+          // at the new question. We avoid smooth scrolling here to ensure the page instantly
+          // jumps to the top, preventing the content from remaining off‑screen when moving
+          // between steps on mobile devices.
+          try {
+            window.scrollTo(0, 0);
+          } catch (e) {
+            window.scrollTo(0, 0);
+          }
+          // Ensure both horizontal and vertical scroll positions are reset in all browsers
+          document.documentElement.scrollLeft = 0;
+          document.body.scrollLeft = 0;
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }
+
+        function handleNext() {
+          const current = steps[currentStep];
+          const inputs = current.querySelectorAll('input, select, textarea');
+          for (const input of inputs) {
+            if (!input.checkValidity()) {
+              input.reportValidity();
+              return;
+            }
+          }
+          if (currentStep < steps.length - 1) {
+            currentStep++;
+            showStep();
+          }
+        }
+        function handlePrev() {
+          if (currentStep > 0) {
+            currentStep--;
+            showStep();
+          }
+        }
+        // Attach next/prev handlers
+        document.querySelectorAll('.next-btn').forEach((btn) => btn.addEventListener('click', handleNext));
+        document.querySelectorAll('.prev-btn').forEach((btn) => btn.addEventListener('click', handlePrev));
+
+        function setLanguage(lang) {
+          currentLang = lang;
+          langSelection.style.display = 'none';
+          formSection.classList.remove('hidden');
+          // After selecting language, replace the description with a more professional note about the detailed form.
+          const descEl = document.querySelector('.online-description');
+          if (descEl) {
+            const afterText = descEl.getAttribute('data-' + lang + '-after');
+            if (afterText) {
+              descEl.textContent = afterText;
+            }
+          }
+          updateTranslations();
+          showStep();
+        }
+        document.getElementById('lang-ar').addEventListener('click', () => setLanguage('ar'));
+        document.getElementById('lang-dar').addEventListener('click', () => setLanguage('dar'));
+
+        // Show/hide extra input for injuries and diet
+        const injuriesSelect = document.getElementById('injuriesSelect');
+        if (injuriesSelect) {
+          injuriesSelect.addEventListener('change', function () {
+            document.getElementById('injuriesOtherGroup').style.display = this.value === 'other' ? 'block' : 'none';
+          });
+        }
+        const dietarySelect = document.getElementById('dietaryRestrictions');
+        if (dietarySelect) {
+          dietarySelect.addEventListener('change', function () {
+            document.getElementById('restrictionsOtherGroup').style.display = this.value === 'other' ? 'block' : 'none';
+          });
+        }
+
+        // If the user selects the "all equal" option in the fat areas group,
+        // automatically check all other options. Similarly for the focus muscles group.
+        const fatAreasGroup = document.getElementById('fatAreas');
+        if (fatAreasGroup) {
+          fatAreasGroup.addEventListener('change', function () {
+            const allEqual = this.querySelector('input[value="all_equal"]');
+            if (allEqual && allEqual.checked) {
+              this.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
+                cb.checked = true;
+              });
+            }
+          });
+        }
+        const focusMusclesGroup = document.getElementById('focusMuscles');
+        if (focusMusclesGroup) {
+          focusMusclesGroup.addEventListener('change', function () {
+            const equal = this.querySelector('input[value="equal"]');
+            if (equal && equal.checked) {
+              this.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
+                cb.checked = true;
+              });
+            }
+          });
+        }
+
+        function getCheckboxValues(groupId) {
+          const group = document.getElementById(groupId);
+          if (!group) return '';
+          const vals = Array.from(group.querySelectorAll('input:checked')).map((cb) =>
+            cb.nextElementSibling.getAttribute('data-' + currentLang)
+          );
+          return vals.join(', ');
+        }
+
+        function getSelectValue(id) {
+          const el = document.getElementById(id);
+          if (!el || !el.value) return '';
+          const selected = el.selectedOptions[0];
+          const txt = selected.getAttribute('data-' + currentLang);
+          return txt || '';
+        }
+
+        // Retrieve the selected body shape based on the custom image radio inputs
+        function getBodyShape() {
+          const selected = document.querySelector('.body-shape-options input[type="radio"]:checked');
+          if (!selected) return '';
+          // look at the parent label for the translation values
+          const label = selected.closest('label');
+          if (!label) return '';
+          // Each label has a data attribute with translations stored on the input element if needed
+          // For translation we can store the readable text on a custom data attribute on the input
+          const optionValue = selected.value;
+          // Map values to translation text, matching the original select options
+          const translationMap = {
+            slender: { ar: 'Schlank', dar: 'Schlank' },
+            slender_soft: { ar: 'Schlank & weich', dar: 'Schlank & weich' },
+            defined: { ar: 'Definiert', dar: 'Definiert' },
+            athletic: { ar: 'Athletisch', dar: 'Athletisch' },
+            bulky: { ar: 'Kräftig', dar: 'Kräftig' },
+            soft_heavy: { ar: 'Weich & kräftig', dar: 'Weich & kräftig' },
+          };
+          const mapping = translationMap[optionValue] || {};
+          return mapping[currentLang] || '';
+        }
+
+        function collectFormData() {
+          return {
+            email: document.getElementById('email').value,
+            name: document.getElementById('name').value,
+            phone: document.getElementById('phone').value,
+            goal: getSelectValue('goal'),
+            gender: getSelectValue('gender'),
+            ageGroup: getSelectValue('ageGroup'),
+            height: document.getElementById('height').value,
+            weight: document.getElementById('weight').value,
+            bodyShape: getBodyShape(),
+            bodyFat: getSelectValue('bodyFat'),
+            muscleGain: getSelectValue('muscleGain'),
+            trainingHabits: getSelectValue('trainingHabits'),
+            consistencyChallenge: getSelectValue('consistencyChallenge'),
+            fatAreas: getCheckboxValues('fatAreas'),
+            focusMuscles: getCheckboxValues('focusMuscles'),
+            trainingYears: getSelectValue('trainingYears'),
+            trainingExperience: getSelectValue('trainingExperience'),
+            changeReasons: getCheckboxValues('changeReasons'),
+            improvementPeriod: getSelectValue('improvementPeriod'),
+            selfSatisfaction: getSelectValue('selfSatisfaction'),
+            externalAccountability: getSelectValue('externalAccountability'),
+            programsTried: getCheckboxValues('programsTried'),
+            trainingAppUsed: getSelectValue('trainingAppUsed'),
+            supplementsPlanned: getSelectValue('supplementsPlanned'),
+            knowledgeLevel: getSelectValue('knowledgeLevel'),
+            stepsPerDay: getSelectValue('stepsPerDay'),
+            cardioFrequency: getSelectValue('cardioFrequency'),
+            compoundComfort: getSelectValue('compoundComfort'),
+            availableDays: getCheckboxValues('availableDays'),
+            sessionDuration: getSelectValue('sessionDuration'),
+            trainingEnvironment: getSelectValue('trainingEnvironment'),
+            injuriesSelect: getSelectValue('injuriesSelect'),
+            injuriesOther: document.getElementById('injuriesOther') ? document.getElementById('injuriesOther').value : '',
+            caloriesRelative: getSelectValue('caloriesRelative'),
+            proteinRelative: getSelectValue('proteinRelative'),
+            nutritionDifficulties: getCheckboxValues('nutritionDifficulties'),
+            dietaryRestrictions: getSelectValue('dietaryRestrictions'),
+            restrictionsOther: document.getElementById('restrictionsOther')
+              ? document.getElementById('restrictionsOther').value
+              : '',
+            busySchedule: getSelectValue('busySchedule'),
+            coachingNeeds: getSelectValue('coachingNeeds'),
+            involveOthers: getSelectValue('involveOthers'),
+            supportPerson: getSelectValue('supportPerson'),
+            pageFollowingDuration: getSelectValue('pageFollowingDuration'),
+            interestFields: getCheckboxValues('interestFields'),
+            preWorkoutUse: getSelectValue('preWorkoutUse'),
+            preferredTrainingTime: getSelectValue('preferredTrainingTime'),
+            sleepHours: getSelectValue('sleepHours'),
+            financialAbility: getSelectValue('financialAbility'),
+            lifestyleAdditional: document.getElementById('lifestyleAdditional')
+              ? document.getElementById('lifestyleAdditional').value
+              : '',
+            additionalInfo: document.getElementById('additionalInfo') ? document.getElementById('additionalInfo').value : '',
+            offerChoice: (function() {
+              const selected = document.querySelector('#offerOptions input[type="radio"]:checked');
+              if (!selected) return '';
+              // Each plan label has a hidden span.offer-title with translations for Arabic/Darija
+              const titleSpan = selected.parentElement.querySelector('.offer-title');
+              if (titleSpan) {
+                const translated = titleSpan.getAttribute('data-' + currentLang);
+                return translated || '';
+              }
+              return '';
+            })(),
+          };
+        }
+
+        const labelsForPdf = {
+          ar: {
+            email: 'E-Mail-Adresse',
+            name: 'Name',
+            phone: 'WhatsApp-Nummer',
+            goal: 'Hauptziel',
+            gender: 'Geschlecht',
+            ageGroup: 'Altersgruppe',
+            height: 'Größe (cm)',
+            weight: 'Gewicht (kg)',
+            bodyShape: 'Aktuelle Körperform',
+            bodyFat: 'Körperfettanteil',
+            muscleGain: 'Gewünschter Muskelaufbau (kg)',
+            trainingHabits: 'Trainings- und Ernährungsgewohnheiten',
+            consistencyChallenge: 'Herausforderungen bei der Kontinuität',
+            fatAreas: 'Bereiche mit schwierigem Fettverlust',
+            focusMuscles: 'Fokus-Muskelgruppen',
+            trainingYears: 'Seit wann gezielte Körperverbesserung',
+            trainingExperience: 'Trainingserfahrung',
+            changeReasons: 'Gründe für die Veränderung',
+            improvementPeriod: 'Unwohlsein wegen des Körpers vor anderen',
+            selfSatisfaction: 'Zustimmung zur aktuellen Situation',
+            externalAccountability: 'Bedarf an externer Motivation/Kontrolle',
+            programsTried: 'Bisher ausprobierte Programme',
+            trainingAppUsed: 'Trainings-App',
+            supplementsPlanned: 'Geplante Supplements',
+            knowledgeLevel: 'Wissensstand',
+            stepsPerDay: 'Schritte pro Tag',
+            cardioFrequency: 'Cardio-Häufigkeit',
+            compoundComfort: 'Sicherheit bei Grundübungen',
+            availableDays: 'Verfügbare Trainingstage',
+            sessionDuration: 'Dauer der Trainingseinheit',
+            trainingEnvironment: 'Trainingsumgebung',
+            injuriesSelect: 'Verletzungen',
+            injuriesOther: 'Details zur Verletzung',
+            caloriesRelative: 'Kalorienzufuhr',
+            proteinRelative: 'Proteinzufuhr',
+            nutritionDifficulties: 'Schwierigkeiten mit der Ernährung',
+            dietaryRestrictions: 'Ernährungsbeschränkungen',
+            restrictionsOther: 'Weitere Einschränkungen',
+            busySchedule: 'Alltag / Zeitplan',
+            coachingNeeds: 'Coaching-Bedarf',
+            involveOthers: 'Andere in Ziele einbeziehen',
+            supportPerson: 'Unterstützende Person',
+            pageFollowingDuration: 'Seit wann GYMLABO gefolgt wird',
+            interestFields: 'Interessengebiete',
+            preWorkoutUse: 'Pre-Workout-Nutzung',
+            preferredTrainingTime: 'Bevorzugte Trainingszeit',
+            sleepHours: 'Schlafdauer',
+            financialAbility: 'Finanzielle Möglichkeit',
+            lifestyleAdditional: 'Zusätzliche Angaben zum Lebensstil',
+            additionalInfo: 'Zusätzliche Informationen / Anmerkungen',
+            offerChoice: 'Gewähltes Angebot',
+          },
+          dar: {
+            email: 'E-Mail-Adresse',
+            name: 'Name',
+            phone: 'WhatsApp-Nummer',
+            goal: 'Hauptziel',
+            gender: 'Geschlecht',
+            ageGroup: 'Altersgruppe',
+            height: 'Größe (cm)',
+            weight: 'Gewicht (kg)',
+            bodyShape: 'Aktuelle Körperform',
+            bodyFat: 'Körperfettanteil',
+            muscleGain: 'Gewünschter Muskelaufbau (kg)',
+            trainingHabits: 'Trainings- und Ernährungsgewohnheiten',
+            consistencyChallenge: 'Herausforderungen bei der Kontinuität',
+            fatAreas: 'Bereiche mit schwierigem Fettverlust',
+            focusMuscles: 'Fokus-Muskelgruppen',
+            trainingYears: 'Seit wann gezielte Körperverbesserung',
+            trainingExperience: 'Trainingserfahrung',
+            changeReasons: 'Gründe für die Veränderung',
+            improvementPeriod: 'Unwohlsein wegen des Körpers vor anderen',
+            selfSatisfaction: 'Zustimmung zur aktuellen Situation',
+            externalAccountability: 'Bedarf an externer Motivation/Kontrolle',
+            programsTried: 'Bisher ausprobierte Programme',
+            trainingAppUsed: 'Trainings-App',
+            supplementsPlanned: 'Geplante Supplements',
+            knowledgeLevel: 'Wissensstand',
+            stepsPerDay: 'Schritte pro Tag',
+            cardioFrequency: 'Cardio-Häufigkeit',
+            compoundComfort: 'Sicherheit bei Grundübungen',
+            availableDays: 'Verfügbare Trainingstage',
+            sessionDuration: 'Dauer der Trainingseinheit',
+            trainingEnvironment: 'Trainingsumgebung',
+            injuriesSelect: 'Verletzungen',
+            injuriesOther: 'Details zur Verletzung',
+            caloriesRelative: 'Kalorienzufuhr',
+            proteinRelative: 'Proteinzufuhr',
+            nutritionDifficulties: 'Schwierigkeiten mit der Ernährung',
+            dietaryRestrictions: 'Ernährungsbeschränkungen',
+            restrictionsOther: 'Weitere Einschränkungen',
+            busySchedule: 'Alltag / Zeitplan',
+            coachingNeeds: 'Coaching-Bedarf',
+            involveOthers: 'Andere in Ziele einbeziehen',
+            supportPerson: 'Unterstützende Person',
+            pageFollowingDuration: 'Seit wann GYMLABO gefolgt wird',
+            interestFields: 'Interessengebiete',
+            preWorkoutUse: 'Pre-Workout-Nutzung',
+            preferredTrainingTime: 'Bevorzugte Trainingszeit',
+            sleepHours: 'Schlafdauer',
+            financialAbility: 'Finanzielle Möglichkeit',
+            lifestyleAdditional: 'Zusätzliche Angaben zum Lebensstil',
+            additionalInfo: 'Zusätzliche Informationen / Anmerkungen',
+            offerChoice: 'Gewähltes Angebot',
+          },
+        };
+
+        // handle form submission
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          const current = steps[currentStep];
+          const inputs = current.querySelectorAll('input, select, textarea');
+          for (const input of inputs) {
+            if (!input.checkValidity()) {
+              input.reportValidity();
+              return;
+            }
+          }
+          // Collect the form data now so we can include it in the PDF and WhatsApp message
+          const data = collectFormData();
+          // Show loading feedback: hide the form and display the submit loading section
+          const loadingSection = document.getElementById('submitLoading');
+          if (loadingSection) {
+            // Update loading text based on the selected language
+            const h2 = loadingSection.querySelector('h2');
+            const p = loadingSection.querySelector('p');
+            if (h2 && p) {
+              if (currentLang === 'ar') {
+                h2.textContent = 'Deine Angaben werden gesendet...';
+                p.textContent = 'Das Formular wird jetzt gesendet. Bitte warten...';
+              } else {
+                h2.textContent = 'Deine Angaben werden gesendet...';
+                p.textContent = 'Das Formular wird jetzt gesendet. Bitte warten...';
+              }
+            }
+            loadingSection.classList.remove('hidden');
+          }
+          // Hide the form section while processing
+          formSection.classList.add('hidden');
+
+          // (Removed PDF generation.) We do not generate or download a PDF any more.
+
+          // Compose the WhatsApp message containing all answers. Include a greeting
+          // and the fields with their translated labels for the selected language.
+          const msgIntro = data.name + ' hat das persönliche Coaching-Formular ausgefüllt. Details:\n';
+          let details = '';
+          // Build details lines using the labelsForPdf translations
+          Object.keys(data).forEach((key) => {
+            if (!labelsForPdf[currentLang][key]) return;
+            const label = labelsForPdf[currentLang][key];
+            const value = data[key] || '';
+            details += label + ': ' + value + '\n';
+          });
+          const fullMessage = msgIntro + details;
+          const encoded = encodeURIComponent(fullMessage);
+          // Send the full message via WhatsApp. Use window.open with a fallback to
+          // window.location.href to ensure mobile browsers treat this as a user-initiated
+          // navigation and do not block it as a popup.
+          const waUrl = 'https://wa.me/212657994110?text=' + encoded;
+          const waWin = window.open(waUrl, '_blank');
+          if (!waWin) {
+            window.location.href = waUrl;
+          }
+          // Hide the loading section and show the thank you message
+          if (loadingSection) {
+            loadingSection.classList.add('hidden');
+          }
+          const thankYou = document.getElementById('thankYouMessage');
+          if (thankYou) {
+            thankYou.style.display = 'block';
+            // Update thank you text for correct language and include a follow-up note
+            const h2 = thankYou.querySelector('h2');
+            const p = thankYou.querySelector('p');
+            if (h2 && p) {
+              if (currentLang === 'ar') {
+                h2.textContent = 'Danke! Ich melde mich so schnell wie möglich bei dir.';
+                p.textContent = 'Deine Angaben wurden erfolgreich gesendet. Du wirst in wenigen Augenblicken zur Startseite weitergeleitet.';
+              } else {
+                h2.textContent = 'Danke! Ich melde mich so schnell wie möglich bei dir.';
+                p.textContent = 'Deine Angaben wurden erfolgreich gesendet. Du wirst jetzt zur Startseite weitergeleitet.';
+              }
+            }
+          }
+          // Redirect back to home page (index) after a short delay
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 4500);
+        });
+      });
+    </script>
+<!-- Script to copy email address to clipboard and display toast -->
+<script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const emailIcons = document.querySelectorAll('a[data-copy-email]');
+        emailIcons.forEach(function (icon) {
+          icon.addEventListener('click', function (ev) {
+            ev.preventDefault();
+            const mail = icon.getAttribute('data-copy-email');
+            if (!mail) return;
+            navigator.clipboard.writeText(mail).then(function () {
+              const existing = document.querySelector('.email-copy-toast');
+              if (existing) existing.remove();
+              const toast = document.createElement('div');
+              toast.className = 'email-copy-toast';
+              toast.textContent = 'E-Mail-Adresse kopiert!';
+              document.body.appendChild(toast);
+              setTimeout(function () {
+                toast.remove();
+              }, 3000);
+            });
+          });
+        });
+      });
+    </script>
+<!-- Site footer -->
+<footer class="site-footer">
+<div class="container">
+<div class="footer-card footer-card--premium">
+<div aria-hidden="true" class="footer-glow footer-glow--one"></div>
+<div aria-hidden="true" class="footer-glow footer-glow--two"></div>
+<div class="footer-grid footer-grid--premium">
+<!-- Brand -->
+<div class="footer-col footer-brand">
+<a aria-label="Zur Startseite" class="footer-brand-lockup" href="index.html#home">
+<span aria-hidden="true" class="footer-brand-mark footer-brand-mark--logo">
+<img alt="" loading="lazy" src="images/gym-laboratory-logo.webp"/>
+</span>
+<span class="footer-brand-copy">
+<strong class="footer-brand-title">GYM LABORATORY</strong>
+<small>Training • Ernährung • Wissen</small>
+</span>
+</a>
+<p class="footer-brand-text">
+                Folge uns – wir posten täglich neue Inhalte rund um Training, Ernährung und Fortschritt.
+              </p>
+<div class="footer-social">
+<a class="footer-pill" href="https://www.instagram.com/gymlaboo/" rel="noopener" target="_blank">
+<span class="footer-social-dot">IG</span>
+                  Instagram
+                </a>
+<a class="footer-pill" href="https://www.facebook.com/profile.php?id=61576849801264" rel="noopener" target="_blank">
+<span class="footer-social-dot">f</span>
+                  Facebook
+                </a>
+<a class="footer-pill" href="https://www.tiktok.com/@gymlaboo" rel="noopener" target="_blank">
+<span class="footer-social-dot">♪</span>
+                  TikTok
+                </a>
+<a class="footer-pill" href="https://www.youtube.com/@gymlabo" rel="noopener" target="_blank">
+<span class="footer-social-dot">▶</span>
+                  YouTube
+                </a>
+</div>
+</div>
+<!-- Explore -->
+<div class="footer-col">
+<span class="footer-col-eyebrow">Navigation</span>
+<h4 class="footer-title">Entdecken</h4>
+<ul class="footer-links footer-links--premium">
+<li><a href="index.html#ebook"><span>Muscle Mastery E-Book</span><span>→</span></a></li>
+<li><a href="index.html#online"><span>Online-Coaching</span><span>→</span></a></li>
+<li><a href="index.html#free-guides"><span>Kostenlose Guides</span><span>→</span></a></li>
+<li><a href="blog.html"><span>Blog</span><span>→</span></a></li>
+</ul>
+</div>
+<!-- Contact + legal -->
+<div class="footer-col">
+<span class="footer-col-eyebrow">Support</span>
+<h4 class="footer-title">Kontakt &amp; Rechtliches</h4>
+<div class="footer-contact-box">
+<span class="footer-contact-label">Direkter Kontakt</span>
+<div class="footer-contact-actions">
+<a aria-label="E-Mail-Adresse kopieren" class="footer-icon footer-icon--wide" data-copy-email="contact.labooo@gmail.com" href="#">
+<span class="footer-contact-symbol">✉</span>
+<span>E-Mail</span>
+</a>
+<a aria-label="WhatsApp" class="footer-icon footer-icon--wide" href="https://wa.me/212657994110" rel="noopener" target="_blank">
+<span class="footer-contact-symbol">◉</span>
+<span>WhatsApp</span>
+</a>
+</div>
+</div>
+<ul class="footer-links footer-legal-links">
+<li><a href="#" id="terms-link">Nutzungsbedingungen</a></li>
+<li><a href="#" id="privacy-link">Datenschutzrichtlinie</a></li>
+</ul>
+</div>
+<!-- Newsletter -->
+<div class="footer-col footer-newsletter-card">
+<span class="footer-col-eyebrow">Newsletter</span>
+<h4 class="footer-title">Updates direkt per E-Mail</h4>
+<p class="footer-muted">
+                Erhalte neue Tipps zu Training, Ernährung und unseren neuesten Guides direkt in dein Postfach.
+              </p>
+<form action="https://docs.google.com/forms/d/e/1FAIpQLSf1J3YBh-Xstf0M2CuExO_WGVY75-u4iBIj2NMQHoWoRmXLrg/formResponse" class="newsletter" method="POST" onsubmit="newsletterSuccess()" target="hidden_iframe">
+<div class="newsletter-field">
+<span aria-hidden="true" class="newsletter-mail-icon">✉</span>
+<input name="entry.364924139" placeholder="E-Mail-Adresse eingeben" required="" type="email"/>
+</div>
+<button type="submit">
+<span>Abonnieren</span>
+<span aria-hidden="true">→</span>
+</button>
+</form>
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+<p class="newsletter-success" id="newsletter-success" style="display:none;"></p>
+<span class="footer-newsletter-note">Kein Spam. Nur neue Inhalte.</span>
+</div>
+</div>
+<div class="footer-bottom footer-bottom--premium">
+<span class="footer-copyright">
+              © 2026 Gym Laboratory. Alle Rechte vorbehalten.
+            </span>
+<span aria-hidden="true" class="footer-bottom-line"></span>
+<a class="footer-backtop" href="#top">
+<span>Nach oben</span>
+<span aria-hidden="true" class="footer-backtop-arrow">↑</span>
+</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Legal modal overlay and container (hidden by default) -->
+<div class="legal-modal-overlay" id="legalOverlay" style="display: none;"></div>
+<div class="legal-modal" id="legalModal" style="display: none;">
+<div class="legal-modal-content">
+<span class="legal-close" id="legalCloseBtn">×</span>
+<h3 id="legalModalTitle"></h3>
+<div class="legal-modal-body" id="legalModalBody"></div>
+</div>
+</div>
+<!-- Hidden detailed legal content for Terms of Service and Privacy Policy -->
+<div id="terms-content" style="display:none;">
+<p><strong>Letzte Aktualisierung:</strong> 07. Januar 2026</p>
+<p>Willkommen auf der Website von GYM LABORATORY. Durch die Nutzung dieser Website oder eines unserer Angebote bestätigst du, dass du diese Bedingungen gelesen und verstanden hast und ihnen zustimmst.</p>
+<p><strong>1) Definitionen</strong></p>
+<p><strong>Website:</strong> Die Plattform GYM LABORATORY und die damit verbundenen Inhalte.</p>
+<p><strong>Angebote:</strong> Dazu gehören Lerninhalte, die Übungsbibliothek, der Blog, der Kalorienrechner, Online-Coaching und digitale Bücher (E-Books).</p>
+<p><strong>Nutzer:</strong> Jede Person, die die Website besucht oder eines der Angebote nutzt.</p>
+<p><strong>Inhalte:</strong> Alle Texte, Bilder, Trainingsprogramme, Artikel, Videos, Übungen und Lernmaterialien, die auf der Website verfügbar sind.</p>
+<p><strong>2) Annahme der Bedingungen</strong><br/>Durch die Nutzung der Website erklärst du dich mit diesen Bedingungen einverstanden. Wenn du ihnen nicht zustimmst, musst du die Nutzung der Website und ihrer Angebote sofort einstellen.</p>
+<p><strong>3) Art der Angebote und keine Ergebnisgarantie</strong><br/>GYM LABORATORY bietet Bildungs- und Informationsinhalte zu Fitness und Ernährung. Dabei gilt:<br/>Ergebnisse unterscheiden sich von Person zu Person und hängen unter anderem von Konsequenz, Alter, Genetik, Gesundheitszustand und Lebensstil ab.<br/>Empfehlungen oder Programme dienen als allgemeine Orientierung oder basieren beim persönlichen Coaching auf den von dir bereitgestellten Angaben.</p>
+<p><strong>4) Gesundheitshinweis und medizinische Verantwortung (sehr wichtig)</strong><br/>Die Website ersetzt keinen Arzt oder medizinisches Fachpersonal. Durch die Nutzung unserer Angebote bestätigst du Folgendes:<br/>Wenn du an einer Krankheit oder gesundheitlichen Beeinträchtigung leidest (z. B. Herz-Kreislauf-Erkrankungen, Bluthochdruck, Diabetes, Verletzungen oder andere medizinische Beschwerden), solltest du vor Beginn eines Programms, Trainings oder einer Ernährungsumstellung ärztlichen Rat einholen.<br/>Du nutzt die Inhalte und Angebote der Website auf eigene Verantwortung.<br/>Wir übernehmen keine Haftung für Verletzungen oder Schäden, die durch falsche Anwendung, fehlende fachliche Beratung oder unsachgemäße Nutzung der Informationen entstehen.</p>
+<p><strong>5) Digitale Bücher und Online-Coaching</strong><br/>Wir können digitale Produkte und Dienstleistungen anbieten, zum Beispiel:<br/>E-Books<br/>Persönliches Coaching / Online-Trainingsprogramme<br/>Dabei gilt:<br/>Diese Angebote sind digital und nicht materiell.<br/>Nach der Bereitstellung bzw. Zusendung eines Produkts oder Programms an den Nutzer kann eine Rückgabe aufgrund der digitalen Natur des Inhalts nicht garantiert werden.</p>
+<p><strong>6) Zahlung und Zahlungsmethoden</strong><br/>Zahlungen können unter anderem über PayPal, Banküberweisung oder Western Union akzeptiert werden. Weitere Zahlungsmethoden können künftig hinzukommen.<br/>Der Nutzer ist dafür verantwortlich, bei der Zahlung korrekte Angaben zu machen und gegebenenfalls anfallende Überweisungsgebühren zu tragen.</p>
+<p><strong>7) Rückerstattungsrichtlinie (Refund Policy)</strong><br/>Derzeit bieten wir aufgrund der Art digitaler Inhalte und Online-Dienstleistungen keine allgemeine Rückerstattungsregelung an. In Ausnahmefällen können Anfragen nach unserem Ermessen geprüft werden.</p>
+<p><strong>8) Geistiges Eigentum</strong><br/>Alle Inhalte auf der Website von GYM LABORATORY (Artikel, Programme, Design, Texte, Bilder usw.) gehören zur Website. Inhalte dürfen ohne Genehmigung weder kopiert noch erneut veröffentlicht oder verkauft werden. Tipps und Informationen dürfen für persönliche oder Bildungszwecke genutzt werden, um Wissen zu verbreiten und das Fitnessniveau in Marokko und der arabischen Welt zu verbessern, sofern die Inhalte nicht als eigene ausgegeben oder kommerziell genutzt werden.</p>
+<p><strong>9) Unzulässige Nutzung</strong><br/>Es ist untersagt, die Inhalte ohne Genehmigung kommerziell zu verwenden oder störende bzw. schädliche Daten oder Nachrichten zu versenden.</p>
+<p><strong>10) Externe Links</strong><br/>Die Website kann Links zu anderen Plattformen wie Instagram, TikTok oder YouTube enthalten. Für die Inhalte oder Richtlinien dieser Websites sind wir nicht verantwortlich.</p>
+<p><strong>11) Änderungen der Bedingungen</strong><br/>Wir behalten uns das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Die weitere Nutzung der Website nach einer Aktualisierung gilt als Zustimmung zu den neuen Bedingungen.</p>
+<p><strong>12) Kontakt und Support</strong><br/>Bei Fragen oder Anliegen zu unseren Angeboten kannst du uns per E-Mail kontaktieren:<br/>📩 contact.labooo@gmail.com<br/>Voraussichtliche Antwortzeit: 24 bis 72 Stunden.</p>
+</div>
+<div id="privacy-content" style="display:none;">
+<p><strong>Letzte Aktualisierung:</strong> 07. Januar 2026</p>
+<p>Bei GYM LABORATORY respektieren wir deine Privatsphäre und verpflichten uns zum Schutz deiner Daten. Diese Richtlinie erklärt, welche Informationen wir erfassen und wie wir sie verwenden.</p>
+<p><strong>1) Welche Informationen wir erfassen</strong></p>
+<p>Wir erfassen nur die minimal erforderlichen Daten, zum Beispiel:</p>
+<p><strong>a) E-Mail-Adresse (Newsletter)</strong><br/>Wenn du unseren Newsletter abonnierst, erfassen wir gegebenenfalls nur deine E-Mail-Adresse. Sie wird verwendet, um Tipps zu Ernährung und Training sowie Updates zu Artikeln und neuen Inhalten zu senden.</p>
+<p><strong>b) Daten für das Online-Coaching</strong><br/>Beim Ausfüllen des Coaching-Formulars kannst du Angaben wie Ziel, Größe und Gewicht, Alter, Aktivitätsniveau sowie Informationen zu Ernährung und Training und gegebenenfalls Gesundheitsinformationen angeben. ⚠️ Diese Informationen werden ausschließlich verwendet, um ein passendes Programm für dich zu erstellen.</p>
+<p><strong>2) Wie wir deine Daten verwenden</strong><br/>Wir verwenden deine Daten ausschließlich, um Coaching- und Ernährungsprogramme bereitzustellen, den Newsletter an Personen zu senden, die dem zugestimmt haben, und dich bezüglich unserer Angebote zu kontaktieren.</p>
+<p><strong>3) Keine Weitergabe von Daten</strong><br/>Wir verkaufen oder teilen deine personenbezogenen Daten nicht mit Dritten; deine Daten bleiben privat und vertraulich. Eine technische Weitergabe kann lediglich im Zusammenhang mit Zahlungen erfolgen (z. B. PayPal oder Banküberweisung), da diese Dienste Zahlungsdaten zur Abwicklung der Transaktion benötigen.</p>
+<p><strong>4) Datenschutz</strong><br/>Wir verpflichten uns, angemessene Sicherheitsmaßnahmen zu ergreifen, um deine Daten vor unbefugtem Zugriff, Offenlegung oder Veränderung zu schützen.</p>
+<p><strong>5) Cookies</strong><br/>Die Website kann Cookies verwenden, um die Nutzererfahrung zu verbessern, zum Beispiel um den Dunkelmodus zu speichern und die Leistung der Website zu optimieren.</p>
+<p><strong>6) Rechte der Nutzer</strong><br/>Du kannst jederzeit verlangen, dass deine E-Mail-Adresse aus dem Newsletter-Verteiler entfernt wird, und uns kontaktieren, um die Löschung deiner Coaching-Daten zu beantragen.</p>
+<p><strong>7) Änderungen dieser Richtlinie</strong><br/>Wir können diese Datenschutzrichtlinie aktualisieren, wenn neue Angebote oder Funktionen hinzukommen (zum Beispiel künftig Benutzerkonten). Aktualisierungen werden auf dieser Seite veröffentlicht.</p>
+<p><strong>8) Kontakt</strong><br/>Bei Anliegen zu Datenschutz oder Daten: 📩 contact.labooo@gmail.com<br/>Wir antworten innerhalb von 24 bis 72 Stunden.</p>
+</div>
+<!-- Additional script for legal modals and newsletter -->
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Legal modal elements and hidden content
+        const legalOverlay = document.getElementById('legalOverlay');
+        const legalModal = document.getElementById('legalModal');
+        const legalModalTitle = document.getElementById('legalModalTitle');
+        const legalModalBody = document.getElementById('legalModalBody');
+        const legalCloseBtn = document.getElementById('legalCloseBtn');
+        const termsEl = document.getElementById('terms-content');
+        const privacyEl = document.getElementById('privacy-content');
+
+        /**
+         * Display a legal modal with the given title and HTML body. The html
+         * parameter is pulled from hidden DOM elements containing full terms
+         * and privacy content. Using innerHTML allows preserving formatting.
+         */
+        function showLegal(title, html) {
+          if (legalModalTitle) legalModalTitle.textContent = title;
+          if (legalModalBody) legalModalBody.innerHTML = html;
+          if (legalOverlay) legalOverlay.style.display = 'flex';
+          if (legalModal) legalModal.style.display = 'block';
+        }
+
+        const termsLink = document.getElementById('terms-link');
+        const privacyLink = document.getElementById('privacy-link');
+        if (termsLink && termsEl) {
+          termsLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showLegal('Nutzungsbedingungen', termsEl.innerHTML);
+          });
+        }
+        if (privacyLink && privacyEl) {
+          privacyLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showLegal('Datenschutzrichtlinie', privacyEl.innerHTML);
+          });
+        }
+        // Close modal when clicking on the close button
+        if (legalCloseBtn) {
+          legalCloseBtn.addEventListener('click', () => {
+            if (legalOverlay) legalOverlay.style.display = 'none';
+            if (legalModal) legalModal.style.display = 'none';
+          });
+        }
+        // Close modal when clicking outside of it on the overlay
+        if (legalOverlay) {
+          legalOverlay.addEventListener('click', (evt) => {
+            if (evt.target === legalOverlay) {
+              legalOverlay.style.display = 'none';
+              if (legalModal) legalModal.style.display = 'none';
+            }
+          });
+        }
+        // Newsletter form submission is handled by Google Form. No client-side interception needed here.
+      });
+    </script>
+<script defer="" src="mobile-enhancements.js"></script></body>
+</html>

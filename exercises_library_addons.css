@@ -1,0 +1,2684 @@
+/* Add-ons for exercises library page (keeps style.css untouched) */
+
+.exlib-hero {
+  padding: 90px 0 26px;
+  background: radial-gradient(900px 380px at 20% 20%, rgba(87, 167, 201, 0.18), transparent 60%),
+              radial-gradient(900px 380px at 80% 30%, rgba(10, 116, 166, 0.12), transparent 60%),
+              var(--secondary-bg);
+}
+
+body.dark .exlib-hero {
+  background: radial-gradient(900px 380px at 20% 20%, rgba(87, 167, 201, 0.18), transparent 60%),
+              radial-gradient(900px 380px at 80% 30%, rgba(10, 116, 166, 0.18), transparent 60%),
+              var(--dark-bg);
+}
+
+.exlib-hero-inner {
+  /* Expand to the full available container width so the search bar aligns with exercise lists */
+  max-width: 100%;
+  /* Center the hero content vertically and horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.exlib-controls {
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(10, 116, 166, 0.18);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(8px);
+  /* Stretch the controls container to the full width of the parent container */
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+body.dark .exlib-controls {
+  background: rgba(18, 56, 71, 0.72);
+  border-color: rgba(87, 167, 201, 0.22);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.25);
+}
+
+.exlib-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* Center the search bar on larger screens */
+  max-width: 100%;
+  margin-inline: 0;
+}
+
+.exlib-search {
+  width: 100%;
+  padding: 14px 44px 14px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(10, 116, 166, 0.22);
+  outline: none;
+  font-family: inherit;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+body.dark .exlib-search {
+  color: var(--dark-text);
+  background: rgba(11, 34, 43, 0.55);
+  border-color: rgba(87, 167, 201, 0.25);
+}
+
+.exlib-search::placeholder { opacity: 0.7; }
+
+/* Focus ring for better accessibility and interactivity */
+.exlib-search:focus {
+  border-color: var(--h1);
+  box-shadow: 0 0 0 3px rgba(10, 116, 166, 0.25);
+}
+
+body.dark .exlib-search:focus {
+  border-color: var(--dark-accent);
+  box-shadow: 0 0 0 3px rgba(87, 167, 201, 0.25);
+}
+
+/* Search icon styling */
+.exlib-search-icon {
+  position: absolute;
+  /* RTL-friendly: place on the right side */
+  right: 12px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: rgba(10, 116, 166, 0.7);
+  pointer-events: none;
+}
+
+body.dark .exlib-search-icon {
+  color: rgba(87, 167, 201, 0.8);
+}
+
+/* Suggestions dropdown */
+.exlib-suggestions {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(10, 116, 166, 0.22);
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  z-index: 50;
+  max-height: 240px;
+  overflow-y: auto;
+  direction: rtl;
+}
+
+body.dark .exlib-suggestions {
+  background: rgba(18, 56, 71, 0.95);
+  border-color: rgba(87, 167, 201, 0.25);
+}
+
+.exlib-suggestions li {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: inherit;
+  transition: background 0.15s ease;
+}
+
+body.dark .exlib-suggestions li {
+  color: inherit;
+}
+
+.exlib-suggestions li:hover,
+.exlib-suggestions li:focus {
+  background: rgba(10, 116, 166, 0.1);
+}
+
+body.dark .exlib-suggestions li:hover,
+body.dark .exlib-suggestions li:focus {
+  background: rgba(87, 167, 201, 0.15);
+}
+
+/* Highlighted suggestion when navigating via keyboard */
+.exlib-suggestions li.active {
+  background: rgba(10, 116, 166, 0.15);
+}
+
+body.dark .exlib-suggestions li.active {
+  background: rgba(87, 167, 201, 0.2);
+}
+
+.exlib-clear {
+  position: absolute;
+  left: 12px; /* RTL friendly: put on left */
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(10, 116, 166, 0.22);
+  background: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+body.dark .exlib-clear {
+  color: var(--dark-text);
+  background: rgba(11, 34, 43, 0.55);
+  border-color: rgba(87, 167, 201, 0.25);
+}
+
+.exlib-clear:hover { transform: scale(1.05); }
+
+.exlib-filter-row {
+  margin-top: 14px;
+  display: grid;
+  /* On larger screens place the label and chips on a single line, but allow wrapping */
+  grid-template-columns: 120px 1fr;
+  gap: 10px;
+  align-items: start;
+  /* Center contents when stacked (small screens) */
+  text-align: center;
+}
+
+/* Responsive tweaks: stack filter rows on narrow screens to avoid horizontal
+   scrolling and make each input easier to tap on mobile devices. */
+@media (max-width: 600px) {
+  .exlib-filter-row {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .exlib-filter-label {
+    margin-bottom: 4px;
+  }
+}
+
+.exlib-filter-label {
+  font-weight: 700;
+  color: var(--primary-text);
+  opacity: 0.9;
+}
+
+body.dark .exlib-filter-label {
+  color: var(--dark-text);
+  opacity: 0.9;
+}
+
+.exlib-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  /* Center chip groups horizontally to better align with the search bar */
+  justify-content: center;
+}
+
+/*
+  Improved chip design for filters
+  - Subtle gradient background for a softer look
+  - Rounded corners with gentle shadow
+  - Responsive hover and active states
+*/
+/*
+  Enhanced chip styling
+  - Uses a subtle radial gradient tinted with the primary accent color
+  - Larger border-radius for a more pill‑like feel
+  - Slightly larger font for better readability
+  - Adds a gentle lift and scale on hover/active for more interactivity
+*/
+.exlib-chip {
+  border: 1px solid rgba(10, 116, 166, 0.28);
+  background: linear-gradient(145deg, rgba(10, 116, 166, 0.12), rgba(255, 255, 255, 0.80));
+  padding: 10px 18px;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.92rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
+  white-space: nowrap;
+}
+
+body.dark .exlib-chip {
+  color: var(--dark-text);
+  background: rgba(18, 56, 71, 0.65);
+  border-color: rgba(87, 167, 201, 0.30);
+  box-shadow: none;
+}
+
+/* Hover state: lift and brighten the chip to indicate interactivity */
+.exlib-chip:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
+  background: rgba(55, 149, 187, 0.15);
+}
+
+body.dark .exlib-chip:hover {
+  background: rgba(87, 167, 201, 0.28);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* Active state: strong accent color with higher contrast */
+.exlib-chip.active {
+  background: var(--h2);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
+}
+
+body.dark .exlib-chip.active {
+  background: var(--dark-accent);
+  color: #07202b;
+}
+
+.exlib-chip.active:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.22);
+}
+
+.exlib-meta {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+.exlib-meta-dot { opacity: 0.45; }
+
+.exlib-reset {
+  border: none;
+  background: transparent;
+  /* Use heading color as a reliable accent since primary-accent may not be defined */
+  color: var(--h2);
+  font-weight: 800;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 10px;
+}
+
+body.dark .exlib-reset { color: var(--dark-accent); }
+
+.exlib-reset:hover { background: rgba(10, 116, 166, 0.1); }
+body.dark .exlib-reset:hover { background: rgba(87, 167, 201, 0.12); }
+
+.exlib-section {
+  padding: 26px 0 70px;
+  background: var(--secondary-bg);
+}
+
+body.dark .exlib-section { background: var(--dark-bg); }
+
+.exlib-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.exlib-muscle {
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(10, 116, 166, 0.16);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.06);
+  padding: 16px;
+}
+
+body.dark .exlib-muscle {
+  background: rgba(18, 56, 71, 0.7);
+  border-color: rgba(87, 167, 201, 0.20);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.25);
+}
+
+.exlib-muscle-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Collapsible sections: hide cards by default */
+.exlib-muscle .exlib-cards {
+  display: none;
+}
+
+/* Show cards when section is open */
+.exlib-muscle.open .exlib-cards {
+  display: grid;
+}
+
+/*
+  The default muscle header is now redesigned as a card tile.  We override the
+  previous arrow indicator and layout rules below in a dedicated section at
+  the bottom of this file.  Existing rules remain for backwards
+  compatibility but will be superseded by the new definitions.
+*/
+
+.exlib-muscle-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* Allow the info block to grow and wrap so long names don't force the filter button out */
+  flex: 1;
+  min-width: 0;
+}
+
+.exlib-muscle-img {
+  width: 68px;
+  height: 68px;
+  border-radius: 16px;
+  background: rgba(10, 116, 166, 0.08);
+  border: 1px dashed rgba(10, 116, 166, 0.25);
+  position: relative;
+  overflow: hidden;
+  flex: 0 0 68px;
+  display: grid;
+}
+
+body.dark .exlib-muscle-img {
+  background: rgba(87, 167, 201, 0.10);
+  border-color: rgba(87, 167, 201, 0.25);
+}
+
+.exlib-muscle-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.exlib-img-placeholder {
+  position: absolute;
+  font-size: 12px;
+  font-weight: 800;
+  opacity: 0.65;
+  padding: 0 8px;
+  text-align: center;
+}
+
+.exlib-muscle-img.missing .exlib-img-placeholder { opacity: 0.85; }
+
+.exlib-muscle-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--primary-text);
+}
+
+body.dark .exlib-muscle-title { color: var(--dark-text); }
+
+.exlib-muscle-sub {
+  margin: 3px 0 0;
+  opacity: 0.75;
+  font-weight: 700;
+}
+
+.exlib-jump {
+  border: 1px solid rgba(10, 116, 166, 0.22);
+  background: rgba(255,255,255,0.65);
+  padding: 10px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 900;
+  color: var(--h2);
+}
+
+body.dark .exlib-jump {
+  color: var(--dark-accent);
+  background: rgba(11,34,43,0.45);
+  border-color: rgba(87, 167, 201, 0.22);
+}
+
+.exlib-jump:hover { transform: translateY(-1px); }
+
+.exlib-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 980px) {
+  .exlib-filter-row { grid-template-columns: 1fr; }
+  .exlib-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .exlib-cards { grid-template-columns: 1fr; }
+}
+
+.exlib-card {
+  border-radius: 16px;
+  border: 1px solid rgba(10, 116, 166, 0.16);
+  background: rgba(255,255,255,0.92);
+  padding: 12px 12px 10px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+body.dark .exlib-card {
+  background: rgba(11, 34, 43, 0.45);
+  border-color: rgba(87, 167, 201, 0.20);
+}
+
+.exlib-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 26px rgba(0,0,0,0.08);
+}
+
+body.dark .exlib-card:hover { box-shadow: 0 18px 30px rgba(0,0,0,0.30); }
+
+.exlib-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.exlib-ex-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--primary-text);
+}
+
+body.dark .exlib-ex-name { color: var(--dark-text); }
+
+.exlib-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-start;
+}
+
+.exlib-tag {
+  border: 1px solid rgba(10, 116, 166, 0.20);
+  background: rgba(10, 116, 166, 0.08);
+  color: var(--primary-accent);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+body.dark .exlib-tag {
+  color: var(--dark-accent);
+  background: rgba(87, 167, 201, 0.12);
+  border-color: rgba(87, 167, 201, 0.18);
+}
+
+.exlib-tag:hover { transform: translateY(-1px); }
+
+.exlib-badges {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.exlib-badge {
+  font-size: 12px;
+  font-weight: 900;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.7);
+}
+
+body.dark .exlib-badge {
+  background: rgba(255,255,255,0.08);
+  color: rgba(231,246,252,0.85);
+}
+
+.exlib-badge--primary {
+  background: rgba(10, 116, 166, 0.14);
+  color: var(--primary-accent);
+  border: 1px solid rgba(10, 116, 166, 0.18);
+}
+
+body.dark .exlib-badge--primary {
+  background: rgba(87, 167, 201, 0.18);
+  color: var(--dark-accent);
+  border-color: rgba(87, 167, 201, 0.18);
+}
+
+.exlib-empty {
+  margin-top: 22px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px dashed rgba(10, 116, 166, 0.25);
+  background: rgba(255,255,255,0.65);
+  text-align: center;
+}
+
+body.dark .exlib-empty {
+  background: rgba(11,34,43,0.35);
+  border-color: rgba(87, 167, 201, 0.25);
+}
+
+.kbd {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(10, 116, 166, 0.18);
+  background: rgba(255,255,255,0.65);
+  font-weight: 900;
+}
+
+body.dark .kbd {
+  background: rgba(11,34,43,0.45);
+  border-color: rgba(87, 167, 201, 0.22);
+}
+
+.exlib-note {
+  margin-top: 18px;
+  opacity: 0.85;
+  font-weight: 700;
+}
+
+
+/* =========================
+   Exercise Cards v3 (image + description + role badges)
+   ========================= */
+
+.exlib-card-grid{
+  display:grid;
+  grid-template-columns: 140px 1fr;
+  gap:14px;
+  align-items:start;
+}
+
+@media (max-width: 640px){
+  .exlib-card-grid{ grid-template-columns: 1fr; }
+}
+
+.exlib-ex-img{
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(10,116,166,0.12);
+  background: rgba(255,255,255,0.55);
+}
+
+body.dark .exlib-ex-img{
+  border-color: rgba(87,167,201,0.20);
+  background: rgba(11,34,43,0.35);
+}
+
+.exlib-ex-img img{
+  /* Preserve original aspect ratio for exercise images. The max-height ensures
+     cards remain reasonably sized while preventing distortion or zooming. */
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
+  display: block;
+}
+
+/* =========================
+   Muscle Sections Grid & Card (v4)
+   ========================= */
+
+/*
+  Display the muscle sections in a responsive grid.  Each section becomes a
+  tile that shows the muscle image, names, count, and a filter button.  When
+  the tile is clicked, the corresponding list of exercises toggles open or
+  closed.  The grid automatically wraps based on available width.
+*/
+#muscleSections {
+  display: grid;
+  /* Create responsive columns; minimum tile width ~260px */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 26px;
+}
+
+/* When a section is open, span the entire row to display exercises full width */
+#muscleSections .exlib-muscle.open {
+  grid-column: 1 / -1;
+}
+
+/* Each muscle section acts as a column with a header and a collapsible card list */
+.exlib-muscle {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Muscle header tile */
+/*
+  Each muscle header is a glossy card with a slight gradient and interactive highlight.  It holds the
+  muscle image, name, count, filter button, and a toggle arrow.  The card lifts and subtly scales
+  on hover, with a radial glow effect emanating from the center.  Dark mode uses deeper tones.
+*/
+.exlib-muscle-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(231,246,252,0.85) 100%);
+  border: 1px solid rgba(10,116,166,0.20);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin-bottom: 0;
+  justify-content: flex-start;
+  /* Allow the muscle info to flex and wrap without pushing the filter button outside the card */
+  /* The .exlib-muscle-info element will take the remaining space */
+}
+
+body.dark .exlib-muscle-head {
+  background: linear-gradient(180deg, rgba(11,34,43,0.85) 0%, rgba(7,30,45,0.85) 100%);
+  border-color: rgba(87,167,201,0.22);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+}
+
+/* Radial glow overlay for hover */
+.exlib-muscle-head::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 50%, rgba(10,116,166,0.18), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.exlib-muscle-head:hover::before {
+  opacity: 1;
+}
+
+/* Lift and slight scale on hover */
+.exlib-muscle-head:hover {
+  box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+  transform: translateY(-3px) scale(1.015);
+}
+
+/* Dark mode variant */
+body.dark .exlib-muscle-head {
+  background: rgba(11,34,43,0.65);
+  border-color: rgba(87,167,201,0.25);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Hover effect to lift the tile slightly */
+.exlib-muscle-head:hover {
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+/* Arrow indicator to the far right; rotates when the section is open */
+.exlib-muscle-head::after {
+  content: "\25B6"; /* right-pointing triangle */
+  font-size: 0.8rem;
+  color: var(--h2);
+  /* Position the arrow absolutely at the far right of the header */
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.35s ease;
+}
+
+.exlib-muscle.open .exlib-muscle-head::after {
+  /* Rotate the arrow while preserving its vertical centering */
+  transform: translateY(-50%) rotate(90deg);
+}
+
+/* Position the filter button in the header; push it to the end of the row */
+.exlib-muscle-head .exlib-jump {
+  margin-left: auto;
+  /* Leave space on the right for the arrow indicator */
+  margin-right: 38px;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  /* Give the jump button its own subtle gradient */
+  background: linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(231,246,252,0.90) 100%);
+  border: 1px solid rgba(10,116,166,0.25);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  font-weight: 800;
+  color: var(--h2);
+  transition: background 0.3s ease, transform 0.15s ease;
+}
+
+.exlib-muscle-head .exlib-jump:hover {
+  background: rgba(10,116,166,0.12);
+  color: var(--h2);
+  transform: translateY(-1px);
+}
+
+/* Adjust margin between head and cards */
+.exlib-muscle .exlib-cards {
+  margin-top: 14px;
+}
+
+/* Removed the previous breakpoints that forced different heights on small screens.
+   Exercise images will scale naturally with their container and maintain aspect ratio.
+ */
+
+.exlib-img-note{
+  padding: 8px 10px;
+  font-size: 12px;
+  color: rgba(0,0,0,0.60);
+  border-top: 1px solid rgba(10,116,166,0.10);
+}
+
+body.dark .exlib-img-note{
+  color: rgba(255,255,255,0.70);
+  border-top-color: rgba(87,167,201,0.18);
+}
+
+.exlib-ex-body{ min-width:0; }
+
+.exlib-ex-desc{
+  margin: 10px 0 8px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.72);
+  font-weight: 700;
+}
+
+body.dark .exlib-ex-desc{
+  color: rgba(255,255,255,0.78);
+}
+
+/* Role dots */
+.exlib-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display:inline-block;
+  margin-left: 6px;
+  flex: 0 0 10px;
+}
+
+/* Target = red, Synergists = orange, Stabilizers = yellow */
+.exlib-dot--target{ background: #e34b4b; }
+.exlib-dot--synergist{ background: #f39c33; }
+.exlib-dot--stabilizer{ background: #f1d24a; }
+
+/* Badge tints */
+.exlib-badge--target{
+  background: rgba(227,75,75,0.12);
+  border: 1px solid rgba(227,75,75,0.18);
+  color: rgba(0,0,0,0.78);
+}
+
+.exlib-badge--synergist{
+  background: rgba(243,156,51,0.14);
+  border: 1px solid rgba(243,156,51,0.20);
+  color: rgba(0,0,0,0.78);
+}
+
+.exlib-badge--stabilizer{
+  background: rgba(241,210,74,0.16);
+  border: 1px solid rgba(241,210,74,0.22);
+  color: rgba(0,0,0,0.78);
+}
+
+body.dark .exlib-badge--target{
+  background: rgba(227,75,75,0.18);
+  border-color: rgba(227,75,75,0.25);
+  color: rgba(255,255,255,0.86);
+}
+body.dark .exlib-badge--synergist{
+  background: rgba(243,156,51,0.20);
+  border-color: rgba(243,156,51,0.28);
+  color: rgba(255,255,255,0.86);
+}
+body.dark .exlib-badge--stabilizer{
+  background: rgba(241,210,74,0.22);
+  border-color: rgba(241,210,74,0.30);
+  color: rgba(255,255,255,0.86);
+}
+
+/* Make badges align nicely */
+.exlib-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:0;
+}
+
+
+/* ===== Exercise Library Legend ===== */
+.exlib-legend{
+  margin: 12px 0 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: center;
+  font-weight: 700;
+  color: var(--primary);
+}
+body.dark .exlib-legend{ color: #cfeaf6; }
+
+.legend-item{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(10, 116, 166, 0.06);
+  border: 1px solid rgba(10, 116, 166, 0.14);
+}
+body.dark .legend-item{
+  background: rgba(87, 167, 201, 0.10);
+  border-color: rgba(87, 167, 201, 0.22);
+}
+
+.legend-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.03);
+}
+.legend-dot--target{ background: #e23b3b; }
+.legend-dot--syn{ background: #f59e0b; }
+.legend-dot--stab{ background: #facc15; }
+
+/* === Legend toggle === */
+.legend-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: 700;
+  border: 1px solid rgba(10, 116, 166, 0.22);
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--primary);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.dark .legend-toggle {
+  background: rgba(18, 56, 71, 0.6);
+  color: var(--dark-text);
+  border-color: rgba(87, 167, 201, 0.25);
+}
+
+.legend-toggle:hover,
+.legend-toggle:focus {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Legend wrapper spacing when visible */
+#legendContent {
+  margin-top: 10px;
+}
+
+/* Hide old image note if exists */
+.exlib-img-note{ display:none !important; }
+
+
+
+/* === Enhancements: images + sticky controls + nicer interactions === */
+
+/* Sticky filter bar (under the header) */
+.exlib-controls {
+  position: sticky;
+  top: 84px; /* below header */
+  z-index: 20;
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 800px) {
+  .exlib-controls { top: 76px; }
+}
+
+/* Muscle/exercise image placeholders */
+.exlib-muscle-img,
+.exlib-ex-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.exlib-img-placeholder {
+  display: none;
+  position: absolute;
+  inset: 0;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 12px;
+  color: rgba(10, 116, 166, 0.8);
+  background: linear-gradient(135deg, rgba(87,167,201,0.12), rgba(10,116,166,0.06));
+  text-align: center;
+}
+
+body.dark .exlib-img-placeholder {
+  color: rgba(255,255,255,0.78);
+  background: linear-gradient(135deg, rgba(87,167,201,0.14), rgba(0,0,0,0.08));
+}
+
+.exlib-muscle-img .exlib-img-placeholder,
+.exlib-ex-img .exlib-img-placeholder{
+  position:absolute;
+  inset:0;
+  padding:10px;
+  font-weight:700;
+  font-size:12px;
+  text-align:center;
+  color: rgba(10, 116, 166, 0.80);
+  background: linear-gradient(135deg, rgba(87,167,201,0.12), rgba(10,116,166,0.06));
+}
+body.dark .exlib-muscle-img .exlib-img-placeholder,
+body.dark .exlib-ex-img .exlib-img-placeholder{
+  color: rgba(255,255,255,0.78);
+  background: linear-gradient(135deg, rgba(87,167,201,0.14), rgba(0,0,0,0.08));
+}
+
+/* Show placeholder only when image is missing */
+.exlib-muscle-img .exlib-img-placeholder,
+.exlib-ex-img .exlib-img-placeholder { display: none; }
+
+.exlib-muscle-img.missing .exlib-img-placeholder,
+.exlib-ex-img.missing .exlib-img-placeholder { display: grid; place-items: center; }
+
+/* File-name hint (hidden by default; appears on hover/focus) */
+.exlib-img-fn {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+  opacity: 0.6;
+  direction: ltr;
+  text-align: center;
+  unicode-bidi: plaintext;
+}
+
+.exlib-ex-img::after {
+  content: attr(data-fn);
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  direction: ltr;
+  unicode-bidi: plaintext;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(87,167,201,0.28);
+  color: rgba(10, 50, 68, 0.9);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: 180ms ease;
+  pointer-events: none;
+}
+
+body.dark .exlib-ex-img::after {
+  background: rgba(18, 56, 71, 0.88);
+  border-color: rgba(87,167,201,0.24);
+  color: rgba(255,255,255,0.9);
+}
+
+.exlib-ex-img:hover::after,
+.exlib-ex-img:focus-within::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* If missing, keep filename visible so you can add the image later */
+.exlib-ex-img.missing::after {
+  opacity: 1;
+  transform: none;
+}
+
+/* Make cards feel more alive */
+.exlib-card {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.exlib-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Clearer legend pills */
+.exlib-legend .legend-item {
+  border-radius: 999px;
+  padding: 10px 14px;
+  border: 1px solid rgba(87, 167, 201, 0.22);
+  background: rgba(255,255,255,0.6);
+}
+
+body.dark .exlib-legend .legend-item {
+  background: rgba(18, 56, 71, 0.55);
+  border-color: rgba(87, 167, 201, 0.20);
+}
+
+/*
+ * Hide the file-name overlay on exercise images.
+ *
+ * The exercise library originally shows the filename (via the ::after pseudo-element on
+ * .exlib-ex-img and an .exlib-img-fn element) when hovering over a card. The user requested
+ * that these hints be removed entirely so that the image remains clean with no name overlay.
+ * The following rules override the defaults by setting display to none with !important.
+ */
+.exlib-ex-img::after {
+  display: none !important;
+}
+
+.exlib-img-fn {
+  display: none !important;
+}
+
+
+/* =========================================================
+   Muscle category cards — cleaner compact redesign
+   ========================================================= */
+
+/* Slightly wider minimum so text/buttons are not squeezed */
+#muscleSections {
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 20px;
+}
+
+/* Remove the double-card appearance.
+   The clickable header itself becomes the visible card. */
+#muscleSections > .exlib-muscle {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 20px;
+}
+
+body.dark #muscleSections > .exlib-muscle {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+/* Main category tile */
+.exlib-muscle-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 10px 12px;
+  min-height: 126px;
+  padding: 18px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.94),
+    rgba(231, 246, 252, 0.88)
+  );
+  border: 1px solid rgba(10, 116, 166, 0.16);
+  box-shadow: 0 8px 22px rgba(12, 52, 68, 0.07);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.exlib-muscle-head:hover {
+  transform: translateY(-3px);
+  border-color: rgba(55, 149, 187, 0.38);
+  box-shadow: 0 14px 30px rgba(12, 52, 68, 0.12);
+}
+
+body.dark .exlib-muscle-head {
+  background: linear-gradient(
+    145deg,
+    rgba(18, 56, 71, 0.95),
+    rgba(11, 34, 43, 0.92)
+  );
+  border-color: rgba(87, 167, 201, 0.20);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.20);
+}
+
+body.dark .exlib-muscle-head:hover {
+  border-color: rgba(87, 167, 201, 0.42);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.32);
+}
+
+/* Keep the soft hover glow subtle */
+.exlib-muscle-head::before {
+  background: radial-gradient(
+    circle at 20% 30%,
+    rgba(87, 167, 201, 0.14),
+    transparent 58%
+  );
+}
+
+/* Image + title/content area */
+.exlib-muscle-info {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding-right: 26px; /* room for arrow */
+}
+
+.exlib-muscle-img {
+  width: 68px;
+  height: 68px;
+  flex-basis: 68px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(10, 116, 166, 0.14);
+  box-shadow: 0 5px 14px rgba(12, 52, 68, 0.08);
+}
+
+.exlib-muscle-img img {
+  object-fit: contain;
+  padding: 5px;
+}
+
+body.dark .exlib-muscle-img {
+  background: rgba(231, 246, 252, 0.92);
+  border-color: rgba(87, 167, 201, 0.18);
+}
+
+/* Text hierarchy */
+.exlib-muscle-title {
+  margin: 0 0 4px;
+  font-size: 20px;
+  line-height: 1.15;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.exlib-muscle-sub {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 700;
+  opacity: 0.68;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Filter button gets its own row under the text.
+   This prevents it from overlapping the title/subtitle. */
+.exlib-muscle-head .exlib-jump {
+  grid-column: 1 / -1;
+  justify-self: start;
+  margin: 0 0 0 82px !important;
+  padding: 7px 13px;
+  min-height: 32px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 850;
+  background: rgba(55, 149, 187, 0.10);
+  color: var(--h1);
+  border: 1px solid rgba(55, 149, 187, 0.22);
+  box-shadow: none;
+  position: relative;
+  z-index: 2;
+}
+
+.exlib-muscle-head .exlib-jump:hover {
+  background: rgba(55, 149, 187, 0.18);
+  border-color: rgba(55, 149, 187, 0.38);
+  transform: translateY(-1px);
+}
+
+body.dark .exlib-muscle-head .exlib-jump {
+  background: rgba(87, 167, 201, 0.12);
+  color: var(--dark-accent);
+  border-color: rgba(87, 167, 201, 0.25);
+}
+
+body.dark .exlib-muscle-head .exlib-jump:hover {
+  background: rgba(87, 167, 201, 0.22);
+}
+
+/* Smaller, cleaner expand arrow */
+.exlib-muscle-head::after {
+  right: 17px;
+  top: 31px;
+  font-size: 0.72rem;
+  opacity: 0.72;
+  transform: none;
+}
+
+.exlib-muscle.open .exlib-muscle-head::after {
+  transform: rotate(90deg);
+}
+
+/* Open state: keep the header compact and let exercises span the row */
+#muscleSections .exlib-muscle.open {
+  grid-column: 1 / -1;
+}
+
+.exlib-muscle.open .exlib-muscle-head {
+  min-height: auto;
+}
+
+/* Responsive card layout */
+@media (max-width: 720px) {
+  #muscleSections {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .exlib-muscle-head {
+    min-height: 116px;
+    padding: 16px;
+  }
+
+  .exlib-muscle-info {
+    grid-template-columns: 60px minmax(0, 1fr);
+    gap: 12px;
+    padding-right: 22px;
+  }
+
+  .exlib-muscle-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .exlib-muscle-title {
+    font-size: 18px;
+  }
+
+  .exlib-muscle-sub {
+    font-size: 12.5px;
+  }
+
+  .exlib-muscle-head .exlib-jump {
+    margin-left: 72px !important;
+  }
+
+  .exlib-muscle-head::after {
+    right: 14px;
+    top: 28px;
+  }
+}
+
+
+/* =========================================================
+   EXERCISE LIBRARY FILTERS V6 — premium finder redesign
+   ========================================================= */
+
+/* Legend */
+.exlib-legend--premium {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 1rem;
+  padding: 0.6rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+
+  background: transparent;
+}
+
+.exlib-legend-label {
+  color: rgba(54, 86, 99, 0.62);
+  font-size: 0.67rem;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.exlib-legend-items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.exlib-legend--premium .legend-item {
+  min-height: 36px;
+  padding: 0.5rem 0.78rem;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.48rem;
+
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(10, 116, 166, 0.11);
+
+  color: #456b79;
+  font-size: 0.70rem;
+  line-height: 1;
+  font-weight: 850;
+
+  box-shadow: 0 4px 12px rgba(12, 52, 68, 0.035);
+}
+
+body.dark .exlib-legend-label {
+  color: rgba(231, 246, 252, 0.42);
+}
+
+body.dark .exlib-legend--premium .legend-item {
+  background: rgba(18, 56, 71, 0.52);
+  border-color: rgba(87, 167, 201, 0.14);
+  color: rgba(231, 246, 252, 0.78);
+}
+
+/* Main filter surface */
+.exlib-controls--premium {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+
+  width: 100%;
+  max-width: 100%;
+  margin: 0 !important;
+  padding: clamp(1rem, 2vw, 1.35rem) !important;
+
+  border-radius: 24px !important;
+  border: 1px solid rgba(10, 116, 166, 0.12) !important;
+
+  background:
+    radial-gradient(circle at 94% 0%, rgba(87, 167, 201, 0.12), transparent 28%),
+    linear-gradient(145deg, rgba(255,255,255,0.93), rgba(239,248,250,0.90)) !important;
+
+  box-shadow:
+    0 18px 44px rgba(12, 52, 68, 0.085),
+    inset 0 1px 0 rgba(255,255,255,0.82) !important;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+body.dark .exlib-controls--premium {
+  background:
+    radial-gradient(circle at 94% 0%, rgba(87, 167, 201, 0.12), transparent 30%),
+    linear-gradient(145deg, rgba(19,56,71,0.96), rgba(12,42,54,0.96)) !important;
+
+  border-color: rgba(87, 167, 201, 0.20) !important;
+
+  box-shadow:
+    0 20px 48px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.022) !important;
+}
+
+/* Header */
+.exlib-controls-head {
+  margin-bottom: 1rem;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+
+  text-align: left;
+}
+
+.exlib-controls-heading {
+  min-width: 0;
+}
+
+.exlib-controls-kicker {
+  display: block;
+  margin-bottom: 0.3rem;
+
+  color: var(--h2);
+  font-size: 0.64rem;
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.exlib-controls-heading h2 {
+  margin: 0;
+
+  color: #173f4f;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  line-height: 1.08;
+  font-weight: 950;
+  letter-spacing: -0.025em;
+}
+
+.exlib-controls-heading p {
+  margin: 0.38rem 0 0;
+
+  color: #6a8792;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+body.dark .exlib-controls-heading h2 {
+  color: #f0fbfe;
+}
+
+body.dark .exlib-controls-heading p {
+  color: rgba(231,246,252,0.56);
+}
+
+.exlib-results-badge {
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 0.55rem 0.78rem;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  border-radius: 12px;
+
+  background: rgba(55,149,187,0.09);
+  border: 1px solid rgba(55,149,187,0.13);
+
+  color: #436976;
+  font-size: 0.70rem;
+  line-height: 1;
+  font-weight: 900;
+}
+
+body.dark .exlib-results-badge {
+  background: rgba(87,167,201,0.09);
+  border-color: rgba(87,167,201,0.14);
+  color: rgba(231,246,252,0.74);
+}
+
+.exlib-results-pulse {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+
+  border-radius: 50%;
+  background: var(--h2);
+
+  box-shadow: 0 0 0 0 rgba(55,149,187,0.25);
+  animation: exlibResultPulse 2.2s ease-out infinite;
+}
+
+@keyframes exlibResultPulse {
+  0% { box-shadow: 0 0 0 0 rgba(55,149,187,0.26); }
+  60%, 100% { box-shadow: 0 0 0 7px rgba(55,149,187,0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exlib-results-pulse {
+    animation: none;
+  }
+}
+
+/* Search */
+.exlib-search-wrap--premium {
+  position: relative;
+  z-index: 20;
+
+  width: 100%;
+  max-width: none;
+  margin: 0 0 0.9rem !important;
+}
+
+.exlib-search-wrap--premium .exlib-search {
+  width: 100%;
+  height: 58px;
+
+  padding: 0 3rem 0 3.1rem !important;
+
+  border-radius: 14px !important;
+  border: 1px solid rgba(10,116,166,0.14) !important;
+  outline: none;
+
+  background: rgba(255,255,255,0.78) !important;
+  color: #244c5b;
+
+  font-size: 0.86rem !important;
+  font-weight: 650;
+
+  box-shadow:
+    0 5px 15px rgba(12,52,68,0.035),
+    inset 0 1px 0 rgba(255,255,255,0.80);
+
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.exlib-search-wrap--premium .exlib-search::placeholder {
+  color: #8da3ab;
+  opacity: 1;
+}
+
+.exlib-search-wrap--premium .exlib-search:focus {
+  background: #fff !important;
+  border-color: var(--h2) !important;
+
+  box-shadow:
+    0 7px 18px rgba(12,52,68,0.06),
+    0 0 0 4px rgba(55,149,187,0.095) !important;
+}
+
+body.dark .exlib-search-wrap--premium .exlib-search {
+  background: rgba(7,30,45,0.38) !important;
+  color: var(--dark-text);
+  border-color: rgba(87,167,201,0.14) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.018);
+}
+
+body.dark .exlib-search-wrap--premium .exlib-search:focus {
+  background: rgba(7,30,45,0.56) !important;
+  border-color: var(--dark-accent) !important;
+  box-shadow: 0 0 0 4px rgba(87,167,201,0.09) !important;
+}
+
+.exlib-search-wrap--premium .exlib-search-icon {
+  left: 1rem !important;
+  right: auto !important;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 26px;
+  height: 26px;
+
+  color: var(--h2) !important;
+  font-size: 0;
+}
+
+body.dark .exlib-search-wrap--premium .exlib-search-icon {
+  color: var(--dark-accent) !important;
+}
+
+.exlib-search-wrap--premium .exlib-clear {
+  left: auto !important;
+  right: 0.85rem !important;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 30px;
+  height: 30px;
+
+  border-radius: 9px;
+  border: 1px solid rgba(10,116,166,0.10);
+
+  background: rgba(55,149,187,0.07);
+  color: #517582;
+
+  font-size: 1rem;
+}
+
+.exlib-search-wrap--premium .exlib-clear:hover {
+  transform: translateY(-50%) scale(1.05);
+  background: rgba(55,149,187,0.13);
+}
+
+body.dark .exlib-search-wrap--premium .exlib-clear {
+  background: rgba(87,167,201,0.08);
+  border-color: rgba(87,167,201,0.11);
+  color: rgba(231,246,252,0.72);
+}
+
+/* Search suggestions */
+.exlib-search-wrap--premium .exlib-suggestions {
+  left: 0;
+  right: 0;
+  top: calc(100% + 7px);
+
+  direction: ltr !important;
+  text-align: left;
+
+  padding: 0.4rem;
+
+  border-radius: 13px;
+  border: 1px solid rgba(10,116,166,0.13);
+
+  background: rgba(255,255,255,0.985);
+  box-shadow: 0 16px 34px rgba(12,52,68,0.13);
+}
+
+body.dark .exlib-search-wrap--premium .exlib-suggestions {
+  background: rgba(12,42,54,0.985);
+  border-color: rgba(87,167,201,0.16);
+  box-shadow: 0 18px 36px rgba(0,0,0,0.28);
+}
+
+.exlib-search-wrap--premium .exlib-suggestions li {
+  padding: 0.68rem 0.75rem;
+
+  border-radius: 9px;
+
+  color: #456976;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+body.dark .exlib-search-wrap--premium .exlib-suggestions li {
+  color: rgba(231,246,252,0.72);
+}
+
+/* Filter cards */
+.exlib-filter-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
+}
+
+.exlib-filter-row.exlib-filter-card {
+  margin: 0 !important;
+  padding: 0.9rem !important;
+
+  display: grid !important;
+  grid-template-columns: 200px minmax(0, 1fr) !important;
+  gap: 1rem !important;
+  align-items: center !important;
+
+  text-align: left !important;
+
+  border-radius: 15px;
+
+  background: rgba(255,255,255,0.44);
+  border: 1px solid rgba(10,116,166,0.075);
+
+  transition:
+    background 160ms ease,
+    border-color 160ms ease;
+}
+
+.exlib-filter-row.exlib-filter-card:hover {
+  background: rgba(255,255,255,0.61);
+  border-color: rgba(55,149,187,0.12);
+}
+
+body.dark .exlib-filter-row.exlib-filter-card {
+  background: rgba(7,30,45,0.20);
+  border-color: rgba(87,167,201,0.075);
+}
+
+body.dark .exlib-filter-row.exlib-filter-card:hover {
+  background: rgba(7,30,45,0.30);
+  border-color: rgba(87,167,201,0.12);
+}
+
+.exlib-filter-card-head {
+  min-width: 0;
+
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.exlib-filter-icon {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 11px;
+
+  background: linear-gradient(145deg, rgba(1,109,156,0.13), rgba(87,167,201,0.09));
+  border: 1px solid rgba(55,149,187,0.11);
+
+  color: var(--h1);
+  font-size: 0.72rem;
+  line-height: 1;
+  font-weight: 950;
+}
+
+body.dark .exlib-filter-icon {
+  background: rgba(87,167,201,0.09);
+  border-color: rgba(87,167,201,0.12);
+  color: var(--dark-accent);
+}
+
+.exlib-filter-card .exlib-filter-label {
+  margin: 0;
+
+  color: #355d6c !important;
+  opacity: 1 !important;
+
+  font-size: 0.78rem;
+  line-height: 1.1;
+  font-weight: 900;
+}
+
+.exlib-filter-card-head small {
+  display: block;
+  margin-top: 0.22rem;
+
+  color: #8198a1;
+  font-size: 0.61rem;
+  line-height: 1.35;
+  font-weight: 650;
+}
+
+body.dark .exlib-filter-card .exlib-filter-label {
+  color: rgba(231,246,252,0.82) !important;
+}
+
+body.dark .exlib-filter-card-head small {
+  color: rgba(231,246,252,0.38);
+}
+
+/* Chips */
+.exlib-filter-card .exlib-chips {
+  justify-content: flex-start !important;
+  gap: 0.45rem !important;
+}
+
+.exlib-filter-card .exlib-chip {
+  min-height: 38px;
+  padding: 0.5rem 0.78rem !important;
+
+  border-radius: 10px !important;
+  border: 1px solid rgba(10,116,166,0.13) !important;
+
+  background: rgba(255,255,255,0.62) !important;
+  color: #456a78;
+
+  font-size: 0.72rem !important;
+  line-height: 1;
+  font-weight: 850 !important;
+
+  box-shadow: none !important;
+
+  transition:
+    transform 150ms ease,
+    background 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease !important;
+}
+
+.exlib-filter-card .exlib-chip:hover {
+  transform: translateY(-1px) !important;
+
+  background: rgba(55,149,187,0.09) !important;
+  border-color: rgba(55,149,187,0.23) !important;
+  color: var(--h1);
+
+  box-shadow: 0 5px 12px rgba(12,52,68,0.045) !important;
+}
+
+.exlib-filter-card .exlib-chip.active {
+  transform: none !important;
+
+  background: linear-gradient(135deg, var(--h1), var(--h2)) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+
+  box-shadow: 0 7px 16px rgba(1,109,156,0.17) !important;
+}
+
+.exlib-filter-card .exlib-chip.active:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 9px 18px rgba(1,109,156,0.22) !important;
+}
+
+body.dark .exlib-filter-card .exlib-chip {
+  background: rgba(18,56,71,0.58) !important;
+  border-color: rgba(87,167,201,0.14) !important;
+  color: rgba(231,246,252,0.72);
+}
+
+body.dark .exlib-filter-card .exlib-chip:hover {
+  background: rgba(87,167,201,0.12) !important;
+  border-color: rgba(87,167,201,0.24) !important;
+  color: #fff;
+}
+
+body.dark .exlib-filter-card .exlib-chip.active {
+  background: linear-gradient(135deg, #3795bb, #57a7c9) !important;
+  color: #071e28 !important;
+}
+
+/* Bottom status bar */
+.exlib-controls--premium .exlib-meta {
+  margin-top: 0.85rem !important;
+  padding-top: 0.85rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  border-top: 1px solid rgba(10,116,166,0.08);
+
+  font-weight: 700;
+}
+
+body.dark .exlib-controls--premium .exlib-meta {
+  border-top-color: rgba(87,167,201,0.09);
+}
+
+.exlib-filter-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+
+  color: #7d959e;
+  font-size: 0.66rem;
+  line-height: 1;
+  font-weight: 700;
+}
+
+body.dark .exlib-filter-hint {
+  color: rgba(231,246,252,0.38);
+}
+
+.exlib-filter-hint-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+  background: #45b98f;
+  box-shadow: 0 0 0 4px rgba(69,185,143,0.09);
+}
+
+.exlib-controls--premium .exlib-reset {
+  min-height: 36px;
+  padding: 0.5rem 0.7rem !important;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  border: 1px solid rgba(10,116,166,0.10) !important;
+  border-radius: 9px !important;
+
+  background: rgba(55,149,187,0.055) !important;
+  color: var(--h1) !important;
+
+  font-size: 0.68rem;
+  line-height: 1;
+  font-weight: 900 !important;
+
+  transition:
+    transform 150ms ease,
+    background 150ms ease,
+    border-color 150ms ease;
+}
+
+.exlib-controls--premium .exlib-reset:hover {
+  transform: translateY(-1px);
+  background: rgba(55,149,187,0.11) !important;
+  border-color: rgba(55,149,187,0.18) !important;
+}
+
+body.dark .exlib-controls--premium .exlib-reset {
+  background: rgba(87,167,201,0.07) !important;
+  border-color: rgba(87,167,201,0.10) !important;
+  color: var(--dark-accent) !important;
+}
+
+/* Responsive: wrap normally — never turn filters into a horizontal slider */
+@media (max-width: 860px) {
+  .exlib-filter-row.exlib-filter-card {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .exlib-filter-card .exlib-chips {
+    justify-content: flex-start !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .exlib-legend--premium {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .exlib-legend-label {
+    text-align: left;
+    padding-left: 0.1rem;
+  }
+
+  .exlib-legend-items {
+    justify-content: flex-start;
+  }
+
+  .exlib-legend--premium .legend-item {
+    min-height: 32px;
+    padding: 0.42rem 0.58rem;
+    font-size: 0.63rem;
+  }
+
+  .exlib-controls--premium {
+    padding: 0.85rem !important;
+    border-radius: 19px !important;
+  }
+
+  .exlib-controls-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .exlib-controls-heading h2 {
+    font-size: 1.3rem;
+  }
+
+  .exlib-results-badge {
+    min-height: 36px;
+    padding: 0.45rem 0.62rem;
+  }
+
+  .exlib-search-wrap--premium .exlib-search {
+    height: 52px;
+    font-size: 16px !important; /* prevents iOS input zoom */
+  }
+
+  .exlib-filter-row.exlib-filter-card {
+    padding: 0.75rem !important;
+  }
+
+  .exlib-filter-card-head {
+    grid-template-columns: 34px minmax(0,1fr);
+  }
+
+  .exlib-filter-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .exlib-filter-card .exlib-chips {
+    gap: 0.38rem !important;
+  }
+
+  .exlib-filter-card .exlib-chip {
+    min-height: 35px;
+    padding: 0.45rem 0.64rem !important;
+    font-size: 0.68rem !important;
+  }
+
+  .exlib-controls--premium .exlib-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .exlib-legend-items {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .exlib-legend--premium .legend-item {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+
+/* =========================================================
+   EXERCISE CARDS V11 — wide editorial cards
+   Search / filter styling stays untouched
+   ========================================================= */
+
+/* Two wide cards per row for much better readability */
+.exlib-muscle.open .exlib-cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+  align-items: stretch;
+}
+
+/* Card shell */
+.exlib-card.exlib-card--wide {
+  position: relative;
+  overflow: hidden;
+
+  min-height: 268px;
+  padding: 0 !important;
+
+  display: grid;
+  grid-template-columns: 42% minmax(0, 1fr);
+
+  border-radius: 20px !important;
+  border: 1px solid rgba(10,116,166,0.13) !important;
+
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.98), rgba(247,252,253,0.96)) !important;
+
+  box-shadow:
+    0 8px 22px rgba(24,65,82,0.055),
+    inset 0 1px 0 rgba(255,255,255,0.82) !important;
+
+  transform: translateY(0);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease !important;
+}
+
+.exlib-card.exlib-card--wide:hover {
+  transform: translateY(-4px) !important;
+  border-color: rgba(55,149,187,0.27) !important;
+
+  box-shadow:
+    0 18px 34px rgba(24,65,82,0.11),
+    inset 0 1px 0 rgba(255,255,255,0.88) !important;
+}
+
+body.dark .exlib-card.exlib-card--wide {
+  background:
+    linear-gradient(145deg, rgba(15,45,58,0.98), rgba(9,31,41,0.98)) !important;
+
+  border-color: rgba(87,167,201,0.14) !important;
+
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.24),
+    inset 0 1px 0 rgba(255,255,255,0.018) !important;
+}
+
+body.dark .exlib-card.exlib-card--wide:hover {
+  border-color: rgba(87,167,201,0.29) !important;
+  box-shadow:
+    0 20px 38px rgba(0,0,0,0.34),
+    inset 0 1px 0 rgba(255,255,255,0.02) !important;
+}
+
+/* Left visual block */
+.exlib-wide-media {
+  position: relative;
+  min-width: 0;
+  min-height: 268px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 50% 42%, rgba(87,167,201,0.18), transparent 44%),
+    linear-gradient(160deg, #eef8fa, #dbeef2);
+
+  border-right: 1px solid rgba(10,116,166,0.08);
+}
+
+body.dark .exlib-wide-media {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(87,167,201,0.12), transparent 46%),
+    linear-gradient(160deg, rgba(23,67,82,0.82), rgba(12,41,53,0.96));
+
+  border-right-color: rgba(87,167,201,0.09);
+}
+
+.exlib-card--wide .exlib-ex-img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 268px;
+
+  display: grid;
+  place-items: center;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+.exlib-card--wide .exlib-ex-img img {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+
+  padding: 18px;
+
+  object-fit: contain !important;
+  object-position: center;
+
+  transform: scale(0.94);
+
+  transition:
+    transform 220ms ease,
+    filter 220ms ease;
+}
+
+.exlib-card--wide:hover .exlib-ex-img img {
+  transform: scale(0.985);
+}
+
+body.dark .exlib-card--wide .exlib-ex-img img {
+  filter: saturate(0.96) brightness(0.97);
+}
+
+/* Equipment badge sits in media corner */
+.exlib-wide-equipment {
+  position: absolute;
+  z-index: 3;
+  top: 12px;
+  left: 12px;
+
+  max-width: calc(100% - 24px);
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.exlib-card--wide .exlib-tag {
+  min-height: 29px;
+  padding: 0.36rem 0.55rem !important;
+
+  border-radius: 8px !important;
+  border: 1px solid rgba(10,116,166,0.15) !important;
+
+  background: rgba(255,255,255,0.88) !important;
+  color: #285267 !important;
+
+  font-size: 0.61rem !important;
+  line-height: 1;
+  font-weight: 900 !important;
+
+  box-shadow: 0 5px 12px rgba(19,59,76,0.07);
+
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+}
+
+.exlib-card--wide .exlib-tag:hover {
+  transform: translateY(-1px) !important;
+  background: #fff !important;
+  border-color: rgba(55,149,187,0.28) !important;
+}
+
+body.dark .exlib-card--wide .exlib-tag {
+  background: rgba(7,28,38,0.80) !important;
+  border-color: rgba(87,167,201,0.17) !important;
+  color: #def5fb !important;
+}
+
+/* Right content */
+.exlib-wide-content {
+  min-width: 0;
+  padding: 18px 18px 16px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.exlib-wide-heading {
+  margin-bottom: 8px;
+}
+
+.exlib-wide-muscle {
+  display: inline-flex;
+  align-items: center;
+
+  margin-bottom: 0.4rem;
+
+  color: var(--h2);
+
+  font-size: 0.58rem;
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+body.dark .exlib-wide-muscle {
+  color: var(--dark-accent);
+}
+
+.exlib-card--wide .exlib-ex-name {
+  margin: 0 !important;
+
+  color: #173e4e !important;
+
+  font-size: 1.02rem !important;
+  line-height: 1.22;
+  font-weight: 950 !important;
+  letter-spacing: -0.018em;
+}
+
+body.dark .exlib-card--wide .exlib-ex-name {
+  color: #f2fbfd !important;
+}
+
+.exlib-card--wide .exlib-ex-desc {
+  margin: 0 0 12px !important;
+
+  color: #607b86 !important;
+
+  font-size: 0.75rem !important;
+  line-height: 1.58 !important;
+  font-weight: 650 !important;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+body.dark .exlib-card--wide .exlib-ex-desc {
+  color: rgba(231,246,252,0.60) !important;
+}
+
+/* Muscle role area — no pill soup */
+.exlib-wide-roles {
+  margin-top: auto;
+  padding-top: 10px;
+
+  display: grid;
+  gap: 8px;
+
+  border-top: 1px solid rgba(10,116,166,0.075);
+}
+
+body.dark .exlib-wide-roles {
+  border-top-color: rgba(87,167,201,0.09);
+}
+
+.exlib-wide-role {
+  display: grid;
+  grid-template-columns: 78px minmax(0,1fr);
+  gap: 8px;
+  align-items: start;
+}
+
+.exlib-wide-role-name {
+  min-height: 26px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #778e97;
+
+  font-size: 0.55rem;
+  line-height: 1.1;
+  font-weight: 900;
+}
+
+body.dark .exlib-wide-role-name {
+  color: rgba(231,246,252,0.40);
+}
+
+.exlib-wide-role-name .legend-dot {
+  width: 7px !important;
+  height: 7px !important;
+  flex: 0 0 7px;
+  box-shadow: none !important;
+}
+
+.exlib-wide-role-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.exlib-role-chip {
+  min-height: 26px;
+  padding: 0.34rem 0.48rem;
+
+  display: inline-flex;
+  align-items: center;
+
+  border-radius: 7px;
+
+  font-size: 0.57rem;
+  line-height: 1;
+  font-weight: 850;
+}
+
+/* More subtle, professional role colors */
+.exlib-role-chip--target {
+  background: rgba(226,59,59,0.075);
+  border: 1px solid rgba(226,59,59,0.14);
+  color: #835050;
+}
+
+.exlib-role-chip--synergist {
+  background: rgba(245,158,11,0.075);
+  border: 1px solid rgba(245,158,11,0.15);
+  color: #836431;
+}
+
+.exlib-role-chip--stabilizer {
+  background: rgba(250,204,21,0.075);
+  border: 1px solid rgba(220,178,15,0.15);
+  color: #776936;
+}
+
+body.dark .exlib-role-chip--target {
+  background: rgba(226,59,59,0.13);
+  border-color: rgba(226,59,59,0.19);
+  color: #ffd3d3;
+}
+
+body.dark .exlib-role-chip--synergist {
+  background: rgba(245,158,11,0.13);
+  border-color: rgba(245,158,11,0.20);
+  color: #ffe0ac;
+}
+
+body.dark .exlib-role-chip--stabilizer {
+  background: rgba(250,204,21,0.12);
+  border-color: rgba(250,204,21,0.19);
+  color: #fff0a5;
+}
+
+/* Missing image */
+.exlib-card--wide .exlib-ex-img.missing {
+  position: relative;
+}
+
+.exlib-card--wide .exlib-img-placeholder {
+  color: #8098a1;
+  font-size: 0.62rem !important;
+  font-weight: 800 !important;
+}
+
+/* Tablet */
+@media (max-width: 980px) {
+  .exlib-muscle.open .exlib-cards {
+    grid-template-columns: 1fr !important;
+  }
+
+  .exlib-card.exlib-card--wide {
+    grid-template-columns: 34% minmax(0,1fr);
+    min-height: 245px;
+  }
+
+  .exlib-wide-media,
+  .exlib-card--wide .exlib-ex-img {
+    min-height: 245px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .exlib-card.exlib-card--wide {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    border-radius: 17px !important;
+  }
+
+  .exlib-wide-media {
+    min-height: 210px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(10,116,166,0.08);
+  }
+
+  body.dark .exlib-wide-media {
+    border-bottom-color: rgba(87,167,201,0.09);
+  }
+
+  .exlib-card--wide .exlib-ex-img {
+    min-height: 210px;
+    height: 210px !important;
+  }
+
+  .exlib-wide-content {
+    padding: 15px;
+  }
+
+  .exlib-card--wide .exlib-ex-name {
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .exlib-wide-role {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+
+/* =========================================================
+   EXERCISE FILTERS — compact one-line rows
+   Keeps the existing chosen chip filter logic/markup
+   ========================================================= */
+
+/* Entire controls panel: tighter */
+.exlib-controls--premium {
+  padding: 0.78rem !important;
+  border-radius: 18px !important;
+}
+
+/* Hide the large heading/description to save vertical space */
+.exlib-controls-head {
+  display: none !important;
+}
+
+/* Search becomes slimmer */
+.exlib-search-wrap--premium {
+  margin-bottom: 0.62rem !important;
+}
+
+.exlib-search-wrap--premium .exlib-search {
+  height: 48px !important;
+  border-radius: 12px !important;
+  font-size: 0.78rem !important;
+  padding-left: 2.75rem !important;
+}
+
+.exlib-search-wrap--premium .exlib-search-icon {
+  left: 0.9rem !important;
+  width: 22px !important;
+  height: 22px !important;
+}
+
+.exlib-search-wrap--premium .exlib-clear {
+  width: 27px !important;
+  height: 27px !important;
+  right: 0.72rem !important;
+}
+
+/* Filter area: compact rows instead of large cards */
+.exlib-filter-grid {
+  gap: 0.45rem !important;
+}
+
+.exlib-filter-row.exlib-filter-card {
+  min-height: 52px !important;
+  padding: 0.48rem 0.58rem !important;
+
+  display: grid !important;
+  grid-template-columns: 118px minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 0.65rem !important;
+
+  border-radius: 12px !important;
+
+  background: rgba(255,255,255,0.34) !important;
+  border: 1px solid rgba(10,116,166,0.07) !important;
+}
+
+body.dark .exlib-filter-row.exlib-filter-card {
+  background: rgba(7,30,45,0.16) !important;
+  border-color: rgba(87,167,201,0.07) !important;
+}
+
+/* Label area becomes tiny */
+.exlib-filter-card-head {
+  grid-template-columns: 29px minmax(0, 1fr) !important;
+  gap: 0.45rem !important;
+}
+
+.exlib-filter-icon {
+  width: 29px !important;
+  height: 29px !important;
+  border-radius: 8px !important;
+  font-size: 0.58rem !important;
+}
+
+.exlib-filter-card .exlib-filter-label {
+  font-size: 0.68rem !important;
+  line-height: 1 !important;
+}
+
+.exlib-filter-card-head small {
+  display: none !important;
+}
+
+/* Chips: smaller, denser, still comfortable to tap */
+.exlib-filter-card .exlib-chips {
+  gap: 0.32rem !important;
+  align-items: center !important;
+}
+
+.exlib-filter-card .exlib-chip {
+  min-height: 33px !important;
+  padding: 0.39rem 0.62rem !important;
+
+  border-radius: 9px !important;
+
+  font-size: 0.66rem !important;
+  line-height: 1 !important;
+  font-weight: 850 !important;
+}
+
+/* Bottom meta/status: much smaller */
+.exlib-controls--premium .exlib-meta {
+  margin-top: 0.5rem !important;
+  padding-top: 0.5rem !important;
+  gap: 0.6rem !important;
+}
+
+.exlib-filter-hint {
+  font-size: 0.58rem !important;
+}
+
+.exlib-controls--premium .exlib-reset {
+  min-height: 30px !important;
+  padding: 0.35rem 0.52rem !important;
+  font-size: 0.60rem !important;
+}
+
+/* Legend also tighter */
+.exlib-legend--premium {
+  margin-bottom: 0.6rem !important;
+  padding: 0.2rem !important;
+  gap: 0.35rem !important;
+}
+
+.exlib-legend-label {
+  display: none !important;
+}
+
+.exlib-legend--premium .legend-item {
+  min-height: 30px !important;
+  padding: 0.38rem 0.58rem !important;
+  font-size: 0.61rem !important;
+}
+
+/* ---------------------------------------------------------
+   Tablet / mobile:
+   keep each filter compact and wrap chips naturally.
+   No horizontal slider.
+   --------------------------------------------------------- */
+@media (max-width: 860px) {
+  .exlib-filter-row.exlib-filter-card {
+    grid-template-columns: 105px minmax(0, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+
+  .exlib-filter-card .exlib-chips {
+    flex-wrap: wrap !important;
+    overflow: visible !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .exlib-controls--premium {
+    padding: 0.65rem !important;
+    border-radius: 16px !important;
+  }
+
+  .exlib-search-wrap--premium {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .exlib-search-wrap--premium .exlib-search {
+    height: 46px !important;
+    font-size: 16px !important; /* avoid iOS zoom */
+  }
+
+  .exlib-filter-grid {
+    gap: 0.38rem !important;
+  }
+
+  .exlib-filter-row.exlib-filter-card {
+    min-height: 0 !important;
+    padding: 0.46rem !important;
+
+    grid-template-columns: 1fr !important;
+    gap: 0.4rem !important;
+  }
+
+  .exlib-filter-card-head {
+    grid-template-columns: 26px auto !important;
+    justify-content: start;
+  }
+
+  .exlib-filter-icon {
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .exlib-filter-card .exlib-filter-label {
+    font-size: 0.65rem !important;
+  }
+
+  .exlib-filter-card .exlib-chips {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.28rem !important;
+  }
+
+  .exlib-filter-card .exlib-chip {
+    min-height: 31px !important;
+    padding: 0.36rem 0.52rem !important;
+    font-size: 0.63rem !important;
+  }
+
+  .exlib-controls--premium .exlib-meta {
+    margin-top: 0.4rem !important;
+    padding-top: 0.4rem !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .exlib-filter-hint {
+    display: none !important;
+  }
+
+  .exlib-controls--premium .exlib-reset {
+    margin-left: auto;
+  }
+
+  .exlib-legend--premium {
+    justify-content: flex-start !important;
+  }
+
+  .exlib-legend--premium .legend-item {
+    min-height: 28px !important;
+    padding: 0.34rem 0.5rem !important;
+    font-size: 0.58rem !important;
+  }
+}
+
+/* Very small phones: keep labels + chips compact */
+@media (max-width: 390px) {
+  .exlib-filter-card .exlib-chip {
+    padding-left: 0.46rem !important;
+    padding-right: 0.46rem !important;
+    font-size: 0.60rem !important;
+  }
+
+  .exlib-legend--premium .legend-item {
+    width: auto !important;
+  }
+}
